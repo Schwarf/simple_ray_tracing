@@ -56,7 +56,7 @@ c_vector<dimension> operator-(c_vector <dimension> lhs, const c_vector<dimension
     return lhs;
 }
 
-// Invert direction
+// Invert direction_normalized
 template<size_t dimension>
 c_vector<dimension> operator-(const c_vector<dimension> &lhs) {
     return lhs * (-1.f);

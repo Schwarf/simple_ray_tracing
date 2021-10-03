@@ -1,0 +1,64 @@
+//
+// Created by andreas on 03.10.21.
+//
+
+#include "sphere.h"
+
+c_vector3 Sphere::center() const {
+    return center_;
+}
+
+float Sphere::radius() const {
+    return radius_;
+}
+
+Sphere::Sphere(c_vector3 &center, float radius) {
+    center_ = center;
+    is_above_threshold("sphere radius", radius, 0.0);
+    radius_ = radius;
+}
+
+void Sphere::is_above_threshold(const std::string &variable_name, const float &variable_value,
+                                const float &threshold) const {
+    const std::string message_part1 = "In Sphere ";
+    const std::string message_part2 = " is less than ";
+    const std::string threshold_part = std::to_string(threshold);
+    std::string message = message_part1 + variable_name + message_part2 + threshold_part;
+    if (variable_value < threshold) {
+        throw std::out_of_range(message);
+    }
+
+}
+
+bool Sphere::does_ray_intersect(const IRay &ray, float &closest_hit_distance) const {
+    closest_hit_distance = -1.0;
+    c_vector3 origin_to_center = (center_ - ray.origin());
+    float origin_to_center_dot_direction = origin_to_center * ray.direction_normalized();
+    if (origin_to_center_dot_direction < 0) {
+        // Sphere center is behind ray origin
+        return false;
+    }
+
+    float epsilon = 1e-5;
+    float delta = origin_to_center_dot_direction * origin_to_center_dot_direction -
+                  ((origin_to_center * origin_to_center) - radius_ * radius_);
+    if (delta < 0.0) {
+        return false;
+    }
+    if (std::abs(delta) < epsilon) {
+        closest_hit_distance = origin_to_center_dot_direction;
+        return true;
+    }
+    auto solution1 = origin_to_center_dot_direction - std::sqrt(delta);
+    auto solution2 = origin_to_center_dot_direction + std::sqrt(delta);
+    closest_hit_distance = solution1;
+
+    if (closest_hit_distance < 0.0) {
+        closest_hit_distance = solution2;
+    }
+    if (closest_hit_distance < 0.0) {
+        return false;
+    }
+
+    return true;
+}

@@ -5,6 +5,7 @@
 #include "cpp_implementation/material.h"
 #include "cpp_implementation/material_builder.h"
 #include "cpp_implementation/image_buffer.h"
+#include "cpp_implementation/sphere.h"
 #include <memory>
 #include <fstream>
 int main(){
@@ -54,7 +55,10 @@ int main(){
         }
     }
     ofs.close();
-
+    auto center = c_vector3{1.2,0.0, 0.0};
+    auto radius = 1.5;
+    auto sphere = Sphere(center, radius);
+    std:: cout << sphere.center() << std::endl;
     return 0;
 }
 

@@ -21,13 +21,16 @@ enable_cxx_compiler_flag_if_supported("-Wall")
 enable_cxx_compiler_flag_if_supported("-Wextra")
 enable_cxx_compiler_flag_if_supported("-pedantic")
 enable_cxx_compiler_flag_if_supported("-std=c++17")
-enable_cxx_compiler_flag_if_supported("-O3")
+enable_cxx_compiler_flag_if_supported("-O0")
 enable_cxx_compiler_flag_if_supported("-fopenmp")
 
 
 
-add_executable(source sanity_checks_for_c_vector.cpp)
+# add_executable(source sanity_checks_for_c_vector.cpp )
+add_executable(ray_cast ray_casting.cpp )
+
 include_directories(cpp_implementation)
 add_subdirectory(cpp_implementation)
-target_link_libraries(source c_vector)
+# target_link_libraries(source c_vector)
+target_link_libraries(ray_cast c_vector)
 

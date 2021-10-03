@@ -19,7 +19,6 @@ public:
     std::vector<c_vector3> buffer() override;
 private:
     std::vector<c_vector3> buffer_;
-    std::vector<char> pixel_buffer_;
     int width_;
     int height_;
 };
