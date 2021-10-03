@@ -2,7 +2,9 @@
 // Created by andreas on 02.10.21.
 //
 #include "cpp_implementation/c_vector.h"
-
+#include "cpp_implementation/material.h"
+#include "cpp_implementation/material_builder.h"
+#include <memory>
 int main(){
     auto test_vector= c_vector<3>{0.0, 4.0, 3.0};
     auto test_vector2= c_vector<3>{3.0, 3.0, 3.0};
@@ -18,5 +20,19 @@ int main(){
     std::cout << subtraction << std::endl;
     std::cout << normalized << std::endl;
     std::cout << perpendicular << std::endl;
+
+    auto builder = MaterialBuilder();
+    builder.set_specular_reflection(0.3);
+    builder.set_diffuse_reflection(0.3);
+    builder.set_ambient_reflection(0.3);
+    builder.set_shininess(0.3);
+    auto material = Material(builder);
+    std::unique_ptr<IReflectionCoefficients> i_material = std::make_unique<Material>(material);
+    //std::shared_ptr<IMaterialBuilder> i_material_setter = ;
+    //std::shared_ptr<IReflectionCoefficients> i_material = reinterpret_cast<IReflectionCoefficients> (*i_material_setter);
+    std::cout <<  " out  " << i_material->shininess() << std::endl;
+
+
     return 0;
 }
+

@@ -24,6 +24,10 @@ enable_cxx_compiler_flag_if_supported("-std=c++17")
 enable_cxx_compiler_flag_if_supported("-O3")
 enable_cxx_compiler_flag_if_supported("-fopenmp")
 
-include_directories(cpp_implementation)
 
-add_executable(source sanity_checks_for_c_vector.cpp cpp_implementation/interfaces/i_material.h)
+
+add_executable(source sanity_checks_for_c_vector.cpp)
+include_directories(cpp_implementation)
+add_subdirectory(cpp_implementation)
+target_link_libraries(source c_vector)
+
