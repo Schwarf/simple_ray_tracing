@@ -11,7 +11,7 @@
 
 class MaterialBuilder : public IMaterialBuilder {
 public:
-    MaterialBuilder();
+    MaterialBuilder() = default;
 
     void set_specular_reflection(const float &specular_reflection) override;
 
@@ -31,11 +31,46 @@ public:
 
     float shininess() const override;
 
+    std::string name() const override;
+
+    void set_specular_exponent(const float &specular_exponent) override;
+
+    void set_red_value(const float &red_value) override;
+
+    void set_green_value(const float &green_value) override;
+
+    void set_blue_value(const float &blue_value) override;
+
+    void set_refraction_coefficient(const float &refraction_coefficient) override;
+
+    void set_name(const std::string &name) override;
+
+    float refraction_coefficient() const override;
+
+    float red_value() const override;
+
+    float green_value() const override;
+
+    float blue_value() const override;
+
+    float specular_exponent() const override;
+
 private:
-    float specular_reflection_;
-    float diffuse_reflection_;
-    float ambient_reflection_;
-    float shininess_;
+    void
+    is_above_threshold(const std::string &variable_name, const float &variable_value, const float &threshold) const override;
+
+private:
+    float specular_reflection_{-1.0};
+    float diffuse_reflection_{-1.0};
+    float ambient_reflection_{-1.0};
+    float shininess_{-1.0};
+    float specular_exponent_{-1.0};
+    float red_value_{-1.0};
+    float green_value_{-1.0};
+    float blue_value_{-1.0};
+    float refraction_coefficient_{-1.0};
+    std::string name_;
+
 };
 
 
