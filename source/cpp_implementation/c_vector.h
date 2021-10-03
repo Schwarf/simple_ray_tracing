@@ -90,18 +90,12 @@ struct c_vector<3> {
 typedef c_vector<3> c_vector3;
 typedef c_vector<4> c_vector4;
 
-// Cross Product only defined for 3d vectors
-c_vector3 cross_product(c_vector3 v1, c_vector3 v2) {
-    return {v1.y * v2.z - v1.z * v2.y, v1.z * v2.x - v1.x * v2.z, v1.x * v2.y - v1.y * v2.x};
-}
-
-// output vector
 template<size_t dimension>
 std::ostream &operator<<(std::ostream &out, const c_vector<dimension> &v) {
     for (size_t index = 0; index < dimension; index++)
         out << v[index] << " ";
     return out;
-}
 
+}
 
 #endif //SOURCE_C_VECTOR_H

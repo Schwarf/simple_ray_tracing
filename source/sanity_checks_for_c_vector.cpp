@@ -4,7 +4,9 @@
 #include "cpp_implementation/c_vector.h"
 #include "cpp_implementation/material.h"
 #include "cpp_implementation/material_builder.h"
+#include "cpp_implementation/image_buffer.h"
 #include <memory>
+#include <fstream>
 int main(){
     auto test_vector= c_vector<3>{0.0, 4.0, 3.0};
     auto test_vector2= c_vector<3>{3.0, 3.0, 3.0};
@@ -13,13 +15,11 @@ int main(){
     auto addition = test_vector + test_vector2;
     auto subtraction = test_vector - test_vector2;
     auto normalized = test_vector.normalize();
-    auto perpendicular = cross_product(test_vector, test_vector2);
     std::cout << factor << std::endl;
     std::cout << dot_product << std::endl;
     std::cout << addition << std::endl;
     std::cout << subtraction << std::endl;
     std::cout << normalized << std::endl;
-    std::cout << perpendicular << std::endl;
 
     auto builder = MaterialBuilder();
     float test = 0.3;
@@ -34,12 +34,26 @@ int main(){
     builder.set_refraction_coefficient(test2);
     builder.set_specular_exponent(test2);
     
-    auto material = Material("smaple", builder);
+    auto material = Material("example", builder);
     std::unique_ptr<IReflectionCoefficients> i_material = std::make_unique<Material>(material);
     //std::shared_ptr<IMaterialBuilder> i_material_setter = ;
     //std::shared_ptr<IReflectionCoefficients> i_material = reinterpret_cast<IReflectionCoefficients> (*i_material_setter);
     std::cout <<  " out  " << i_material->shininess() << std::endl;
+    auto width = 1920;
+    auto height = 1080;
+    auto image = ImageBuffer(width, height);
+    auto buffer = image.buffer();
+    std::cout << buffer[1] << std::endl;
 
+    std::ofstream ofs; // save the framebuffer to file
+    ofs.open("./sample.ppm");
+    ofs << "P6\n" << width << " " << height << "\n255\n";
+    for (size_t i = 0; i < height*width; ++i) {
+        for (size_t j = 0; j<3; j++) {
+            ofs << (char)(255 * std::max(0.f, std::min(1.f, buffer[i][j])));
+        }
+    }
+    ofs.close();
 
     return 0;
 }

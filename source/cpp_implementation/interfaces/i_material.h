@@ -10,6 +10,7 @@
 #include "i_refraction_coefficient.h"
 #include <string>
 
+
 class IMaterial: public IRefractionCoefficient, public ISpecularExponent, public IReflectionCoefficients, public IRGBColor
 {
 public:
