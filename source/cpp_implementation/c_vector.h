@@ -34,6 +34,13 @@ c_vector<dimension, T> operator*(const c_vector<dimension, T> &lhs, const float 
     return result;
 }
 
+
+template<size_t dimension, typename T>
+c_vector<dimension, T> operator*(const float lhs, const c_vector<dimension, T> &rhs) {
+    return rhs*lhs;
+}
+
+
 // Dot-product
 template<size_t dimension, typename T>
 T operator*(const c_vector<dimension, T> &lhs, const c_vector<dimension, T> &rhs) {

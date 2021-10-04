@@ -26,18 +26,6 @@ void MaterialBuilder::set_specular_exponent(const float &specular_exponent) {
 
 }
 
-void MaterialBuilder::set_red_value(const float &red_value) {
-    red_value_ = red_value;
-}
-
-void MaterialBuilder::set_green_value(const float &green_value) {
-    green_value_ = green_value;
-}
-
-void MaterialBuilder::set_blue_value(const float &blue_value) {
-    blue_value_ = blue_value;
-}
-
 void MaterialBuilder::set_refraction_coefficient(const float &refraction_coefficient) {
     refraction_coefficient_ = refraction_coefficient;
 }
@@ -80,21 +68,6 @@ float MaterialBuilder::refraction_coefficient() const {
     return refraction_coefficient_;
 }
 
-float MaterialBuilder::red_value() const {
-    is_above_threshold("red_value_", red_value_, 0.0);
-    return red_value_;
-}
-
-float MaterialBuilder::green_value() const {
-    is_above_threshold("green_value_", green_value_, 0.0);
-    return green_value_;
-}
-
-float MaterialBuilder::blue_value() const {
-    is_above_threshold("blue_value_", blue_value_, 0.0);
-    return blue_value_;
-}
-
 float MaterialBuilder::specular_exponent() const {
     is_above_threshold("specular_exponent_", specular_exponent_, 0.0);
     return specular_exponent_;
@@ -110,4 +83,16 @@ void MaterialBuilder::is_above_threshold(const std::string &variable_name, const
         throw std::out_of_range(message);
     }
 }
+
+void MaterialBuilder::set_rgb_color(const c_vector3 &rgb_color) {
+    rgb_color_ = rgb_color;
+}
+
+c_vector3 MaterialBuilder::rgb_color() const {
+    is_above_threshold("color value red", rgb_color_[0], 0.0);
+    is_above_threshold("color value green", rgb_color_[1], 0.0);
+    is_above_threshold("color value blue", rgb_color_[2], 0.0);
+    return rgb_color_;
+}
+
 

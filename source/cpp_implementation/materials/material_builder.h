@@ -21,6 +21,14 @@ public:
 
     void set_shininess(const float &shininess) final;
 
+    void set_specular_exponent(const float &specular_exponent) final;
+
+    void set_rgb_color(const c_vector3 &rgb_color) final;
+
+    void set_refraction_coefficient(const float &refraction_coefficient) final;
+
+    void set_name(const std::string &name) final;
+
     ~MaterialBuilder() override = default;
 
     float specular_reflection() const final;
@@ -33,27 +41,11 @@ public:
 
     std::string name() const final;
 
-    void set_specular_exponent(const float &specular_exponent) final;
-
-    void set_red_value(const float &red_value) final;
-
-    void set_green_value(const float &green_value) final;
-
-    void set_blue_value(const float &blue_value) final;
-
-    void set_refraction_coefficient(const float &refraction_coefficient) final;
-
-    void set_name(const std::string &name) final;
-
     float refraction_coefficient() const final;
 
-    float red_value() const final;
-
-    float green_value() const final;
-
-    float blue_value() const final;
-
     float specular_exponent() const final;
+
+    c_vector3 rgb_color() const final;
 
 private:
     void
@@ -66,10 +58,8 @@ private:
     float ambient_reflection_{-1.0};
     float shininess_{-1.0};
     float specular_exponent_{-1.0};
-    float red_value_{-1.0};
-    float green_value_{-1.0};
-    float blue_value_{-1.0};
     float refraction_coefficient_{-1.0};
+    c_vector3 rgb_color_{-1, -1, -1};
     std::string name_;
 
 };

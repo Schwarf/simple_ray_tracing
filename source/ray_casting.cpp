@@ -11,7 +11,7 @@
 #include "cpp_implementation/light_source.h"
 #include <memory>
 #include <fstream>
-#include <limits>
+#include "cpp_implementation/ray_interactions.h"
 #include <cmath>
 
 c_vector3 cast_ray(const IRay &ray, Sphere &sphere, const LightSource &light_source) {
@@ -22,12 +22,13 @@ c_vector3 cast_ray(const IRay &ray, Sphere &sphere, const LightSource &light_sou
     }
     auto light_direction = (light_source.position() - hit_point ).normalize();
     auto normal = (hit_point -sphere.center()).normalize();
-
-    auto resulting_intensity = light_source.intensity()*std::max(0.f, light_direction*normal);
-    auto red = sphere.get_material().get()->red_value()*resulting_intensity;
-    auto blue = sphere.get_material().get()->blue_value()*resulting_intensity;
-    auto green = sphere.get_material().get()->green_value()*resulting_intensity;
-    return c_vector3 {red, green, blue};
+    auto interaction = RayInteractions();
+    auto diffuse_intensity = light_source.intensity() * std::max(0.f, light_direction * normal);
+    auto specular_intensity = std::pow(std::max(0.f, interaction.reflection(light_direction, normal)*light_direction),
+                                       sphere.get_material()->specular_exponent())*light_source.intensity();
+    auto diffuse_reflection = sphere.get_material()->rgb_color() * diffuse_intensity * sphere.get_material()->diffuse_reflection();
+    auto specular_reflection = specular_intensity*c_vector3{1,1,1}*sphere.get_material()->specular_reflection();
+    return diffuse_reflection + specular_reflection;
 }
 
 void render(Sphere &sphere, const LightSource &light_source) {
@@ -37,7 +38,6 @@ void render(Sphere &sphere, const LightSource &light_source) {
     auto buffer = image.buffer();
     auto f_width = static_cast<float>(width);
     auto f_height = static_cast<float>(height);
-    std::vector<c_vector3> imagebuffer(width * height);
     auto image_buffer = ImageBuffer(width, height);
     for (size_t j = 0; j < height; j++) {
         for (size_t i = 0; i < width; i++) {
@@ -48,7 +48,7 @@ void render(Sphere &sphere, const LightSource &light_source) {
             c_vector3 origin = c_vector3{0, 0, 0};
             auto ray = Ray(origin, direction);
             image_buffer.set_pixel_value(i, j, cast_ray(ray, sphere, light_source));
-            //imagebuffer[i + j * width] = cast_ray(ray, sphere);
+
         }
     }
     std::cout << "Hallo" << std::endl;
@@ -57,7 +57,6 @@ void render(Sphere &sphere, const LightSource &light_source) {
     ofs << "P6\n" << width << " " << height << "\n255\n";
     for (size_t i = 0; i < height * width; ++i) {
         for (size_t j = 0; j < 3; j++) {
-            //ofs << (char)(255 * std::max(0.f, std::min(1.f, imagebuffer[i][j])));
             ofs << static_cast<char>(image_buffer.get_pixel(i)[j]);
 
         }
@@ -74,15 +73,13 @@ int main() {
     auto builder = MaterialBuilder();
     float test = 0.3;
     float test2 = 0.1;
-    builder.set_specular_reflection(test);
-    builder.set_diffuse_reflection(test);
+    builder.set_specular_reflection(0.6);
+    builder.set_diffuse_reflection(0.3);
     builder.set_ambient_reflection(test);
     builder.set_shininess(test);
-    builder.set_blue_value(0.9);
-    builder.set_red_value(0.4);
-    builder.set_green_value(0.4);
+    builder.set_rgb_color(c_vector3{0.7, 0.4, 0.4});
     builder.set_refraction_coefficient(test2);
-    builder.set_specular_exponent(test2);
+    builder.set_specular_exponent(50.);
 
     auto material = Material("sample", builder);
     sphere.set_material(std::make_unique<Material>(material));

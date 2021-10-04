@@ -8,6 +8,7 @@
 #include <memory>
 #include "materials/interfaces/i_material_builder.h"
 
+
 class Material : public IMaterial {
 public:
     explicit Material(const std::string & name, const IMaterialBuilder & builder);
@@ -28,13 +29,9 @@ public:
 
     float refraction_coefficient() const final;
 
-    float red_value() const final;
-
-    float green_value() const final;
-
-    float blue_value() const final;
-
     float specular_exponent() const final;
+
+    c_vector3 rgb_color() const final;
 
 private:
     float specular_reflection_{-1.0};
@@ -42,9 +39,7 @@ private:
     float ambient_reflection_{-1.0};
     float shininess_{-1.0};
     float specular_exponent_{-1.0};
-    float red_value_{-1.0};
-    float green_value_{-1.0};
-    float blue_value_{-1.0};
+    c_vector3 rgb_color_;
     float refraction_coefficient_{-1.0};
     std::string name_;
 };

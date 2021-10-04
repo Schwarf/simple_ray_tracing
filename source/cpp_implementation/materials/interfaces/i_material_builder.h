@@ -19,11 +19,7 @@ public:
 
     virtual void set_specular_exponent(const float &specular_exponent) = 0;
 
-    virtual void set_red_value(const float &red_value) = 0;
-
-    virtual void set_green_value(const float &green_value) = 0;
-
-    virtual void set_blue_value(const float &blue_value) = 0;
+    virtual void set_rgb_color(const c_vector3 & color) = 0;
 
     virtual void set_refraction_coefficient(const float &refraction_coefficient) = 0;
 
