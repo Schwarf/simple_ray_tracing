@@ -29,6 +29,7 @@ void render(const Sphere &sphere) {
     auto f_width = static_cast<float>(width);
     auto f_height = static_cast<float>(height);
     std::vector<c_vector3> imagebuffer(width * height);
+    auto image_buffer = ImageBuffer(width, height);
     for (size_t j = 0; j < height; j++) {
         for (size_t i = 0; i < width; i++) {
             float x_direction = (static_cast<float>(i) + 0.5) - f_width/2.;
@@ -37,15 +38,19 @@ void render(const Sphere &sphere) {
             c_vector3 direction = c_vector3{x_direction, y_direction, z_direction}.normalize();
             c_vector3 origin = c_vector3{0, 0, 0};
             auto ray = Ray(origin, direction);
-            imagebuffer[i + j * width] = cast_ray(ray, sphere);
+            image_buffer.set_pixel_value(i, j, cast_ray(ray, sphere) );
+            //imagebuffer[i + j * width] = cast_ray(ray, sphere);
         }
     }
+    std::cout << "Hallo" << std::endl;
     std::ofstream ofs;
     ofs.open("./sphere.ppm");
     ofs << "P6\n" << width << " " << height << "\n255\n";
     for (size_t i = 0; i < height*width; ++i) {
         for (size_t j = 0; j<3; j++) {
-            ofs << (char)(255 * std::max(0.f, std::min(1.f, imagebuffer[i][j])));
+            //ofs << (char)(255 * std::max(0.f, std::min(1.f, imagebuffer[i][j])));
+            ofs << static_cast<char>(image_buffer.get_pixel(i)[j]);
+
         }
     }
     ofs.close();
@@ -55,7 +60,7 @@ void render(const Sphere &sphere) {
 
 int main() {
     auto sphere_center = c_vector3{-3.2, 0., -16};
-    float sphere_radius = 2;
+    float sphere_radius = -2;
     auto sphere = Sphere(sphere_center, sphere_radius);
     render(sphere);
 

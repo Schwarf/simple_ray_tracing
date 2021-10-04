@@ -10,18 +10,19 @@
 class Sphere : public ISphere, public ICheck{
 public:
     Sphere(c_vector3 & center, float radius);
-    c_vector3 center() const override;
+    c_vector3 center() const final;
 
-    float radius() const override;
+    float radius() const final;
 
     ~Sphere() override = default;
 
     void is_above_threshold(const std::string &variable_name, const float &variable_value,
-                            const float &threshold) const override;
+                            const float &threshold) const final;
 
-    bool does_ray_intersect(const IRay &ray, float &closest_hit_distance) const override;
+    bool does_ray_intersect(const IRay &ray, float &closest_hit_distance) const final;
 
 private:
+    void init() const;
     c_vector3 center_;
     float radius_;
 };

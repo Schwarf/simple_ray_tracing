@@ -14,8 +14,12 @@ float Sphere::radius() const {
 
 Sphere::Sphere(c_vector3 &center, float radius) {
     center_ = center;
-    is_above_threshold("sphere radius", radius, 0.0);
     radius_ = radius;
+    init();
+}
+
+void Sphere::init() const{
+    is_above_threshold("radius_", radius_, 0.0);
 }
 
 void Sphere::is_above_threshold(const std::string &variable_name, const float &variable_value,

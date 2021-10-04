@@ -12,11 +12,16 @@ class ImageBuffer: public IImageBuffer {
 
 public:
     ImageBuffer(int width, int height);
-    int width() const override;
+    int width() const final;
 
-    int height() const override;
+    int height() const final;
 
-    std::vector<c_vector3> buffer() override;
+    std::unique_ptr<std::vector<c_vector3>> buffer() final;
+
+    void set_pixel_value(size_t width_index, size_t height_index, const c_vector3 pixel_color_value) final;
+
+    c_vector3 get_pixel(size_t index) final;
+
 private:
     std::vector<c_vector3> buffer_;
     int width_;

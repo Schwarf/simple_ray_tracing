@@ -13,51 +13,52 @@ class MaterialBuilder : public IMaterialBuilder {
 public:
     MaterialBuilder() = default;
 
-    void set_specular_reflection(const float &specular_reflection) override;
+    void set_specular_reflection(const float &specular_reflection) final;
 
-    void set_diffuse_reflection(const float &diffuse_reflection) override;
+    void set_diffuse_reflection(const float &diffuse_reflection) final;
 
-    void set_ambient_reflection(const float &ambient_reflection) override;
+    void set_ambient_reflection(const float &ambient_reflection) final;
 
-    void set_shininess(const float &shininess) override;
+    void set_shininess(const float &shininess) final;
 
     ~MaterialBuilder() override = default;
 
-    float specular_reflection() const override;
+    float specular_reflection() const final;
 
-    float diffuse_reflection() const override;
+    float diffuse_reflection() const final;
 
-    float ambient_reflection() const override;
+    float ambient_reflection() const final;
 
-    float shininess() const override;
+    float shininess() const final;
 
-    std::string name() const override;
+    std::string name() const final;
 
-    void set_specular_exponent(const float &specular_exponent) override;
+    void set_specular_exponent(const float &specular_exponent) final;
 
-    void set_red_value(const float &red_value) override;
+    void set_red_value(const float &red_value) final;
 
-    void set_green_value(const float &green_value) override;
+    void set_green_value(const float &green_value) final;
 
-    void set_blue_value(const float &blue_value) override;
+    void set_blue_value(const float &blue_value) final;
 
-    void set_refraction_coefficient(const float &refraction_coefficient) override;
+    void set_refraction_coefficient(const float &refraction_coefficient) final;
 
-    void set_name(const std::string &name) override;
+    void set_name(const std::string &name) final;
 
-    float refraction_coefficient() const override;
+    float refraction_coefficient() const final;
 
-    float red_value() const override;
+    float red_value() const final;
 
-    float green_value() const override;
+    float green_value() const final;
 
-    float blue_value() const override;
+    float blue_value() const final;
 
-    float specular_exponent() const override;
+    float specular_exponent() const final;
 
 private:
     void
-    is_above_threshold(const std::string &variable_name, const float &variable_value, const float &threshold) const override;
+    is_above_threshold(const std::string &variable_name, const float &variable_value,
+                       const float &threshold) const final;
 
 private:
     float specular_reflection_{-1.0};

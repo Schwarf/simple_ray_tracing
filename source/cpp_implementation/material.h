@@ -14,27 +14,27 @@ public:
 
     Material(const Material &rhs) = default;
 
-    float specular_reflection() const override;
+    float specular_reflection() const final;
 
-    float diffuse_reflection() const override;
+    float diffuse_reflection() const final;
 
-    float ambient_reflection() const override;
+    float ambient_reflection() const final;
 
-    float shininess() const override;
+    float shininess() const final;
 
     virtual ~Material() = default;
 
-    std::string name() const override;
+    std::string name() const final;
 
-    float refraction_coefficient() const override;
+    float refraction_coefficient() const final;
 
-    float red_value() const override;
+    float red_value() const final;
 
-    float green_value() const override;
+    float green_value() const final;
 
-    float blue_value() const override;
+    float blue_value() const final;
 
-    float specular_exponent() const override;
+    float specular_exponent() const final;
 
 private:
     float specular_reflection_{-1.0};

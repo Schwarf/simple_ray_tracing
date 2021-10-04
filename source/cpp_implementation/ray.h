@@ -10,9 +10,9 @@
 class Ray : public IRay{
 public:
     Ray(c_vector3 & origin, c_vector3 & direction);
-    c_vector3 direction_normalized() const override;
+    c_vector3 direction_normalized() const final;
 
-    c_vector3 origin() const override;
+    c_vector3 origin() const final;
 
     ~Ray() override = default;
 private:
