@@ -31,6 +31,6 @@ add_executable(ray_cast ray_casting.cpp )
 
 include_directories(cpp_implementation)
 add_subdirectory(cpp_implementation)
-# target_link_libraries(source c_vector)
+#target_link_libraries(source c_vector)
 target_link_libraries(ray_cast c_vector)
 

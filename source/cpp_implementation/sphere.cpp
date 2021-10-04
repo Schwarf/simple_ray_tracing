@@ -4,6 +4,13 @@
 
 #include "sphere.h"
 
+Sphere::Sphere(c_vector3 &center, float radius) :
+        material_(nullptr) {
+    center_ = center;
+    radius_ = radius;
+    init();
+}
+
 c_vector3 Sphere::center() const {
     return center_;
 }
@@ -12,13 +19,7 @@ float Sphere::radius() const {
     return radius_;
 }
 
-Sphere::Sphere(c_vector3 &center, float radius) {
-    center_ = center;
-    radius_ = radius;
-    init();
-}
-
-void Sphere::init() const{
+void Sphere::init() const {
     is_above_threshold("radius_", radius_, 0.0);
 }
 
@@ -34,7 +35,7 @@ void Sphere::is_above_threshold(const std::string &variable_name, const float &v
 
 }
 
-bool Sphere::does_ray_intersect(const IRay &ray, float &closest_hit_distance) const {
+bool Sphere::does_ray_intersect(const IRay &ray, float &closest_hit_distance, c_vector3 & hit_point) const {
     closest_hit_distance = -1.0;
     c_vector3 origin_to_center = (center_ - ray.origin());
     float origin_to_center_dot_direction = origin_to_center * ray.direction_normalized();
@@ -50,6 +51,7 @@ bool Sphere::does_ray_intersect(const IRay &ray, float &closest_hit_distance) co
         return false;
     }
     if (std::abs(delta) < epsilon) {
+        hit_point = ray.origin() + ray.direction_normalized() * closest_hit_distance;
         closest_hit_distance = origin_to_center_dot_direction;
         return true;
     }
@@ -63,6 +65,15 @@ bool Sphere::does_ray_intersect(const IRay &ray, float &closest_hit_distance) co
     if (closest_hit_distance < 0.0) {
         return false;
     }
-
+    hit_point = ray.origin() + ray.direction_normalized() * closest_hit_distance;
     return true;
 }
+
+void Sphere::set_material(std::shared_ptr<IMaterial> material) {
+    material_ = material;
+}
+
+std::shared_ptr<IMaterial> Sphere::get_material() {
+    return material_;
+}
+
