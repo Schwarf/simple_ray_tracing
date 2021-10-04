@@ -5,8 +5,8 @@
 #ifndef SIMPLE_RAY_TRACING_MATERIAL_BUILDER_H
 #define SIMPLE_RAY_TRACING_MATERIAL_BUILDER_H
 
-#include "interfaces/i_material_builder.h"
-#include "interfaces/i_reflection_coefficients.h"
+#include "materials/interfaces/i_material_builder.h"
+#include "materials/interfaces/i_reflection_coefficients.h"
 #include <stdexcept>
 
 class MaterialBuilder : public IMaterialBuilder {

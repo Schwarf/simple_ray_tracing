@@ -2,10 +2,10 @@
 // Created by andreas on 02.10.21.
 //
 #include "cpp_implementation/c_vector.h"
-#include "cpp_implementation/material.h"
-#include "cpp_implementation/material_builder.h"
+#include "materials/material.h"
+#include "materials/material_builder.h"
 #include "cpp_implementation/image_buffer.h"
-#include "cpp_implementation/sphere.h"
+#include "objects/sphere.h"
 #include <memory>
 #include <fstream>
 int main(){

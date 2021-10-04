@@ -3,10 +3,10 @@
 //
 
 #include "cpp_implementation/c_vector.h"
-#include "cpp_implementation/material.h"
-#include "cpp_implementation/material_builder.h"
+#include "materials/material.h"
+#include "materials/material_builder.h"
 #include "cpp_implementation/image_buffer.h"
-#include "cpp_implementation/sphere.h"
+#include "objects/sphere.h"
 #include "cpp_implementation/ray.h"
 #include "cpp_implementation/light_source.h"
 #include <memory>
@@ -18,7 +18,7 @@ c_vector3 cast_ray(const IRay &ray, Sphere &sphere, const LightSource &light_sou
     float sphere_dist = 10000.;
     auto hit_point = c_vector3 {0,0,0};
     if (!sphere.does_ray_intersect(ray, sphere_dist, hit_point)) {
-        return c_vector3{0.2, 0.7, 0.8}; // background color
+        return c_vector3{0.5, 0.5, 0.5}; // background color
     }
     auto light_direction = (light_source.position() - hit_point ).normalize();
     auto normal = (hit_point -sphere.center()).normalize();
@@ -78,7 +78,7 @@ int main() {
     builder.set_diffuse_reflection(test);
     builder.set_ambient_reflection(test);
     builder.set_shininess(test);
-    builder.set_blue_value(0.3);
+    builder.set_blue_value(0.9);
     builder.set_red_value(0.4);
     builder.set_green_value(0.4);
     builder.set_refraction_coefficient(test2);

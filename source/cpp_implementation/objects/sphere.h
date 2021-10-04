@@ -4,7 +4,7 @@
 
 #ifndef SIMPLE_RAY_TRACING_SPHERE_H
 #define SIMPLE_RAY_TRACING_SPHERE_H
-#include "interfaces/i_sphere.h"
+#include "objects/interfaces/i_sphere.h"
 #include "interfaces/i_check.h"
 #include <algorithm>
 class Sphere : public ISphere, public ICheck{

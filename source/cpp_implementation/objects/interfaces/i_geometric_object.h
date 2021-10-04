@@ -5,7 +5,7 @@
 #ifndef SIMPLE_RAY_TRACING_I_GEOMETRIC_OBJECT_H
 #define SIMPLE_RAY_TRACING_I_GEOMETRIC_OBJECT_H
 #include <memory>
-#include "i_material.h"
+#include "materials/interfaces/i_material.h"
 
 class IGeometricObject{
 public:

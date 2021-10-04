@@ -6,7 +6,7 @@
 #define SIMPLE_RAY_TRACING_MATERIAL_H
 
 #include <memory>
-#include "interfaces/i_material_builder.h"
+#include "materials/interfaces/i_material_builder.h"
 
 class Material : public IMaterial {
 public:
