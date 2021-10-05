@@ -13,8 +13,9 @@
 #include <fstream>
 #include "cpp_implementation/ray_interactions.h"
 #include <cmath>
+#include "cpp_implementation/objects/rectangle.h"
 
-c_vector3 cast_ray(const IRay &ray, Sphere &sphere, const LightSource &light_source) {
+c_vector3 cast_ray(const IRay &ray, Sphere &sphere, Rectangle & rectangle, const LightSource &light_source) {
     float sphere_dist = 10000.;
     auto hit_point = c_vector3 {0,0,0};
     if (!sphere.does_ray_intersect(ray, sphere_dist, hit_point)) {
@@ -31,7 +32,7 @@ c_vector3 cast_ray(const IRay &ray, Sphere &sphere, const LightSource &light_sou
     return diffuse_reflection + specular_reflection;
 }
 
-void render(Sphere &sphere, const LightSource &light_source) {
+void render(Sphere &sphere, Rectangle & rectangle, const LightSource &light_source) {
     auto width = 1024;
     auto height = 768;
     auto image = ImageBuffer(width, height);
@@ -47,7 +48,7 @@ void render(Sphere &sphere, const LightSource &light_source) {
             c_vector3 direction = c_vector3{x_direction, y_direction, z_direction}.normalize();
             c_vector3 origin = c_vector3{0, 0, 0};
             auto ray = Ray(origin, direction);
-            image_buffer.set_pixel_value(i, j, cast_ray(ray, sphere, light_source));
+            image_buffer.set_pixel_value(i, j, cast_ray(ray, sphere, rectangle, light_source));
 
         }
     }
@@ -65,11 +66,22 @@ void render(Sphere &sphere, const LightSource &light_source) {
 
 }
 
+void push(std::vector<int> * vec)
+{
+    vec->push_back(2);
+}
 
 int main() {
-    auto sphere_center = c_vector3{-3.2, 0., -16};
+    auto bottom_left_position = c_vector3{5.2, -4., -10};
+    auto height = 2.0;
+    auto width = 2.5;
+    auto normal = c_vector3 {1,1,1};
+    auto rectangle = Rectangle(width, height, bottom_left_position, normal);
+
+    auto sphere_center = c_vector3{-5.2, 3., -16};
     float sphere_radius = 2;
     auto sphere = Sphere(sphere_center, sphere_radius);
+
     auto builder = MaterialBuilder();
     float test = 0.3;
     float test2 = 0.1;
@@ -83,11 +95,12 @@ int main() {
 
     auto material = Material("sample", builder);
     sphere.set_material(std::make_unique<Material>(material));
-    //auto u_material = sphere.get_material();
+
+    rectangle.set_material(std::make_unique<Material>(material));
     auto light_source_position = c_vector3{-20, 20, 20};
     float light_intensity = 2.5;
     auto light_source = LightSource(light_source_position, light_intensity);
-    render(sphere, light_source);
+    render(sphere, rectangle, light_source);
 
     return 0;
 }

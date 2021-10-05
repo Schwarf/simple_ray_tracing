@@ -8,7 +8,7 @@
 #include "interfaces/i_ray_intersection.h"
 #include "i_geometric_object.h"
 
-class ISphere:  public IGeometricObject, public IRayIntersection{
+class ISphere:  public IGeometricObject{
 public:
     virtual c_vector3 center() const =0;
     virtual float radius() const =0;

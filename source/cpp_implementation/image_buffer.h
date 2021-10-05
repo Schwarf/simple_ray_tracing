@@ -8,7 +8,7 @@
 #include <memory>
 #include "interfaces/i_image_buffer.h"
 #include "c_vector.h"
-class ImageBuffer: public IImageBuffer {
+class ImageBuffer final: public IImageBuffer {
 
 public:
     ImageBuffer(int width, int height);
@@ -18,7 +18,7 @@ public:
 
     std::unique_ptr<std::vector<c_vector3>> buffer() final;
 
-    void set_pixel_value(size_t width_index, size_t height_index, const c_vector3 pixel_color_value) final;
+    void set_pixel_value(size_t width_index, size_t height_index, c_vector3 pixel_color_value) final;
 
     c_vector3 get_pixel(size_t index) final;
 

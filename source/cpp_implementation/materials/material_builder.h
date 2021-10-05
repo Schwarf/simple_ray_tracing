@@ -8,8 +8,9 @@
 #include "materials/interfaces/i_material_builder.h"
 #include "materials/interfaces/i_reflection_coefficients.h"
 #include <stdexcept>
+#include "check.h"
 
-class MaterialBuilder : public IMaterialBuilder {
+class MaterialBuilder final : public IMaterialBuilder {
 public:
     MaterialBuilder() = default;
 
@@ -48,11 +49,6 @@ public:
     c_vector3 rgb_color() const final;
 
 private:
-    void
-    is_above_threshold(const std::string &variable_name, const float &variable_value,
-                       const float &threshold) const final;
-
-private:
     float specular_reflection_{-1.0};
     float diffuse_reflection_{-1.0};
     float ambient_reflection_{-1.0};
@@ -61,6 +57,7 @@ private:
     float refraction_coefficient_{-1.0};
     c_vector3 rgb_color_{-1, -1, -1};
     std::string name_;
+    Check check_;
 
 };
 

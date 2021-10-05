@@ -7,7 +7,7 @@
 
 #include "interfaces/i_light_source.h"
 
-class LightSource : public ILightSource {
+class LightSource final : public ILightSource {
 public:
     LightSource(const c_vector3 &position, float intensity);
 

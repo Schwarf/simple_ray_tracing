@@ -22,7 +22,7 @@ ImageBuffer::ImageBuffer(const int width, const int height) {
     height_ = height;
 
     buffer_.resize(height_ * width_);
-
+/*
     for (size_t height_index = 0; height_index < height; ++height_index) {
         for (size_t width_index = 0; width_index < width; width_index++) {
             buffer_[width_index + height_index * width] = c_vector3{float(height_index) / float(height),
@@ -32,7 +32,7 @@ ImageBuffer::ImageBuffer(const int width, const int height) {
 
         }
     }
-
+*/
 }
 
 void ImageBuffer::set_pixel_value(size_t width_index, size_t height_index, const c_vector3 pixel_color_value) {

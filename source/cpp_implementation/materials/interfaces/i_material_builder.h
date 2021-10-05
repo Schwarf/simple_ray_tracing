@@ -7,7 +7,7 @@
 #include "i_material.h"
 #include "interfaces/i_check.h"
 
-class IMaterialBuilder: public IMaterial, private ICheck{
+class IMaterialBuilder: public IMaterial {
 public:
     virtual void set_specular_reflection(const float &specular_reflection) = 0;
 

@@ -9,7 +9,7 @@
 #include "materials/interfaces/i_material_builder.h"
 
 
-class Material : public IMaterial {
+class Material final : public IMaterial {
 public:
     explicit Material(const std::string & name, const IMaterialBuilder & builder);
 

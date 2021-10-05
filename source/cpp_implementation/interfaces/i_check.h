@@ -8,8 +8,12 @@
 
 class ICheck {
 public:
-    virtual void is_above_threshold(const std::string & variable_name, const float & variable_value, const float & threshold) const= 0;
-//    virtual bool is_below_threshold(const std::string & variable_name, const float & variable_value, const float & threshold) = 0;
+    virtual void
+    is_above_threshold(const std::string &variable_name, const float &variable_value, const float &threshold,
+                       const std::string &class_name) const= 0;
+    virtual void
+    is_below_threshold(const std::string &variable_name, const float &variable_value, const float &threshold,
+                       const std::string &class_name) const = 0;
     virtual ~ICheck()= default;
 };
 

@@ -36,22 +36,26 @@ void MaterialBuilder::set_name(const std::string &name) {
 
 
 float MaterialBuilder::specular_reflection() const {
-    is_above_threshold("specular_reflection", specular_reflection_, 0.0);
+    std::string class_name = "MaterialBuilder";
+    check_.is_above_threshold("specular_reflection", specular_reflection_, 0.0, class_name);
     return specular_reflection_;
 }
 
 float MaterialBuilder::diffuse_reflection() const {
-    is_above_threshold("diffuse_reflection", diffuse_reflection_, 0.0);
+    std::string class_name = "MaterialBuilder";
+    check_.is_above_threshold("diffuse_reflection", diffuse_reflection_, 0.0, class_name);
     return diffuse_reflection_;
 }
 
 float MaterialBuilder::ambient_reflection() const {
-    is_above_threshold("ambient_reflection_", ambient_reflection_, 0.0);
+    std::string class_name = "MaterialBuilder";
+    check_.is_above_threshold("ambient_reflection_", ambient_reflection_, 0.0, class_name);
     return ambient_reflection_;
 }
 
 float MaterialBuilder::shininess() const {
-    is_above_threshold("shininess", shininess_, 0.0);
+    std::string class_name = "MaterialBuilder";
+    check_.is_above_threshold("shininess", shininess_, 0.0, class_name);
     return shininess_;
 }
 
@@ -64,35 +68,31 @@ std::string MaterialBuilder::name() const {
 
 
 float MaterialBuilder::refraction_coefficient() const {
-    is_above_threshold("refraction_coefficient", refraction_coefficient_, 0.0);
+    std::string class_name = "MaterialBuilder";
+    check_.is_above_threshold("refraction_coefficient", refraction_coefficient_, 0.0, class_name);
     return refraction_coefficient_;
 }
 
 float MaterialBuilder::specular_exponent() const {
-    is_above_threshold("specular_exponent_", specular_exponent_, 0.0);
+    std::string class_name = "MaterialBuilder";
+    check_.is_above_threshold("specular_exponent_", specular_exponent_, 0.0, class_name);
     return specular_exponent_;
 }
 
-void MaterialBuilder::is_above_threshold(const std::string &variable_name, const float &variable_value,
-                                         const float &threshold) const {
-    const std::string message_part1 = "In MaterialBuilder ";
-    const std::string message_part2 = " is less than ";
-    const std::string threshold_part = std::to_string(threshold);
-    std::string message = message_part1 + variable_name + message_part2 + threshold_part;
-    if (variable_value < threshold) {
-        throw std::out_of_range(message);
-    }
-}
 
 void MaterialBuilder::set_rgb_color(const c_vector3 &rgb_color) {
     rgb_color_ = rgb_color;
 }
 
 c_vector3 MaterialBuilder::rgb_color() const {
-    is_above_threshold("color value red", rgb_color_[0], 0.0);
-    is_above_threshold("color value green", rgb_color_[1], 0.0);
-    is_above_threshold("color value blue", rgb_color_[2], 0.0);
+    std::string class_name = "MaterialBuilder";
+    check_.is_above_threshold("color value red", rgb_color_[0], 0.0, class_name);
+    check_.is_below_threshold("color value red", rgb_color_[0], 1.0, class_name);
+
+    check_.is_above_threshold("color value green", rgb_color_[1], 0.0, class_name);
+    check_.is_below_threshold("color value green", rgb_color_[1], 1.0, class_name);
+
+    check_.is_above_threshold("color value blue", rgb_color_[2], 0.0, class_name);
+    check_.is_below_threshold("color value blue", rgb_color_[1], 1.0, class_name);
     return rgb_color_;
 }
-
-

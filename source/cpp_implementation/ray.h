@@ -7,7 +7,7 @@
 
 #include "interfaces/i_ray.h"
 
-class Ray : public IRay{
+class Ray final : public IRay{
 public:
     Ray(c_vector3 & origin, c_vector3 & direction);
     c_vector3 direction_normalized() const final;
