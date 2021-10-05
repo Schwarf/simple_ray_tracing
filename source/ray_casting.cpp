@@ -73,10 +73,10 @@ void push(std::vector<int> * vec)
 
 int main() {
     auto bottom_left_position = c_vector3{5.2, -4., -10};
-    auto height = 2.0;
-    auto width = 2.5;
+    auto height_vector = c_vector3 {2,0,0};
+    auto width_vector =  c_vector3 {0,2,0};
     auto normal = c_vector3 {1,1,1};
-    auto rectangle = Rectangle(width, height, bottom_left_position, normal);
+    auto rectangle = Rectangle(width_vector, height_vector, bottom_left_position, normal);
 
     auto sphere_center = c_vector3{-5.2, 3., -16};
     float sphere_radius = 2;
