@@ -1,6 +1,6 @@
 
 
-add_library(c_vector c_vector.h materials/material.cpp materials/material.h materials/material_builder.cpp
+add_library(c_vector STATIC c_vector.h materials/material.cpp materials/material.h materials/material_builder.cpp
         materials/material_builder.h image_buffer.cpp image_buffer.h objects/sphere.cpp objects/sphere.h ray.cpp ray.h
         objects/interfaces/i_geometric_object.h light_source.cpp light_source.h ray_interactions.cpp ray_interactions.h
         check.cpp check.h objects/interfaces/i_rectangle.h objects/rectangle.cpp objects/rectangle.h)

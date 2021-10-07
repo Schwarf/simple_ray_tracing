@@ -6,6 +6,7 @@ set(CMAKE_C_STANDARD 14)
 set(SOURCE_FILES sanity_checks_for_c_vector.cpp)
 include(CheckCXXCompilerFlag)
 
+
 function(enable_cxx_compiler_flag_if_supported flag)
     string(FIND "${CMAKE_CXX_FLAGS}" "${flag}" flag_already_set)
     if(flag_already_set EQUAL -1)
@@ -27,10 +28,11 @@ enable_cxx_compiler_flag_if_supported("-fopenmp")
 
 
 # add_executable(source sanity_checks_for_c_vector.cpp )
-add_executable(ray_cast ray_casting.cpp )
+add_executable(ray_cast ray_casting.cpp)
 
 include_directories(cpp_implementation)
 add_subdirectory(cpp_implementation)
+add_subdirectory(tests)
 
 target_link_libraries(ray_cast c_vector)
 
