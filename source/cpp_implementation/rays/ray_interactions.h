@@ -4,7 +4,7 @@
 
 #ifndef SIMPLE_RAY_TRACING_RAY_INTERACTIONS_H
 #define SIMPLE_RAY_TRACING_RAY_INTERACTIONS_H
-#include "interfaces/i_ray_interactions.h"
+#include "rays/interfaces/i_ray_interactions.h"
 
 class RayInteractions final : IRayInteractions{
 public:

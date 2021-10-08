@@ -1,7 +1,7 @@
 //
 // Created by andreas on 02.10.21.
 //
-#include "cpp_implementation/c_vector.h"
+#include "miscellaneous/templates/c_vector.h"
 #include "materials/material.h"
 #include "materials/material_builder.h"
 #include "cpp_implementation/image_buffer.h"

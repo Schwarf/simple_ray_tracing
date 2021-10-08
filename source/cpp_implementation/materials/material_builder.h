@@ -8,7 +8,7 @@
 #include "materials/interfaces/i_material_builder.h"
 #include "materials/interfaces/i_reflection_coefficients.h"
 #include <stdexcept>
-#include "check.h"
+#include "miscellaneous/check.h"
 
 class MaterialBuilder final : public IMaterialBuilder {
 public:

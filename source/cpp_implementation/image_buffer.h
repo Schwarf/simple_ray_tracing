@@ -7,7 +7,7 @@
 
 #include <memory>
 #include "interfaces/i_image_buffer.h"
-#include "c_vector.h"
+#include "miscellaneous/templates/c_vector.h"
 class ImageBuffer final: public IImageBuffer {
 
 public:

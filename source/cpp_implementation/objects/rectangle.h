@@ -5,7 +5,7 @@
 #ifndef SIMPLE_RAY_TRACING_RECTANGLE_H
 #define SIMPLE_RAY_TRACING_RECTANGLE_H
 #include "interfaces/i_rectangle.h"
-#include "check.h"
+#include "miscellaneous/check.h"
 
 class Rectangle : IRectangle{
 public:

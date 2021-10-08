@@ -6,7 +6,7 @@
 #define SIMPLE_RAY_TRACING_I_GEOMETRIC_OBJECT_H
 #include <memory>
 #include "materials/interfaces/i_material.h"
-#include "interfaces/i_ray_intersection.h"
+#include "rays/interfaces/i_ray_intersection.h"
 
 class IGeometricObject:  public IRayIntersection {
 public:

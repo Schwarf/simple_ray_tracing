@@ -5,7 +5,7 @@
 #ifndef SIMPLE_RAY_TRACING_RAY_H
 #define SIMPLE_RAY_TRACING_RAY_H
 
-#include "interfaces/i_ray.h"
+#include "rays/interfaces/i_ray.h"
 
 class Ray final : public IRay{
 public:

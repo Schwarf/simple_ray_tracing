@@ -5,9 +5,9 @@
 #ifndef SIMPLE_RAY_TRACING_I_RAY_REFLECTION_H
 #define SIMPLE_RAY_TRACING_I_RAY_REFLECTION_H
 #include "i_ray.h"
-#include "c_vector.h"
-#include "./../objects/interfaces/i_geometric_object.h"
-#include "i_light_source.h"
+#include "miscellaneous/templates/c_vector.h"
+#include "objects/interfaces/i_geometric_object.h"
+#include "interfaces/i_light_source.h"
 
 class IRayInteractions{
 public:

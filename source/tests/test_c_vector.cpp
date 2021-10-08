@@ -3,7 +3,7 @@
 //
 
 #include "gtest/gtest.h"
-#include "c_vector.h"
+#include "miscellaneous/templates/c_vector.h"
 #include <regex>
 
 class SetupCVector : public testing::Test {

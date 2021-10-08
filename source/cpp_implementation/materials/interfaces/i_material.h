@@ -6,7 +6,7 @@
 #define SIMPLE_RAY_TRACING_I_MATERIAL_H
 #include "i_reflection_coefficients.h"
 #include "i_specular_exponent.h"
-#include "c_vector.h"
+#include "miscellaneous/templates/c_vector.h"
 #include "i_refraction_coefficient.h"
 #include <string>
 

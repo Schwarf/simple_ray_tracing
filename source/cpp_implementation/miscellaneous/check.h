@@ -5,7 +5,7 @@
 #ifndef SIMPLE_RAY_TRACING_CHECK_H
 #define SIMPLE_RAY_TRACING_CHECK_H
 
-#include "interfaces/i_check.h"
+#include "miscellaneous/interfaces/i_check.h"
 #include <stdexcept>
 
 class Check final: public ICheck{

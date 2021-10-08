@@ -5,7 +5,7 @@
 #ifndef SIMPLE_RAY_TRACING_I_RECTANGLE_H
 #define SIMPLE_RAY_TRACING_I_RECTANGLE_H
 
-#include "c_vector.h"
+#include "miscellaneous/templates/c_vector.h"
 #include "i_geometric_object.h"
 
 class IRectangle : public IGeometricObject {

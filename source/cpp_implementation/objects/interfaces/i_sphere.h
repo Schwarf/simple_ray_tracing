@@ -4,8 +4,8 @@
 
 #ifndef SIMPLE_RAY_TRACING_I_SPHERE_H
 #define SIMPLE_RAY_TRACING_I_SPHERE_H
-#include "c_vector.h"
-#include "interfaces/i_ray_intersection.h"
+#include "miscellaneous/templates/c_vector.h"
+#include "rays/interfaces/i_ray_intersection.h"
 #include "i_geometric_object.h"
 
 class ISphere:  public IGeometricObject{

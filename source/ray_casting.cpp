@@ -2,16 +2,16 @@
 // Created by andreas on 03.10.21.
 //
 
-#include "cpp_implementation/c_vector.h"
+#include "miscellaneous/templates/c_vector.h"
 #include "materials/material.h"
 #include "materials/material_builder.h"
 #include "cpp_implementation/image_buffer.h"
 #include "objects/sphere.h"
-#include "cpp_implementation/ray.h"
+#include "rays/ray.h"
 #include "cpp_implementation/light_source.h"
 #include <memory>
 #include <fstream>
-#include "cpp_implementation/ray_interactions.h"
+#include "rays/ray_interactions.h"
 #include <cmath>
 #include "cpp_implementation/objects/rectangle.h"
 

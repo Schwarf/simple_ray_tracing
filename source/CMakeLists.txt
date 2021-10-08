@@ -34,5 +34,5 @@ include_directories(cpp_implementation)
 add_subdirectory(cpp_implementation)
 add_subdirectory(tests)
 
-target_link_libraries(ray_cast c_vector)
+target_link_libraries(ray_cast c_vector ray ray_interfaces misc misc_interfaces)
 
