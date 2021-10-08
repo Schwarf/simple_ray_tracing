@@ -9,7 +9,7 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 # 'Google_Tests_run' is the target name
 # 'test1.cpp tests2.cpp' are source files with tests
-add_executable(testfiles test_light_source.cpp test_image_buffer.cpp)
+add_executable(testfiles test_light_source.cpp test_image_buffer.cpp test_c_vector.cpp)
 
 target_link_libraries(testfiles c_vector)
 target_link_libraries(testfiles gtest gtest_main)

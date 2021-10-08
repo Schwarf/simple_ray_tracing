@@ -11,8 +11,8 @@ protected:
     int height{15};
     int size{width*height};
     c_vector3 red_pixel{0.99, 0.05, 0.1};
-    c_vector3 green_pixel{0.0, 0.99, 0.};
-    c_vector3 blue_pixel{0.0, 0., 0.99};
+    c_vector3 green_pixel{0.1, 0.99, 0.2};
+    c_vector3 blue_pixel{0.2, 0.3, 0.99};
 };
 
 TEST_F(SetupImageBuffer, test_image_buffer_width)
@@ -47,14 +47,14 @@ TEST_F(SetupImageBuffer, test_image_get_pixel)
     auto pixel  = image_buffer.get_rgb_pixel(width_index, height_index);
     for(int i =0 ; i <3; ++i)
     {
-        EXPECT_EQ(pixel[i],0.0);
+        EXPECT_FLOAT_EQ(pixel[i],0.0);
     }
     image_buffer.set_pixel_value(width_index,height_index, red_pixel);
     pixel  = image_buffer.get_rgb_pixel(width_index, height_index);
     for(int i =0 ; i <3; ++i)
     {
         float expected = (255 * std::max(0.f, std::min(1.f, red_pixel[i])));
-        EXPECT_EQ(pixel[i],expected);
+        EXPECT_FLOAT_EQ(pixel[i],expected);
     }
 
 }
@@ -69,14 +69,21 @@ TEST_F(SetupImageBuffer, test_image_set_pixel)
     for(int i =0 ; i <3; ++i)
     {
         float expected = (255 * std::max(0.f, std::min(1.f, blue_pixel[i])));
-        EXPECT_EQ(pixel[i],expected);
+        EXPECT_FLOAT_EQ(pixel[i],expected);
     }
     image_buffer.set_pixel_value(width_index,height_index, green_pixel);
     pixel  = image_buffer.get_rgb_pixel(width_index, height_index);
     for(int i =0 ; i <3; ++i)
     {
         float expected = (255 * std::max(0.f, std::min(1.f, green_pixel[i])));
-        EXPECT_EQ(pixel[i],expected);
+        EXPECT_FLOAT_EQ(pixel[i],expected);
     }
 
+}
+
+TEST_F(SetupImageBuffer, test_buffer_size)
+{
+    auto image_buffer = ImageBuffer(width, height);
+    auto buffer = image_buffer.buffer();
+    EXPECT_FLOAT_EQ(buffer->size(), size);
 }
