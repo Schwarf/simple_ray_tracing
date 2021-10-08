@@ -7,7 +7,7 @@
 #include "i_ray.h"
 #include "miscellaneous/templates/c_vector.h"
 #include "objects/interfaces/i_geometric_object.h"
-#include "interfaces/i_light_source.h"
+#include "i_light_source.h"
 
 class IRayInteractions{
 public:

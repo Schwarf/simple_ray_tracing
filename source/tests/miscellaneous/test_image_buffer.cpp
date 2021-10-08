@@ -2,7 +2,7 @@
 // Created by andreas on 08.10.21.
 //
 #include "gtest/gtest.h"
-#include "image_buffer.h"
+#include "miscellaneous/image_buffer.h"
 
 class SetupImageBuffer: public testing::Test
 {

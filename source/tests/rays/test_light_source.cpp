@@ -2,7 +2,7 @@
 // Created by andreas on 07.10.21.
 //
 #include "gtest/gtest.h"
-#include "light_source.h"
+#include "rays/light_source.h"
 
 
 class SetupLightSource: public testing::Test

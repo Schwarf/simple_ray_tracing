@@ -4,7 +4,7 @@
 #include "miscellaneous/templates/c_vector.h"
 #include "materials/material.h"
 #include "materials/material_builder.h"
-#include "cpp_implementation/image_buffer.h"
+#include "miscellaneous/image_buffer.h"
 #include "objects/sphere.h"
 #include <memory>
 #include <fstream>

@@ -6,7 +6,7 @@
 #define SIMPLE_RAY_TRACING_IMAGE_BUFFER_H
 
 #include <memory>
-#include "interfaces/i_image_buffer.h"
+#include "miscellaneous/interfaces/i_image_buffer.h"
 #include "miscellaneous/templates/c_vector.h"
 class ImageBuffer final: public IImageBuffer {
 
