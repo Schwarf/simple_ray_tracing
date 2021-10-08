@@ -35,20 +35,18 @@ c_vector3 cast_ray(const IRay &ray, Sphere &sphere, Rectangle & rectangle, const
 void render(Sphere &sphere, Rectangle & rectangle, const LightSource &light_source) {
     auto width = 1024;
     auto height = 768;
-    auto image = ImageBuffer(width, height);
-    auto buffer = image.buffer();
     auto f_width = static_cast<float>(width);
     auto f_height = static_cast<float>(height);
     auto image_buffer = ImageBuffer(width, height);
-    for (size_t j = 0; j < height; j++) {
-        for (size_t i = 0; i < width; i++) {
-            float x_direction = (static_cast<float>(i) + 0.5) - f_width / 2.;
-            float y_direction = -(static_cast<float>(j) + 0.5) + f_height / 2.;
+    for (size_t height_index = 0; height_index < height; height_index++) {
+        for (size_t width_index = 0; width_index < width; width_index++) {
+            float x_direction = (static_cast<float>(width_index) + 0.5) - f_width / 2.;
+            float y_direction = -(static_cast<float>(height_index) + 0.5) + f_height / 2.;
             float z_direction = -f_height / (2. * tan(M_PI / 6.));
             c_vector3 direction = c_vector3{x_direction, y_direction, z_direction}.normalize();
             c_vector3 origin = c_vector3{0, 0, 0};
             auto ray = Ray(origin, direction);
-            image_buffer.set_pixel_value(i, j, cast_ray(ray, sphere, rectangle, light_source));
+            image_buffer.set_pixel_value(width_index, height_index, cast_ray(ray, sphere, rectangle, light_source));
 
         }
     }
@@ -56,9 +54,9 @@ void render(Sphere &sphere, Rectangle & rectangle, const LightSource &light_sour
     std::ofstream ofs;
     ofs.open("./sphere.ppm");
     ofs << "P6\n" << width << " " << height << "\n255\n";
-    for (size_t i = 0; i < height * width; ++i) {
-        for (size_t j = 0; j < 3; j++) {
-            ofs << static_cast<char>(image_buffer.get_pixel(i)[j]);
+    for (size_t pixel_index = 0; pixel_index < height * width; ++pixel_index) {
+        for (size_t color_index = 0; color_index < 3; color_index++) {
+            ofs << static_cast<char>(image_buffer.get_rgb_pixel(pixel_index)[color_index]);
 
         }
     }
