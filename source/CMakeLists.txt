@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 project(simple_ray_tracing LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_C_STANDARD 14)
+set(CMAKE_C_STANDARD 99)
 set(SOURCE_FILES sanity_checks_for_c_vector.cpp)
 include(CheckCXXCompilerFlag)
 
