@@ -43,10 +43,9 @@ TEST_F(SetupCVector, test_normalize) {
     auto normalized = double_vector.normalize().norm();
     auto normalized2 = double_vector.normalize() * double_vector.normalize();
     auto expected_value = 1.0;
-    EXPECT_DOUBLE_EQ(normalized,expected_value);
-    EXPECT_DOUBLE_EQ(normalized2,expected_value);
+    EXPECT_DOUBLE_EQ(normalized, expected_value);
+    EXPECT_DOUBLE_EQ(normalized2, expected_value);
 }
-
 
 
 TEST_F(SetupCVector, test_multiplication_operator_for_factor) {
@@ -73,7 +72,6 @@ TEST_F(SetupCVector, test_division_operator_for_factor) {
         EXPECT_DOUBLE_EQ(reference_vector[i], result[i]);
     }
 }
-
 
 TEST_F(SetupCVector, test_multiplication_operator_dot_product) {
     c_vector<2, double> double_vector1{x1, x2};
@@ -103,7 +101,6 @@ TEST_F(SetupCVector, test_subtraction_operator) {
     }
 
 }
-
 
 TEST_F(SetupCVector, test_sign_operator) {
     c_vector<2, double> double_vector1{x1, x2};

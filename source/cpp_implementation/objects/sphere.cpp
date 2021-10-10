@@ -20,7 +20,7 @@ float Sphere::radius() const {
 }
 
 void Sphere::init() const {
-    check_.is_above_threshold("radius", radius_, 0.0, " Sphere");
+    validate_.is_above_threshold("radius", radius_, 0.0, " Sphere");
 }
 
 

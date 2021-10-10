@@ -8,7 +8,7 @@
 #include "materials/interfaces/i_material_builder.h"
 #include "materials/interfaces/i_reflection_coefficients.h"
 #include <stdexcept>
-#include "miscellaneous/check.h"
+#include "miscellaneous/validate.h"
 
 class MaterialBuilder final : public IMaterialBuilder {
 public:
@@ -57,7 +57,7 @@ private:
     float refraction_coefficient_{-1.0};
     c_vector3 rgb_color_{-1, -1, -1};
     std::string name_;
-    Check check_;
+    Validate validate_;
 
 };
 

@@ -1,8 +1,8 @@
 add_library(ray STATIC rays/ray_interactions.cpp rays/ray_interactions.h rays/ray.cpp rays/ray.h)
 add_library(ray_interfaces INTERFACE rays/interfaces/i_ray_intersection.h rays/interfaces/i_ray.h rays/interfaces/i_ray_interactions.h)
 
-add_library(misc STATIC miscellaneous/check.cpp miscellaneous/check.h miscellaneous/templates/c_vector.h)
-add_library(misc_interfaces INTERFACE miscellaneous/interfaces/i_check.h)
+add_library(misc STATIC miscellaneous/validate.cpp miscellaneous/validate.h miscellaneous/templates/c_vector.h)
+add_library(misc_interfaces INTERFACE miscellaneous/interfaces/i_validate.h)
 
 add_library(c_vector STATIC materials/material.cpp materials/material.h materials/material_builder.cpp
         materials/material_builder.h miscellaneous/image_buffer.cpp miscellaneous/image_buffer.h objects/sphere.cpp objects/sphere.h

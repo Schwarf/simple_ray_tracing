@@ -5,7 +5,7 @@
 #ifndef SIMPLE_RAY_TRACING_SPHERE_H
 #define SIMPLE_RAY_TRACING_SPHERE_H
 #include "objects/interfaces/i_sphere.h"
-#include "miscellaneous/check.h"
+#include "miscellaneous/validate.h"
 #include <algorithm>
 
 class Sphere final : public ISphere{
@@ -29,7 +29,7 @@ private:
     c_vector3 center_;
     float radius_;
     std::shared_ptr<IMaterial> material_;
-    Check check_;
+    Validate validate_;
 };
 
 

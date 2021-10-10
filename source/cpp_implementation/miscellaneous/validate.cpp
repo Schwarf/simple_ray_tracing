@@ -2,10 +2,10 @@
 // Created by andreas on 05.10.21.
 //
 
-#include "check.h"
+#include "validate.h"
 
-void Check::is_above_threshold(const std::string &variable_name, const float &variable_value, const float &threshold,
-                               const std::string &class_name) const {
+void Validate::is_above_threshold(const std::string &variable_name, const float &variable_value, const float &threshold,
+								  const std::string &class_name) const {
     if (variable_value > threshold)
         return;
     const std::string message_part1 = "In class ";
@@ -18,8 +18,8 @@ void Check::is_above_threshold(const std::string &variable_name, const float &va
 
 }
 
-void Check::is_below_threshold(const std::string &variable_name, const float &variable_value, const float &threshold,
-                               const std::string &class_name) const {
+void Validate::is_below_threshold(const std::string &variable_name, const float &variable_value, const float &threshold,
+								  const std::string &class_name) const {
     if (variable_value < threshold)
         return;
     const std::string message_part1 = "In class ";

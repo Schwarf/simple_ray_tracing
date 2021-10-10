@@ -67,7 +67,7 @@ Rectangle::Rectangle(c_vector3 width_vector, c_vector3 height_vector, const c_ve
 
 void Rectangle::init() const{
     auto width_dot_height = std::abs(width_vector_*height_vector_);
-    check_.is_above_threshold("edge dot product", width_dot_height, 1.e-5, " Rectangle");
+    validate_.is_above_threshold("edge dot product", width_dot_height, 1.e-5, " Rectangle");
 
 }
 

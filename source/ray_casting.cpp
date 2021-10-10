@@ -83,8 +83,8 @@ int main() {
     auto builder = MaterialBuilder();
     float test = 0.3;
     float test2 = 0.1;
-    builder.set_specular_reflection(0.6);
-    builder.set_diffuse_reflection(0.3);
+    builder.set_specular_reflection(0.3);
+    builder.set_diffuse_reflection(0.6);
     builder.set_ambient_reflection(test);
     builder.set_shininess(test);
     builder.set_rgb_color(c_vector3{0.7, 0.4, 0.4});
@@ -95,8 +95,8 @@ int main() {
     sphere.set_material(std::make_unique<Material>(material));
 
     rectangle.set_material(std::make_unique<Material>(material));
-    auto light_source_position = c_vector3{-20, 20, 20};
-    float light_intensity = 2.5;
+    auto light_source_position = c_vector3{20, 20, 20};
+    float light_intensity = 1.5;
     auto light_source = LightSource(light_source_position, light_intensity);
     render(sphere, rectangle, light_source);
 

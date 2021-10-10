@@ -5,7 +5,7 @@
 #ifndef SIMPLE_RAY_TRACING_RECTANGLE_H
 #define SIMPLE_RAY_TRACING_RECTANGLE_H
 #include "interfaces/i_rectangle.h"
-#include "miscellaneous/check.h"
+#include "miscellaneous/validate.h"
 
 class Rectangle : IRectangle{
 public:
@@ -32,7 +32,7 @@ private:
     c_vector3 bottom_left_position_;
     c_vector3 normal_;
     std::shared_ptr<IMaterial> material_;
-    Check check_;
+    Validate validate_;
     void init() const;
 };
 
