@@ -11,7 +11,7 @@ include_directories(${gmock_SOURCE_DIR}/include ${gmock_SOURCE_DIR})
 # 'Google_Tests_run' is the target name
 # 'test1.cpp tests2.cpp' are source files with tests
 add_executable(testfiles rays/test_light_source.cpp miscellaneous/test_image_buffer.cpp miscellaneous/test_c_vector.cpp
-        rays/test_ray.cpp objects/test_sphere.cpp objects/mock_ray.h)
+        rays/test_ray.cpp objects/test_sphere.cpp objects/mock_ray.h miscellaneous/test_validate.cpp)
 
 target_link_libraries(testfiles c_vector)
 target_link_libraries(testfiles ray)

@@ -8,6 +8,7 @@
 #include "miscellaneous/interfaces/i_validate.h"
 #include <stdexcept>
 
+
 class Validate final: public IValidate{
 public:
     void is_above_threshold(const std::string &variable_name, const float &variable_value, const float &threshold,

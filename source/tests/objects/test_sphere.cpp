@@ -2,6 +2,7 @@
 // Created by andreas on 08.10.21.
 //
 
+
 #include "gtest/gtest.h"
 #include "objects/sphere.h"
 #include "mock_ray.h"
@@ -34,7 +35,7 @@ protected:
 		return true;
 	}
 	c_vector3 ray_direction{100.5, 100.5, -500.0};
-	c_vector3 ray_origin{0.,0., 0.};
+	c_vector3 ray_origin{-1.1212,1.313, 2.331};
 };
 
 
@@ -98,6 +99,7 @@ TEST_F(SetupSphere, test_ray_intersection_hit_point)
 	auto sphere = Sphere(center, radius);
 	MockRay mock_ray;
 	ray_direction = ray_direction.normalize();
+
 	EXPECT_CALL(mock_ray, origin()).WillRepeatedly(testing::Return(ray_origin));
 	EXPECT_CALL(mock_ray, direction_normalized()).WillRepeatedly(testing::Return(ray_direction));
 

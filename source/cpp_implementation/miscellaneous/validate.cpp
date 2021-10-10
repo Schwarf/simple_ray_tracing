@@ -9,7 +9,7 @@ void Validate::is_above_threshold(const std::string &variable_name, const float 
     if (variable_value > threshold)
         return;
     const std::string message_part1 = "In class ";
-    const std::string message_part2 = " is less than ";
+    const std::string message_part2 = " is lower than ";
     const std::string threshold_part = std::to_string(threshold);
     const std::string variable_part = std::to_string(variable_value);
     std::string message =
@@ -23,7 +23,7 @@ void Validate::is_below_threshold(const std::string &variable_name, const float 
     if (variable_value < threshold)
         return;
     const std::string message_part1 = "In class ";
-    const std::string message_part2 = " is bigger than ";
+    const std::string message_part2 = " is greater than ";
     const std::string threshold_part = std::to_string(threshold);
     const std::string variable_part = std::to_string(variable_value);
     std::string message =
