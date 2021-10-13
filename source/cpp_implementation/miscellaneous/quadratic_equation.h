@@ -30,27 +30,34 @@ template<typename T>
 QuadraticEquation<T>::QuadraticEquation(const T &quadratic_factor, const T &linear_factor, const T &constant)
 {
 	validate_.is_above_threshold("quadratic_factor", std::abs(quadratic_factor), epsilon_, "QuadraticEquation");
+	// constant is zero: use factorization
+	if(std::abs(constant) < epsilon_)
+	{
+		solutions_.push_back(0.0);
+		solutions_.push_back(-linear_factor/quadratic_factor);
+		return;
+	}
+
 	p_ = linear_factor/quadratic_factor;
 	q_ = constant/quadratic_factor;
-	auto root_term = (p_/2.)*(p_/2.) - q_;
-	if (root_term < 0)
+	auto discriminant = (p_/2.)*(p_/2.) - q_;
+	if (discriminant < 0)
 	{
 		number_of_solutions_ = 0;
+		return;
 	}
-	else if( std::abs(root_term) < epsilon_)
+	if( std::abs(discriminant) < epsilon_)
 	{
 		number_of_solutions_ = 1;
 		auto solution = -p_/2.;
 		solutions_.push_back(solution);
+		return;
 	}
-	else {
-		number_of_solutions_ = 2;
-		auto solution1 = -p_/2. + std::sqrt(root_term);
-		auto solution2 = -p_/2. - std::sqrt(root_term);
-		solutions_.push_back(solution1);
-		solutions_.push_back(solution2);
-
-	}
+	number_of_solutions_ = 2;
+	auto solution1 = -p_/2. + std::sqrt(discriminant);
+	auto solution2 = -p_/2. - std::sqrt(discriminant);
+	solutions_.push_back(solution1);
+	solutions_.push_back(solution2);
 
 }
 
