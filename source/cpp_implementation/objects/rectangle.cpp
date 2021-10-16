@@ -17,14 +17,14 @@ c_vector3 Rectangle::bottom_left_position() const {
 }
 
 bool Rectangle::does_ray_intersect(const IRay &ray, float &closest_hit_distance, c_vector3 &hit_point) const {
-    auto denominator_dot_product = this->bottom_left_position() * ray.origin();
+    auto denominator_dot_product = this->bottom_left_position() * ray.direction_normalized();
     auto epsilon = 1.e-5;
     if (std::abs(denominator_dot_product) < epsilon )
     {
         return false;
     }
     auto numerator_dot_product = (this->bottom_left_position() - ray.origin())*this->normal_;
-    if (numerator_dot_product < epsilon)
+    if (std::abs(numerator_dot_product) < epsilon)
     {
         return false;
     }
@@ -59,8 +59,8 @@ std::shared_ptr<IMaterial> Rectangle::get_material() {
 Rectangle::Rectangle(c_vector3 width_vector, c_vector3 height_vector, const c_vector3 &position, const c_vector3 & normal) {
     width_ = width_vector.norm();
     height_ = height_vector.norm();
-    width_vector_ = width_vector;
-    height_vector_ = height_vector;
+    width_vector_ = width_vector.normalize();
+    height_vector_ = height_vector.normalize();
     bottom_left_position_ = position;
     normal_ = normal;
 }

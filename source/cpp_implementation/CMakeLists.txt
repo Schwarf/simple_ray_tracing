@@ -1,5 +1,6 @@
-add_library(ray STATIC rays/ray_interactions.cpp rays/ray_interactions.h rays/ray.cpp rays/ray.h)
-add_library(ray_interfaces INTERFACE rays/interfaces/i_ray_intersection.h rays/interfaces/i_ray.h rays/interfaces/i_ray_interactions.h)
+add_library(ray STATIC rays/ray_interactions.cpp rays/ray_interactions.h rays/ray.cpp rays/ray.h rays/scene_illumination.cpp rays/scene_illumination.h)
+add_library(ray_interfaces INTERFACE rays/interfaces/i_ray_intersection.h rays/interfaces/i_ray.h rays/interfaces/i_ray_interactions.h
+        rays/interfaces/i_scene_illumination.h)
 
 add_library(misc STATIC miscellaneous/validate.cpp miscellaneous/validate.h miscellaneous/templates/c_vector.h)
 add_library(misc_interfaces INTERFACE miscellaneous/interfaces/i_validate.h)

@@ -28,12 +28,7 @@ bool Sphere::does_ray_intersect(const IRay &ray, float &closest_hit_distance, c_
     closest_hit_distance = -1.0;
     c_vector3 origin_to_center = (center_ - ray.origin());
     float origin_to_center_dot_direction = origin_to_center * ray.direction_normalized();
-    if (origin_to_center_dot_direction < 0) {
-        // Sphere center is behind ray origin
-        return false;
-    }
-
-    float epsilon = 1e-5;
+    float epsilon = 1e-3;
     float delta = origin_to_center_dot_direction * origin_to_center_dot_direction -
                   ((origin_to_center * origin_to_center) - radius_ * radius_);
     if (delta < 0.0) {
@@ -48,10 +43,10 @@ bool Sphere::does_ray_intersect(const IRay &ray, float &closest_hit_distance, c_
     auto solution2 = origin_to_center_dot_direction + std::sqrt(delta);
     closest_hit_distance = solution1;
 
-    if (closest_hit_distance < 0.0) {
+    if (closest_hit_distance < epsilon) {
         closest_hit_distance = solution2;
     }
-    if (closest_hit_distance < 0.0) {
+    if (closest_hit_distance < epsilon) {
         return false;
     }
     hit_point = ray.origin() + ray.direction_normalized() * closest_hit_distance;
