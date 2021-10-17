@@ -12,7 +12,8 @@ class SetupSphere: public testing::Test
 protected:
 	float radius{10.5};
 	c_vector3 center{-6.0, 3.678, -17.78};
-	bool ray_intersection(IRay & ray, float &closest_hit_distance, c_vector3 & hit_point)
+	c_vector3 null_vector{0., 0., 0.};
+	bool ray_intersection(IRay &ray, c_vector3 &hit_normal, c_vector3 &hit_point)
 	{
 		// see e.g. here
 		// https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection
@@ -31,11 +32,12 @@ protected:
 			return false;
 		}
 		hit_point = ray.origin() + t0 * ray.direction_normalized();
-		closest_hit_distance = t0;
+		hit_normal = (hit_point - center).normalize();
+
 		return true;
 	}
 	c_vector3 ray_direction{100.5, 100.5, -500.0};
-	c_vector3 ray_origin{-1.1212,1.313, 2.331};
+	c_vector3 ray_origin{-1.1212, 1.313, 2.331};
 };
 
 
@@ -57,22 +59,22 @@ TEST_F(SetupSphere, test_ray_intersection_ray_direction_is_called)
 {
 	auto sphere = Sphere(center, radius);
 	MockRay mock_ray;
-	float closest_hit_distance = 0;
-	c_vector3 hit_point{0., 0., 0.};
+	c_vector3 hit_normal = null_vector;
+	c_vector3 hit_point= null_vector;
 	using ::testing::Exactly;
 	EXPECT_CALL(mock_ray, direction_normalized()).Times(Exactly(1));
-	sphere.does_ray_intersect(mock_ray, closest_hit_distance, hit_point);
+	sphere.does_ray_intersect(mock_ray, hit_normal, hit_point);
 }
 
 TEST_F(SetupSphere, test_ray_intersection_ray_origin_is_called)
 {
 	auto sphere = Sphere(center, radius);
 	MockRay mock_ray;
-	float closest_hit_distance = 0;
-	c_vector3 hit_point{0., 0., 0.};
+	c_vector3 hit_normal = null_vector;
+	c_vector3 hit_point = null_vector;
 	using ::testing::Exactly;
 	EXPECT_CALL(mock_ray, origin()).Times(Exactly(1));
-	sphere.does_ray_intersect(mock_ray, closest_hit_distance, hit_point);
+	sphere.does_ray_intersect(mock_ray, hit_normal, hit_point);
 }
 
 TEST_F(SetupSphere, test_ray_intersection_closest_distance)
@@ -83,15 +85,17 @@ TEST_F(SetupSphere, test_ray_intersection_closest_distance)
 	EXPECT_CALL(mock_ray, origin()).WillRepeatedly(testing::Return(ray_origin));
 	EXPECT_CALL(mock_ray, direction_normalized()).WillRepeatedly(testing::Return(ray_direction));
 
-	float expected_closest_distance = 0;
+	c_vector3 expected_hit_normal = null_vector;
 	c_vector3 expected_hit_point = c_vector3{0., 0., 0.};
-	ray_intersection(mock_ray, expected_closest_distance, expected_hit_point);
+	ray_intersection(mock_ray, expected_hit_normal, expected_hit_point);
 
-	float closest_distance = 0;
+	c_vector3 hit_normal = null_vector;
 	c_vector3 hit_point = c_vector3{0., 0., 0.};
 
-	sphere.does_ray_intersect(mock_ray, closest_distance, hit_point);
-	EXPECT_FLOAT_EQ(closest_distance, expected_closest_distance);
+	sphere.does_ray_intersect(mock_ray, hit_normal, hit_point);
+	for (int i = 0; i < 3; ++i) {
+		EXPECT_FLOAT_EQ(expected_hit_normal[i], hit_normal[i]);
+	}
 }
 
 TEST_F(SetupSphere, test_ray_intersection_hit_point)
@@ -103,15 +107,15 @@ TEST_F(SetupSphere, test_ray_intersection_hit_point)
 	EXPECT_CALL(mock_ray, origin()).WillRepeatedly(testing::Return(ray_origin));
 	EXPECT_CALL(mock_ray, direction_normalized()).WillRepeatedly(testing::Return(ray_direction));
 
-	float expected_closest_distance = 0;
+	c_vector3 expected_hit_normal = null_vector;
 	c_vector3 expected_hit_point = c_vector3{0., 0., 0.};
-	ray_intersection(mock_ray, expected_closest_distance, expected_hit_point);
+	ray_intersection(mock_ray, expected_hit_normal, expected_hit_point);
 
-	float closest_distance = 0;
+	c_vector3 hit_normal = null_vector;
 	c_vector3 hit_point = c_vector3{0., 0., 0.};
 
-	sphere.does_ray_intersect(mock_ray, closest_distance, hit_point);
-	for (int i=0; i < 3; ++i) {
+	sphere.does_ray_intersect(mock_ray, hit_normal, hit_point);
+	for (int i = 0; i < 3; ++i) {
 		EXPECT_FLOAT_EQ(expected_hit_point[i], hit_point[i]);
 	}
 }
