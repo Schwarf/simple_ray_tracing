@@ -14,8 +14,7 @@ size_t ObjectList::number_of_objects()
 }
 std::shared_ptr<ITargetObject> ObjectList::object(size_t index)
 {
-	if(index >= object_vector_.size())
-	{
+	if (index >= object_vector_.size()) {
 		return nullptr;
 	}
 	return object_vector_[index];

@@ -9,7 +9,7 @@
 #include <vector>
 
 
-class ObjectList : public IObjectList
+class ObjectList: public IObjectList
 {
 public:
 	ObjectList() = default;

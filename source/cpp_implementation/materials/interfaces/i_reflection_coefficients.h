@@ -6,17 +6,18 @@
 #define SIMPLE_RAY_TRACING_I_REFLECTION_COEFFICIENTS_H
 
 
-class IReflectionCoefficients  {
+class IReflectionCoefficients
+{
 public:
-    virtual float specular_reflection() const = 0;
+	virtual float specular_reflection() const = 0;
 
-    virtual float diffuse_reflection() const = 0;
+	virtual float diffuse_reflection() const = 0;
 
-    virtual float ambient_reflection() const = 0;
+	virtual float ambient_reflection() const = 0;
 
-    virtual float shininess() const = 0;
+	virtual float shininess() const = 0;
 
-    virtual ~IReflectionCoefficients() = default;
+	virtual ~IReflectionCoefficients() = default;
 };
 
 #endif //SIMPLE_RAY_TRACING_I_REFLECTION_COEFFICIENTS_H

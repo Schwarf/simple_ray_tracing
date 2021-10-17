@@ -7,7 +7,8 @@
 #include "gtest/gtest.h"
 
 
-class SetupMaterial: public testing::Test{
+class SetupMaterial: public testing::Test
+{
 protected:
 	float specular_reflection{0.1};
 	float diffuse_reflection{0.2};
@@ -73,8 +74,7 @@ TEST_F(SetupMaterial, test_rgb_color)
 	MockMaterialBuilder builder;
 	EXPECT_CALL(builder, rgb_color).WillOnce(testing::Return(rgb_color));
 	Material material("specular", builder);
-	for(int i =0; i < 3; ++i)
-	{
+	for (int i = 0; i < 3; ++i) {
 		EXPECT_FLOAT_EQ(material.rgb_color()[i], rgb_color[i]);
 	}
 }

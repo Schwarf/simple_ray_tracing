@@ -10,15 +10,15 @@
 #include <algorithm>
 #include <vector>
 
-class SceneIllumination : public ISceneIllumination
+class SceneIllumination: public ISceneIllumination
 {
 public:
-	SceneIllumination() =default;
+	SceneIllumination() = default;
 	explicit SceneIllumination(std::shared_ptr<ILightSource> light_source);
-	SceneIllumination(const  SceneIllumination & rhs);
-	SceneIllumination(SceneIllumination && rhs) noexcept ;
-	SceneIllumination & operator=(const  SceneIllumination & rhs);
-	SceneIllumination & operator=(SceneIllumination && rhs) noexcept;
+	SceneIllumination(const SceneIllumination &rhs);
+	SceneIllumination(SceneIllumination &&rhs) noexcept;
+	SceneIllumination &operator=(const SceneIllumination &rhs);
+	SceneIllumination &operator=(SceneIllumination &&rhs) noexcept;
 	~SceneIllumination() override = default;
 	void add_light_source(std::shared_ptr<ILightSource> light_source) final;
 	std::shared_ptr<ILightSource> light_source(size_t index) final;

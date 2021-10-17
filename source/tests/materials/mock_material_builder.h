@@ -5,14 +5,15 @@
 #include "gmock/gmock.h"
 #include "materials/interfaces/i_material_builder.h"
 
-class MockMaterialBuilder: public IMaterialBuilder{
+class MockMaterialBuilder: public IMaterialBuilder
+{
 public:
 	MOCK_METHOD(float, specular_reflection, (), (const final));
 	MOCK_METHOD(float, diffuse_reflection, (), (const final));
 	MOCK_METHOD(float, ambient_reflection, (), (const final));
 	MOCK_METHOD(float, shininess, (), (const final));
 	MOCK_METHOD(float, specular_exponent, (), (const final));
-	MOCK_METHOD(c_vector3 , rgb_color, (), (const final));
+	MOCK_METHOD(c_vector3, rgb_color, (), (const final));
 	MOCK_METHOD(float, refraction_coefficient, (), (const final));
 	MOCK_METHOD(std::string, name, (), (const final));
 	MOCK_METHOD(void, set_specular_reflection, (const float &), (final));

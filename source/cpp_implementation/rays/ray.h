@@ -7,17 +7,18 @@
 
 #include "rays/interfaces/i_ray.h"
 
-class Ray final : public IRay{
+class Ray final: public IRay
+{
 public:
-    Ray(c_vector3 & origin, c_vector3 & direction);
-    c_vector3 direction_normalized() const final;
+	Ray(c_vector3 &origin, c_vector3 &direction);
+	c_vector3 direction_normalized() const final;
 
-    c_vector3 origin() const final;
+	c_vector3 origin() const final;
 
-    ~Ray() override = default;
+	~Ray() override = default;
 private:
-    c_vector3 direction_normalized_;
-    c_vector3 origin_;
+	c_vector3 direction_normalized_;
+	c_vector3 origin_;
 };
 
 

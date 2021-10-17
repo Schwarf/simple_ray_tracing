@@ -8,27 +8,28 @@
 #include <memory>
 #include "miscellaneous/interfaces/i_image_buffer.h"
 #include "miscellaneous/templates/c_vector.h"
-class ImageBuffer final: public IImageBuffer {
+class ImageBuffer final: public IImageBuffer
+{
 
 public:
-    ImageBuffer(int width, int height);
-    int width() const final;
+	ImageBuffer(int width, int height);
+	int width() const final;
 
-    int height() const final;
+	int height() const final;
 
-    std::unique_ptr<std::vector<c_vector3>> buffer() final;
+	std::unique_ptr<std::vector<c_vector3>> buffer() final;
 
-    void set_pixel_value(size_t width_index, size_t height_index, c_vector3 pixel_color_value) final;
+	void set_pixel_value(size_t width_index, size_t height_index, c_vector3 pixel_color_value) final;
 
-    c_vector3 get_rgb_pixel(size_t index) final;
-    ~ImageBuffer() =default;
+	c_vector3 get_rgb_pixel(size_t index) final;
+	~ImageBuffer() = default;
 
-    c_vector3 get_rgb_pixel(int width_index, int height_index) final;
+	c_vector3 get_rgb_pixel(int width_index, int height_index) final;
 
 private:
-    std::vector<c_vector3> buffer_;
-    int width_;
-    int height_;
+	std::vector<c_vector3> buffer_;
+	int width_;
+	int height_;
 };
 
 

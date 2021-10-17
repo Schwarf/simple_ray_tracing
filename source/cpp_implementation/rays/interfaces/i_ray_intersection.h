@@ -6,9 +6,10 @@
 #define SIMPLE_RAY_TRACING_I_RAY_INTERSECTION_H
 #include "i_ray.h"
 
-class IRayIntersection{
+class IRayIntersection
+{
 public:
-    virtual bool does_ray_intersect(const IRay & ray, c_vector3 &hit_normal, c_vector3 & hit_point) const = 0;
+	virtual bool does_ray_intersect(const IRay &ray, c_vector3 &hit_normal, c_vector3 &hit_point) const = 0;
 };
 
 #endif //SIMPLE_RAY_TRACING_I_RAY_INTERSECTION_H

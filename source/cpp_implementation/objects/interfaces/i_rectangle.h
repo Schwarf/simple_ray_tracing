@@ -8,15 +8,16 @@
 #include "miscellaneous/templates/c_vector.h"
 #include "i_target_object.h"
 
-class IRectangle : public ITargetObject {
+class IRectangle: public ITargetObject
+{
 public:
-    virtual float width() const = 0;
+	virtual float width() const = 0;
 
-    virtual float height() const = 0;
+	virtual float height() const = 0;
 
-    virtual c_vector3 bottom_left_position() const = 0;
+	virtual c_vector3 bottom_left_position() const = 0;
 
-    virtual ~IRectangle() = default;
+	virtual ~IRectangle() = default;
 };
 
 #endif //SIMPLE_RAY_TRACING_I_RECTANGLE_H

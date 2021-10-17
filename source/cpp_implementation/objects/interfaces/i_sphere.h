@@ -8,10 +8,11 @@
 #include "rays/interfaces/i_ray_intersection.h"
 #include "i_target_object.h"
 
-class ISphere:  public ITargetObject{
+class ISphere: public ITargetObject
+{
 public:
-    virtual c_vector3 center() const =0;
-    virtual float radius() const =0;
-    virtual ~ISphere() =default;
+	virtual c_vector3 center() const = 0;
+	virtual float radius() const = 0;
+	virtual ~ISphere() = default;
 };
 #endif //SIMPLE_RAY_TRACING_I_SPHERE_H

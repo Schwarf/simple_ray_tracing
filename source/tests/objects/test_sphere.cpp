@@ -60,7 +60,7 @@ TEST_F(SetupSphere, test_ray_intersection_ray_direction_is_called)
 	auto sphere = Sphere(center, radius);
 	MockRay mock_ray;
 	c_vector3 hit_normal = null_vector;
-	c_vector3 hit_point= null_vector;
+	c_vector3 hit_point = null_vector;
 	using ::testing::Exactly;
 	EXPECT_CALL(mock_ray, direction_normalized()).Times(Exactly(1));
 	sphere.does_ray_intersect(mock_ray, hit_normal, hit_point);

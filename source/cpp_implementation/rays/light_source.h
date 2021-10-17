@@ -7,17 +7,18 @@
 
 #include "rays/interfaces/i_light_source.h"
 
-class LightSource final : public ILightSource {
+class LightSource final: public ILightSource
+{
 public:
-    LightSource(const c_vector3 &position, float intensity);
+	LightSource(const c_vector3 &position, float intensity);
 
-    c_vector3 position() const final;
+	c_vector3 position() const final;
 
-    float intensity() const final;
+	float intensity() const final;
 
 private:
-    c_vector3 position_;
-    float intensity_;
+	c_vector3 position_;
+	float intensity_;
 };
 
 

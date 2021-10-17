@@ -7,33 +7,37 @@
 #include "interfaces/i_rectangle.h"
 #include "miscellaneous/validate.h"
 
-class Rectangle : IRectangle{
+class Rectangle: IRectangle
+{
 public:
-    Rectangle(c_vector3 width_vector, c_vector3 height_vector, const c_vector3 & bottom_left_position, const c_vector3 & normal);
+	Rectangle(c_vector3 width_vector,
+			  c_vector3 height_vector,
+			  const c_vector3 &bottom_left_position,
+			  const c_vector3 &normal);
 
-    float width() const final;
+	float width() const final;
 
-    float height() const final;
+	float height() const final;
 
-    c_vector3 bottom_left_position() const final;
+	c_vector3 bottom_left_position() const final;
 
-    ~Rectangle() final = default;
+	~Rectangle() final = default;
 
-    bool does_ray_intersect(const IRay &ray, c_vector3 &closest_hit_distance, c_vector3 &hit_point) const final;
+	bool does_ray_intersect(const IRay &ray, c_vector3 &closest_hit_distance, c_vector3 &hit_point) const final;
 
-    void set_material(std::shared_ptr<IMaterial> material) final;
+	void set_material(std::shared_ptr<IMaterial> material) final;
 
-    std::shared_ptr<IMaterial> get_material() final;
+	std::shared_ptr<IMaterial> get_material() final;
 private:
-    float width_;
-    float height_;
-    c_vector3 width_vector_;
-    c_vector3 height_vector_;
-    c_vector3 bottom_left_position_;
-    c_vector3 normal_;
-    std::shared_ptr<IMaterial> material_;
-    Validate validate_;
-    void init() const;
+	float width_;
+	float height_;
+	c_vector3 width_vector_;
+	c_vector3 height_vector_;
+	c_vector3 bottom_left_position_;
+	c_vector3 normal_;
+	std::shared_ptr<IMaterial> material_;
+	Validate validate_;
+	void init() const;
 };
 
 
