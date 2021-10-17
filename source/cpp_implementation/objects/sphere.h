@@ -11,14 +11,15 @@
 class Sphere final : public ISphere{
 public:
     Sphere(c_vector3 & center, float radius);
-    Sphere(Sphere && ) =default;
+	Sphere(const Sphere & ) =default;
+	Sphere(Sphere && ) =default;
     c_vector3 center() const final;
 
     float radius() const final;
 
     ~Sphere() override = default;
 
-    bool does_ray_intersect(const IRay &ray, float &closest_hit_distance, c_vector3 & hit_point) const final;
+    bool does_ray_intersect(const IRay &ray, c_vector3 &hit_normal, c_vector3 & hit_point) const final;
 
     void set_material(std::shared_ptr<IMaterial> material) final;
 

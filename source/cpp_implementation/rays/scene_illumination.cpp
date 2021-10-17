@@ -6,23 +6,20 @@
 
 SceneIllumination::SceneIllumination(std::shared_ptr<ILightSource> light_source)
 {
-	background_color_ = c_vector3 {0,0,0};
+	background_color_ = c_vector3{0, 0, 0};
 	light_source_vector_.push_back(light_source);
-	number_of_light_sources_++;
 }
 
 SceneIllumination::SceneIllumination(const SceneIllumination &rhs)
 {
 	this->background_color_ = rhs.background_color_;
 	this->light_source_vector_ = rhs.light_source_vector_;
-	this->number_of_light_sources_= rhs.number_of_light_sources_;
 }
 
 SceneIllumination::SceneIllumination(SceneIllumination &&rhs) noexcept
 {
 	this->light_source_vector_ = std::move(rhs.light_source_vector_);
 	this->background_color_ = rhs.background_color_;
-	this->number_of_light_sources_ = rhs.number_of_light_sources_;
 }
 SceneIllumination &SceneIllumination::operator=(const SceneIllumination &rhs)
 {
@@ -37,12 +34,11 @@ SceneIllumination &SceneIllumination::operator=(SceneIllumination &&rhs) noexcep
 void SceneIllumination::add_light_source(std::shared_ptr<ILightSource> light_source)
 {
 	light_source_vector_.push_back(light_source);
-	number_of_light_sources_++;
 }
+
 std::shared_ptr<ILightSource> SceneIllumination::light_source(size_t index)
 {
-	if(index >= number_of_light_sources_)
-	{
+	if (index >= light_source_vector_.size()) {
 		return nullptr;
 	}
 	return light_source_vector_[index];

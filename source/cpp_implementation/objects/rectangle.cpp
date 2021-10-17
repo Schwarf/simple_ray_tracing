@@ -16,7 +16,7 @@ c_vector3 Rectangle::bottom_left_position() const {
     return bottom_left_position_;
 }
 
-bool Rectangle::does_ray_intersect(const IRay &ray, float &closest_hit_distance, c_vector3 &hit_point) const {
+bool Rectangle::does_ray_intersect(const IRay &ray, c_vector3 &closest_hit_distance, c_vector3 &hit_point) const {
     auto denominator_dot_product = this->bottom_left_position() * ray.direction_normalized();
     auto epsilon = 1.e-5;
     if (std::abs(denominator_dot_product) < epsilon )

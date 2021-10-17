@@ -24,33 +24,28 @@ void Sphere::init() const {
 }
 
 
-bool Sphere::does_ray_intersect(const IRay &ray, float &closest_hit_distance, c_vector3 & hit_point) const {
-    closest_hit_distance = -1.0;
+bool Sphere::does_ray_intersect(const IRay &ray, c_vector3 &hit_normal, c_vector3 & hit_point) const {
+    float closest_hit_distance = -1.0;
     c_vector3 origin_to_center = (center_ - ray.origin());
     float origin_to_center_dot_direction = origin_to_center * ray.direction_normalized();
     float epsilon = 1e-3;
-    float delta = origin_to_center_dot_direction * origin_to_center_dot_direction -
+    float discriminant = origin_to_center_dot_direction * origin_to_center_dot_direction -
                   ((origin_to_center * origin_to_center) - radius_ * radius_);
-    if (delta < 0.0) {
+    if (discriminant < 0.0) {
         return false;
     }
-    if (std::abs(delta) < epsilon) {
-        hit_point = ray.origin() + ray.direction_normalized() * closest_hit_distance;
-        closest_hit_distance = origin_to_center_dot_direction;
-        return true;
-    }
-    auto solution1 = origin_to_center_dot_direction - std::sqrt(delta);
-    auto solution2 = origin_to_center_dot_direction + std::sqrt(delta);
-    closest_hit_distance = solution1;
 
+    closest_hit_distance = origin_to_center_dot_direction - std::sqrt(discriminant);
+    float hit_distance = origin_to_center_dot_direction + std::sqrt(discriminant);
     if (closest_hit_distance < epsilon) {
-        closest_hit_distance = solution2;
+        closest_hit_distance = hit_distance;
     }
     if (closest_hit_distance < epsilon) {
         return false;
     }
     hit_point = ray.origin() + ray.direction_normalized() * closest_hit_distance;
-    return true;
+    hit_normal = (hit_point - center_).normalize();
+	return true;
 }
 
 void Sphere::set_material(std::shared_ptr<IMaterial> material) {

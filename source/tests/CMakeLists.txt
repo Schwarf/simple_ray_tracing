@@ -14,8 +14,9 @@ add_executable(testfiles rays/test_light_source.cpp miscellaneous/test_image_buf
         rays/test_ray.cpp objects/test_sphere.cpp objects/mock_ray.h miscellaneous/test_validate.cpp
         materials/test_material.cpp materials/mock_material_builder.h)
 
-target_link_libraries(testfiles c_vector)
-target_link_libraries(testfiles ray)
-target_link_libraries(testfiles misc)
+target_link_libraries(testfiles objects_lib)
+target_link_libraries(testfiles materials_lib)
+target_link_libraries(testfiles ray_lib)
+target_link_libraries(testfiles misc_lib)
 target_link_libraries(testfiles gtest gtest_main)
 target_link_libraries(testfiles gmock gmock_main)

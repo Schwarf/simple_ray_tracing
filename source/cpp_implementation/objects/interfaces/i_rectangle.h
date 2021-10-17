@@ -6,9 +6,9 @@
 #define SIMPLE_RAY_TRACING_I_RECTANGLE_H
 
 #include "miscellaneous/templates/c_vector.h"
-#include "i_geometric_object.h"
+#include "i_target_object.h"
 
-class IRectangle : public IGeometricObject {
+class IRectangle : public ITargetObject {
 public:
     virtual float width() const = 0;
 

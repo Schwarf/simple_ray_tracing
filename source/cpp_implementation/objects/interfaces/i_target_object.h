@@ -8,7 +8,7 @@
 #include "materials/interfaces/i_material.h"
 #include "rays/interfaces/i_ray_intersection.h"
 
-class IGeometricObject:  public IRayIntersection {
+class ITargetObject: public IRayIntersection {
 public:
     virtual void set_material(std::shared_ptr<IMaterial> material) = 0;
     virtual std::shared_ptr<IMaterial> get_material() = 0;

@@ -28,7 +28,6 @@ public:
 
 private:
 	std::vector<std::shared_ptr<ILightSource>> light_source_vector_;
-	size_t number_of_light_sources_{};
 	c_vector3 background_color_;
 
 };
