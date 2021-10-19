@@ -15,7 +15,7 @@ public:
 
 	c_vector3 origin() const final;
 
-	~Ray() override = default;
+	~Ray() final = default;
 private:
 	c_vector3 direction_normalized_;
 	c_vector3 origin_;

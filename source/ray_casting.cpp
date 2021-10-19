@@ -66,8 +66,7 @@ ObjectList create_object_list()
 	builder1.set_rgb_color(c_vector3{0.7, 0.4, 0.4});
 	builder1.set_refraction_coefficient(0.1);
 	builder1.set_specular_exponent(50.);
-	auto sphere_material = Material("red_sphere", builder1);
-	sphere.set_material(std::make_unique<Material>(sphere_material));
+	sphere.set_material(std::make_unique<Material>(Material("red_sphere", builder1)));
 
 
 	auto sphere_center2 = c_vector3{1.5, 2.5, -18};
@@ -81,8 +80,7 @@ ObjectList create_object_list()
 	builder2.set_rgb_color(c_vector3{0.4, 0.4, 0.7});
 	builder2.set_refraction_coefficient(0.1);
 	builder2.set_specular_exponent(120.);
-	auto sphere2_material = Material("blue_sphere", builder2);
-	sphere2.set_material(std::make_unique<Material>(sphere2_material));
+	sphere2.set_material(std::make_unique<Material>(Material("blue_sphere", builder2)));
 
 	auto object_list = ObjectList();
 	std::shared_ptr<ITargetObject> red_sphere = std::make_shared<Sphere>(sphere);

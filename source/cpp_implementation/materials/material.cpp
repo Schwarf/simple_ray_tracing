@@ -56,9 +56,3 @@ c_vector3 Material::rgb_color() const
 {
 	return rgb_color_;
 }
-
-
-
-
-
-

@@ -12,9 +12,15 @@
 class Material final: public IMaterial
 {
 public:
-	explicit Material(const std::string &name, const IMaterialBuilder &builder);
+	Material(const std::string &name, const IMaterialBuilder &builder);
 
-	Material(const Material &rhs) = default;
+	Material(const Material &rhs) = delete;
+
+	Material &operator=(const Material &rhs) = delete;
+
+	Material(Material && rhs) =default;
+
+	Material &operator=(Material &&rhs) =default;
 
 	float specular_reflection() const final;
 
@@ -24,7 +30,7 @@ public:
 
 	float shininess() const final;
 
-	virtual ~Material() = default;
+	~Material() final = default;
 
 	std::string name() const final;
 
@@ -40,7 +46,7 @@ private:
 	float ambient_reflection_{-1.0};
 	float shininess_{-1.0};
 	float specular_exponent_{-1.0};
-	c_vector3 rgb_color_;
+	c_vector3 rgb_color_{0., 0., 0.};
 	float refraction_coefficient_{-1.0};
 	std::string name_;
 };

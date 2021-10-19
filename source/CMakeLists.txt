@@ -3,7 +3,6 @@ project(simple_ray_tracing LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_C_STANDARD 99)
-set(SOURCE_FILES sanity_checks_for_c_vector.cpp)
 include(CheckCXXCompilerFlag)
 
 
@@ -27,7 +26,6 @@ enable_cxx_compiler_flag_if_supported("-fopenmp")
 
 
 
-# add_executable(source sanity_checks_for_c_vector.cpp )
 add_executable(ray_cast ray_casting.cpp)
 
 include_directories(cpp_implementation)
