@@ -17,14 +17,19 @@
 #include "cpp_implementation/objects/object_list.h"
 
 
-c_vector3 cast_ray(const IRay &ray, ObjectList &object_list, SceneIllumination &scene_illumination)
+c_vector3 cast_ray(const IRay &ray, ObjectList &object_list, SceneIllumination &scene_illumination, size_t recursion_depth = 0)
 {
 	auto hit_point = c_vector3{0, 0, 0};
 	auto hit_normal = c_vector3{0, 0, 0};
 	auto object = object_list.get_object_hit_by_ray(ray, hit_normal, hit_point);
-	if (object == nullptr) {
+	if (object == nullptr || recursion_depth > 4) {
 		return scene_illumination.background_color();
 	}
+	auto interaction = RayInteractions();
+	auto reflected_ray = Ray(hit_point, interaction.reflection(ray.direction_normalized(), hit_normal).normalize());
+	recursion_depth++;
+	auto reflected_color = cast_ray(reflected_ray, object_list, scene_illumination, recursion_depth);
+
 	float diffuse_intensity = 0.f;
 	float specular_intensity = 0.f;
 	std::shared_ptr<ILightSource> light_source = nullptr;
@@ -41,7 +46,7 @@ c_vector3 cast_ray(const IRay &ray, ObjectList &object_list, SceneIllumination &
 		{
 			continue;
 		}
-		auto interaction = RayInteractions();
+
 		diffuse_intensity += light_source->intensity() * std::max(0.f, light_direction * hit_normal);
 		specular_intensity +=
 			std::pow(std::max(0.f, interaction.reflection(light_direction, hit_normal) * ray.direction_normalized()),
@@ -51,8 +56,9 @@ c_vector3 cast_ray(const IRay &ray, ObjectList &object_list, SceneIllumination &
 	auto diffuse_reflection =
 		object->get_material()->rgb_color() * diffuse_intensity * object->get_material()->diffuse_reflection();
 	auto specular_reflection = specular_intensity * c_vector3{1, 1, 1} * object->get_material()->specular_reflection();
+	auto ambient_reflection = reflected_color*object->get_material()->ambient_reflection();
 
-	return diffuse_reflection + specular_reflection;
+	return diffuse_reflection + specular_reflection + ambient_reflection;
 
 }
 
@@ -98,13 +104,28 @@ ObjectList create_object_list()
 	builder3.set_specular_exponent(130.);
 	sphere3.set_material(std::make_unique<Material>(Material("green_sphere", builder3)));
 
+	auto sphere_center4 = c_vector3{-4.5, -1.5, -12};
+	auto sphere_radius4 = 2.5;
+	auto sphere4 = Sphere(sphere_center4, sphere_radius4);
+	auto builder4 = MaterialBuilder();
+	builder4.set_specular_reflection(0.5);
+	builder4.set_diffuse_reflection(0.000001);
+	builder4.set_ambient_reflection(0.1);
+	builder4.set_shininess(0.8);
+	builder4.set_rgb_color(c_vector3{0.6, 0.7, 0.8});
+	builder4.set_refraction_coefficient(0.1);
+	builder4.set_specular_exponent(1200.);
+	sphere4.set_material(std::make_unique<Material>(Material("glass_sphere", builder4)));
+
 	auto object_list = ObjectList();
 	std::shared_ptr<ITargetObject> red_sphere = std::make_shared<Sphere>(sphere);
 	std::shared_ptr<ITargetObject> blue_sphere = std::make_shared<Sphere>(sphere2);
 	std::shared_ptr<ITargetObject> green_sphere = std::make_shared<Sphere>(sphere3);
+	std::shared_ptr<ITargetObject> glass_sphere = std::make_shared<Sphere>(sphere4);
 	object_list.add_object(red_sphere);
 	object_list.add_object(blue_sphere);
 	object_list.add_object(green_sphere);
+	object_list.add_object(glass_sphere);
 	return object_list;
 
 }
