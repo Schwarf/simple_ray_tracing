@@ -27,7 +27,7 @@ ImageBuffer::ImageBuffer(const int width, const int height)
 	buffer_.resize(height_ * width_);
 }
 
-void ImageBuffer::set_pixel_value(size_t width_index, size_t height_index, const c_vector3 pixel_color_value)
+void ImageBuffer::set_pixel_value(size_t width_index, size_t height_index, const c_vector3 &pixel_color_value)
 {
 	buffer_[width_index + height_index * width_] = pixel_color_value;
 }

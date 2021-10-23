@@ -19,3 +19,15 @@ std::shared_ptr<ITargetObject> ObjectList::object(size_t index)
 	}
 	return object_vector_[index];
 }
+
+std::shared_ptr<ITargetObject> ObjectList::get_object_hit_by_ray(const IRay &ray,
+																 c_vector3 &hit_normal,
+																 c_vector3 &hit_point)
+{
+	for(const auto & object : object_vector_)
+	{
+		if(object->does_ray_intersect(ray, hit_normal, hit_point))
+			return object;
+	}
+	return nullptr;
+}

@@ -16,41 +16,44 @@
 #include "cpp_implementation/rays/scene_illumination.h"
 #include "cpp_implementation/objects/object_list.h"
 
+
 c_vector3 cast_ray(const IRay &ray, ObjectList &object_list, SceneIllumination &scene_illumination)
 {
-	float max_dist = 10000.;
 	auto hit_point = c_vector3{0, 0, 0};
 	auto hit_normal = c_vector3{0, 0, 0};
-	for (size_t index = 0; index < object_list.number_of_objects(); ++index) {
-		if (object_list.object(index)->does_ray_intersect(ray, hit_normal, hit_point)) {
-
-
-			float diffuse_intensity = 0.f;
-			float specular_intensity = 0.f;
-			std::shared_ptr<ILightSource> light_source = nullptr;
-			for (size_t ls_index = 0; ls_index < scene_illumination.number_of_light_sources(); ++ls_index) {
-				light_source = scene_illumination.light_source(ls_index);
-
-				auto light_direction = (light_source->position() - hit_point).normalize();
-				auto interaction = RayInteractions();
-				diffuse_intensity += light_source->intensity() * std::max(0.f, light_direction * hit_normal);
-				specular_intensity +=
-					std::pow(std::max(0.f, interaction.reflection(light_direction, hit_normal) * ray.direction_normalized()),
-							 object_list.object(index)->get_material()->specular_exponent())
-						* light_source->intensity();
-			}
-
-			auto diffuse_reflection =
-				object_list.object(index)->get_material()->rgb_color() * diffuse_intensity
-					* object_list.object(index)->get_material()->diffuse_reflection();
-			auto specular_reflection =
-				specular_intensity * c_vector3{1, 1, 1}
-					* object_list.object(index)->get_material()->specular_reflection();
-
-			return diffuse_reflection +specular_reflection;
-		}
+	auto object = object_list.get_object_hit_by_ray(ray, hit_normal, hit_point);
+	if (object == nullptr) {
+		return scene_illumination.background_color();
 	}
-	return scene_illumination.background_color();
+	float diffuse_intensity = 0.f;
+	float specular_intensity = 0.f;
+	std::shared_ptr<ILightSource> light_source = nullptr;
+	for (size_t ls_index = 0; ls_index < scene_illumination.number_of_light_sources(); ++ls_index) {
+		light_source = scene_illumination.light_source(ls_index);
+		auto light_direction = (light_source->position() - hit_point).normalize();
+		auto light_source_ray = Ray(hit_point, light_direction);
+		auto shadow_point = c_vector3 {0.,0.,0.};
+		auto shadow_normal = c_vector3 {0.,0.,0.};
+		auto object_in_shadow = object_list.get_object_hit_by_ray(light_source_ray, shadow_normal, shadow_point);
+		auto distance_shadow_point_to_point = (shadow_point - hit_point).norm();
+		auto distance_light_source_to_point = (light_source->position() - hit_point).norm();
+		if(object_in_shadow != nullptr && distance_shadow_point_to_point < distance_light_source_to_point)
+		{
+			continue;
+		}
+		auto interaction = RayInteractions();
+		diffuse_intensity += light_source->intensity() * std::max(0.f, light_direction * hit_normal);
+		specular_intensity +=
+			std::pow(std::max(0.f, interaction.reflection(light_direction, hit_normal) * ray.direction_normalized()),
+					 object->get_material()->specular_exponent()) * light_source->intensity();
+	}
+
+	auto diffuse_reflection =
+		object->get_material()->rgb_color() * diffuse_intensity * object->get_material()->diffuse_reflection();
+	auto specular_reflection = specular_intensity * c_vector3{1, 1, 1} * object->get_material()->specular_reflection();
+
+	return diffuse_reflection + specular_reflection;
+
 }
 
 ObjectList create_object_list()
@@ -68,7 +71,6 @@ ObjectList create_object_list()
 	builder1.set_specular_exponent(50.);
 	sphere.set_material(std::make_unique<Material>(Material("red_sphere", builder1)));
 
-
 	auto sphere_center2 = c_vector3{1.5, 2.5, -18};
 	auto sphere_radius2 = 2;
 	auto sphere2 = Sphere(sphere_center2, sphere_radius2);
@@ -82,11 +84,27 @@ ObjectList create_object_list()
 	builder2.set_specular_exponent(120.);
 	sphere2.set_material(std::make_unique<Material>(Material("blue_sphere", builder2)));
 
+
+	auto sphere_center3 = c_vector3{4.5, -1.5, -20};
+	auto sphere_radius3 = 4;
+	auto sphere3 = Sphere(sphere_center3, sphere_radius3);
+	auto builder3 = MaterialBuilder();
+	builder3.set_specular_reflection(0.3);
+	builder3.set_diffuse_reflection(0.6);
+	builder3.set_ambient_reflection(0.3);
+	builder3.set_shininess(0.3);
+	builder3.set_rgb_color(c_vector3{0.4, 0.7, 0.4});
+	builder3.set_refraction_coefficient(0.1);
+	builder3.set_specular_exponent(130.);
+	sphere3.set_material(std::make_unique<Material>(Material("green_sphere", builder3)));
+
 	auto object_list = ObjectList();
 	std::shared_ptr<ITargetObject> red_sphere = std::make_shared<Sphere>(sphere);
 	std::shared_ptr<ITargetObject> blue_sphere = std::make_shared<Sphere>(sphere2);
+	std::shared_ptr<ITargetObject> green_sphere = std::make_shared<Sphere>(sphere3);
 	object_list.add_object(red_sphere);
 	object_list.add_object(blue_sphere);
+	object_list.add_object(green_sphere);
 	return object_list;
 
 }
@@ -103,7 +121,7 @@ SceneIllumination create_scene_illumination()
 	std::shared_ptr<ILightSource>
 		light_source2 = std::make_shared<LightSource>(LightSource(light_source_position2, light_intensity2));;
 
-	auto light_source_position3 = c_vector3{30, -20, 30};
+	auto light_source_position3 = c_vector3{30, 20, 30};
 	float light_intensity3 = 1.7;
 	std::shared_ptr<ILightSource>
 		light_source3 = std::make_shared<LightSource>(LightSource(light_source_position3, light_intensity3));
@@ -163,7 +181,7 @@ int main()
 	auto object_list = create_object_list();
 
 
-	render(object_list,	scene_illumination);
+	render(object_list, scene_illumination);
 
 	return 0;
 }
