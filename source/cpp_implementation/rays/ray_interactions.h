@@ -10,9 +10,10 @@ class RayInteractions final: IRayInteractions
 {
 public:
 	RayInteractions() = default;
-	c_vector3 reflection(const c_vector3 &light_direction, c_vector3 &point_normal) const final;
-	c_vector3 casting(const IRay &ray, ITargetObject &sphere, const ILightSource &light_source) const final;
-private:
+	c_vector3 reflection(const c_vector3 &light_direction, const c_vector3 &point_normal) const final;
+	c_vector3 refraction(const c_vector3 &light_direction,
+						 const c_vector3 &point_normal,
+						 const float &material_refraction_index, const float &air_refraction_index) const final;
 
 };
 
