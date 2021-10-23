@@ -26,7 +26,7 @@ c_vector3 cast_ray(const IRay &ray,
 	auto hit_normal = c_vector3{0, 0, 0};
 	auto air_refraction_index = 1.f;
 	auto object = object_list.get_object_hit_by_ray(ray, hit_normal, hit_point);
-	if (object == nullptr || recursion_depth > 4) {
+	if (object == nullptr || recursion_depth > 1) {
 		return scene_illumination.background_color();
 	}
 	auto interaction = RayInteractions();
@@ -186,7 +186,7 @@ void render(ObjectList &object_list, SceneIllumination &scene_illumination)
 	auto width = 1024;
 	auto height = 768;
 	auto image_buffer = ImageBuffer(width, height);
-
+	#pragma omp parallel for
 	for (int height_index = 0; height_index < height; height_index++) {
 		for (int width_index = 0; width_index < width; width_index++) {
 			float x_direction = float(width_index) - float(width) / 2.f;
