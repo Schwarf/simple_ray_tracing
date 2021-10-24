@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(simple_ray_tracing LANGUAGES C CXX)
+project(simple_ray_tracing LANGUAGES CUDA CXX)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_C_STANDARD 99)
@@ -21,15 +21,17 @@ enable_cxx_compiler_flag_if_supported("-Wall")
 enable_cxx_compiler_flag_if_supported("-Wextra")
 enable_cxx_compiler_flag_if_supported("-pedantic")
 enable_cxx_compiler_flag_if_supported("-std=c++17")
-enable_cxx_compiler_flag_if_supported("-O0")
+enable_cxx_compiler_flag_if_supported("-O3")
 enable_cxx_compiler_flag_if_supported("-fopenmp")
 
 
 
 add_executable(ray_cast ray_casting.cpp)
+add_executable(cuda cuda.cu)
 
 include_directories(cpp_implementation)
 add_subdirectory(cpp_implementation)
+add_subdirectory(cuda_playground)
 add_subdirectory(tests)
 
 target_link_libraries(ray_cast materials_lib materials_interfaces ray_lib ray_interfaces misc_lib misc_interfaces objects_lib objects_interfaces)
