@@ -15,7 +15,8 @@
 #include "rays/ray_interactions.h"
 #include "cpp_implementation/rays/scene_illumination.h"
 #include "cpp_implementation/objects/object_list.h"
-
+#include "miscellaneous/quadratic_equation.h"
+#include "miscellaneous/cubic_equation.h"
 
 c_vector3 cast_ray(const IRay &ray,
 				   ObjectList &object_list,
@@ -229,6 +230,14 @@ int main()
 
 
 	render(object_list, scene_illumination);
-
+	c_vector<3, double> coeff{1.0, 5.0, -5.0};
+	c_vector<4, double> coeff2{1.0, 1.0, 5.0, -5.0};
+	double epsilon = 1.e-10;
+	auto q_equation = QuadraticEquation<double>(coeff, epsilon);
+	auto c_equation = CubicEquation<double>(coeff2, epsilon);
+	for(int i = 0; i < 2; ++i)
+	{
+		std::cout << q_equation.solutions()[i] << std::endl;
+	}
 	return 0;
 }

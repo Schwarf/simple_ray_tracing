@@ -9,36 +9,36 @@
 #include "quadratic_equation.h"
 #include "validate.h"
 #include "stdexcept"
+#include "limits"
 
 template<typename T>
-class CubicEquation: public ISolve
+class CubicEquation: public ISolve<3, T>
 {
 public:
-	CubicEquation(const T &cubic_coefficient,
-				  const T &quadratic_coefficient,
-				  const T &linear_coefficient,
-				  const T &constant);
-	size_t number_of_solutions();
-	void set_epsilon(const double &epsilon);
-	T get_solution(size_t number_of_solution);
+	CubicEquation(const c_vector<4, T> & coefficients, const T & epsilon);
+	c_vector<3, T> solutions() final;
+
 private:
-	double epsilon_{0.00001};
 	Validate validate_;
-	std::vector<T> solutions_;
+	c_vector<3, T> solutions_;
 };
 
 template<typename T>
-CubicEquation<T>::CubicEquation(const T &cubic_coefficient,
-								const T &quadratic_coefficient,
-								const T &linear_coefficient,
-								const T &constant)
+CubicEquation<T>::CubicEquation(const c_vector<4, T> & coefficients, const T & epsilon)
 {
-	validate_.is_above_threshold("cubic_coefficient", std::abs(cubic_coefficient), epsilon_, "CubicEquation");
+	validate_.is_above_threshold("cubic_coefficient", std::abs(coefficients[0]), epsilon, "CubicEquation");
+	T cubic_coefficient = coefficients[0];
+	T quadratic_coefficient = coefficients[1];
+	T linear_coefficient = coefficients[2];
+	T constant = coefficients[3];
+
+
 	if (std::abs(constant) < epsilon) {
-		solutions_.push_back(0.0);
-		QuadraticEquation<T> quadratic_equation(cubic_coefficient, quadratic_coefficient, linear_coefficient);
-		for (int i = 0; i < quadratic_equation.number_of_solutions(); ++i) {
-			solutions_.push_back(quadratic_equation.get_solution(i));
+		solutions_[0] = T{};
+		auto coeff = c_vector<3, T>{cubic_coefficient, quadratic_coefficient, linear_coefficient};
+		auto quadratic_equation = QuadraticEquation<T>(coeff, epsilon);
+		for (int i = 0; i < 2; ++i) {
+			solutions_[i+1] = quadratic_equation.solutions()[i];
 		}
 	}
 
@@ -54,17 +54,19 @@ CubicEquation<T>::CubicEquation(const T &cubic_coefficient,
 	if (discriminant > 0.0)
 		return;
 
-	if (std::abs(p) < epsilon_ )
+	if (std::abs(p) < epsilon )
 	{
-		if(std::abs(q) < epsilon_)
+		if(std::abs(q) < epsilon)
 		{
-			solutions_.push_back(-reduced_quadratic_coefficient/3.0);
+			solutions_[0] = (-reduced_quadratic_coefficient/3.0);
+			solutions_[1] = std::numeric_limits<T>::quiet_NaN();
+			solutions_[2] = std::numeric_limits<T>::quiet_NaN();
+			solutions_[3] = std::numeric_limits<T>::quiet_NaN();
 			return;
 		}
 		auto exponent = 1./3.;
 		auto argument = reduced_quadratic_coefficient*reduced_quadratic_coefficient *reduced_quadratic_coefficient-27.0*reduced_constant;
-		auto solution = 1./3. * (std::pow(argument, exponent) - reduced_quadratic_coefficient);
-		solutions_.push_back(solution);
+		solutions_[0] = 1./3. * (std::pow(argument, exponent) - reduced_quadratic_coefficient);
 		return;
 	}
 
@@ -72,25 +74,10 @@ CubicEquation<T>::CubicEquation(const T &cubic_coefficient,
 
 
 }
-
 template<typename T>
-int CubicEquation<T>::number_of_solutions()
+c_vector<3, T> CubicEquation<T>::solutions()
 {
-	return number_of_solutions_;
-}
-
-template<typename T>
-void CubicEquation<T>::set_epsilon(const double &epsilon)
-{
-	epsilon_ = epsilon;
-}
-
-template<typename T>
-T CubicEquation<T>::get_solution(int number_of_solution)
-{
-	validate_.is_below_threshold("number_of_solution", number_of_solution, 3, "CubicEquation")
-	validate_.is_above_threshold("number_of_solution", number_of_solution, -1, "CubicEquation")
-	return solutions_[number_of_solution];
+	return c_vector<3, T>();
 }
 
 #endif //CUBIC_EQUATION_H

@@ -5,7 +5,7 @@ add_library(ray_interfaces INTERFACE rays/interfaces/i_ray_intersection.h rays/i
 
 add_library(misc_lib STATIC miscellaneous/validate.cpp miscellaneous/validate.h miscellaneous/templates/c_vector.h
             miscellaneous/image_buffer.cpp miscellaneous/image_buffer.h)
-add_library(misc_interfaces INTERFACE miscellaneous/interfaces/i_validate.h miscellaneous/interfaces/i_image_buffer.h )
+add_library(misc_interfaces INTERFACE miscellaneous/interfaces/i_validate.h miscellaneous/interfaces/i_image_buffer.h miscellaneous/quadratic_equation.h)
 
 add_library(objects_lib STATIC objects/sphere.cpp objects/sphere.h objects/rectangle.cpp objects/rectangle.h objects/object_list.cpp objects/object_list.h)
 add_library(objects_interfaces INTERFACE objects/interfaces/i_object_list.h objects/interfaces/i_sphere.h
