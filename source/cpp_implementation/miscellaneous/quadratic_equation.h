@@ -19,8 +19,8 @@ public:
 	c_vector<2, T> solutions() final;
 
 private:
-	Validate validate_;
-	c_vector<2, T> solutions_{};
+	Validate <T> validate_;
+	c_vector<2, T> solutions_{-1., -1.};
 };
 
 template<typename T>
@@ -28,7 +28,7 @@ QuadraticEquation<T>::QuadraticEquation(const c_vector<3, T> & coefficients, con
 {
 
 	validate_
-		.is_above_threshold("quadratic_coefficient", std::abs(coefficients[0]), epsilon, "QuadraticEquation");
+		.is_not_zero("quadratic_coefficient", coefficients[0], epsilon, "QuadraticEquation");
 
 	T quadratic_coefficient = coefficients[0];
 	T linear_coefficient = coefficients[1];

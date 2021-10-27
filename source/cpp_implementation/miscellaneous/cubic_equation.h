@@ -10,23 +10,24 @@
 #include "validate.h"
 #include "stdexcept"
 #include "limits"
+#include "math.h"
 
 template<typename T>
 class CubicEquation: public ISolve<3, T>
 {
 public:
-	CubicEquation(const c_vector<4, T> & coefficients, const T & epsilon);
+	CubicEquation(const c_vector<4, T> &coefficients, const T &epsilon);
 	c_vector<3, T> solutions() final;
 
 private:
-	Validate validate_;
-	c_vector<3, T> solutions_;
+	Validate<T> validate_;
+	c_vector<3, T> solutions_{-1., -1, -1.};
 };
 
 template<typename T>
-CubicEquation<T>::CubicEquation(const c_vector<4, T> & coefficients, const T & epsilon)
+CubicEquation<T>::CubicEquation(const c_vector<4, T> &coefficients, const T &epsilon)
 {
-	validate_.is_above_threshold("cubic_coefficient", std::abs(coefficients[0]), epsilon, "CubicEquation");
+	validate_.is_not_zero("cubic_coefficient", coefficients[0], epsilon, "CubicEquation");
 	T cubic_coefficient = coefficients[0];
 	T quadratic_coefficient = coefficients[1];
 	T linear_coefficient = coefficients[2];
@@ -35,49 +36,54 @@ CubicEquation<T>::CubicEquation(const c_vector<4, T> & coefficients, const T & e
 
 	if (std::abs(constant) < epsilon) {
 		solutions_[0] = T{};
-		auto coeff = c_vector<3, T>{cubic_coefficient, quadratic_coefficient, linear_coefficient};
-		auto quadratic_equation = QuadraticEquation<T>(coeff, epsilon);
+		auto quadratic_equation_coefficients =
+			c_vector<3, T>{cubic_coefficient, quadratic_coefficient, linear_coefficient};
+		auto quadratic_equation = QuadraticEquation<T>(quadratic_equation_coefficients, epsilon);
 		for (int i = 0; i < 2; ++i) {
-			solutions_[i+1] = quadratic_equation.solutions()[i];
+			solutions_[i + 1] = quadratic_equation.solutions()[i];
 		}
 	}
 
-	auto reduced_quadratic_coefficient = quadratic_coefficient / cubic_coefficient;
-	auto reduced_linear_coefficient = linear_coefficient / cubic_coefficient;
-	auto reduced_constant = constant / cubic_coefficient;
+	auto r_quadratic_coefficient = quadratic_coefficient / cubic_coefficient;
+	auto r_linear_coefficient = linear_coefficient / cubic_coefficient;
+	auto r_constant = constant / cubic_coefficient;
 
-	auto p = reduced_quadratic_coefficient - reduced_linear_coefficient * reduced_linear_coefficient / 3.0;
-	auto q = 2.0 * reduced_linear_coefficient * reduced_linear_coefficient * reduced_linear_coefficient / 27.0 -
-		reduced_linear_coefficient * reduced_quadratic_coefficient / 3.0 + reduced_constant;
+	auto r_quadratic_coefficient_squared = r_quadratic_coefficient * r_quadratic_coefficient;
+	auto p = 1. / 3. * (-r_quadratic_coefficient_squared / 3. + r_linear_coefficient);
+	auto q = 1. / 2. * (2. / 27. * r_quadratic_coefficient * r_quadratic_coefficient_squared
+		- 1. / 3. * r_quadratic_coefficient * r_linear_coefficient + r_constant);
 
-	auto discriminant = q* q / 4.0 + p * p * p / 3.0;
-	if (discriminant > 0.0)
-		return;
+	auto p_cubed = p * p * p;
+	auto discriminant = q * q + p_cubed;
 
-	if (std::abs(p) < epsilon )
-	{
-		if(std::abs(q) < epsilon)
-		{
-			solutions_[0] = (-reduced_quadratic_coefficient/3.0);
-			solutions_[1] = std::numeric_limits<T>::quiet_NaN();
-			solutions_[2] = std::numeric_limits<T>::quiet_NaN();
-			solutions_[3] = std::numeric_limits<T>::quiet_NaN();
-			return;
+	if (std::abs(discriminant) < epsilon) {
+		if (std::abs(q) < epsilon) {
+			solutions_[0] = 0;
 		}
-		auto exponent = 1./3.;
-		auto argument = reduced_quadratic_coefficient*reduced_quadratic_coefficient *reduced_quadratic_coefficient-27.0*reduced_constant;
-		solutions_[0] = 1./3. * (std::pow(argument, exponent) - reduced_quadratic_coefficient);
-		return;
+		else {
+			auto q_cube_root = (T)std::cbrt(-q);
+			solutions_[0] = 2 * q_cube_root;
+			solutions_[1] = -q_cube_root;
+		}
 	}
-
-
-
+	else if (discriminant < 0.) {
+		auto phi = 1. / 3. * std::acos(-q / std::sqrt(-p_cubed));
+		auto t = 2 * std::sqrt(-p);
+		solutions_[0] = t * std::cos(phi);
+		std::cout << "PI " <<  t <<"  " << std::cos(phi - M_PI / 3.) <<std::endl;
+		solutions_[1] = -t * std::cos(phi + M_PI / 3.);
+		solutions_[2] = -t * std::cos(phi - M_PI / 3.);
+	}
+	else {
+		auto root_discriminant = std::sqrt(discriminant);
+		solutions_[0] = std::cbrt(root_discriminant - q) - std::cbrt(root_discriminant + q);
+	}
 
 }
 template<typename T>
 c_vector<3, T> CubicEquation<T>::solutions()
 {
-	return c_vector<3, T>();
+	return solutions_;
 }
 
 #endif //CUBIC_EQUATION_H

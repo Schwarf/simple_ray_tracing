@@ -31,7 +31,7 @@ private:
 	c_vector3 center_;
 	float radius_;
 	std::shared_ptr<IMaterial> material_;
-	Validate validate_;
+	Validate<float> validate_;
 };
 
 

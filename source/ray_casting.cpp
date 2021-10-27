@@ -231,7 +231,7 @@ int main()
 
 	render(object_list, scene_illumination);
 	c_vector<3, double> coeff{1.0, 5.0, -5.0};
-	c_vector<4, double> coeff2{1.0, 1.0, 5.0, -5.0};
+	c_vector<4, double> coeff2{1.0, -6.0, 11.0, -6.0};
 	double epsilon = 1.e-10;
 	auto q_equation = QuadraticEquation<double>(coeff, epsilon);
 	auto c_equation = CubicEquation<double>(coeff2, epsilon);
@@ -239,5 +239,10 @@ int main()
 	{
 		std::cout << q_equation.solutions()[i] << std::endl;
 	}
+	for(int i = 0; i < 3; ++i)
+	{
+		std::cout << c_equation.solutions()[i] << std::endl;
+	}
+
 	return 0;
 }

@@ -36,7 +36,7 @@ private:
 	c_vector3 bottom_left_position_;
 	c_vector3 normal_;
 	std::shared_ptr<IMaterial> material_;
-	Validate validate_;
+	Validate <float> validate_;
 	void init() const;
 };
 
