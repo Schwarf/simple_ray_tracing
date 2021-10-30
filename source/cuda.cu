@@ -10,6 +10,35 @@
 #include <iostream>
 #include <vector>
 #include "cuda_playground/vector_add.cu"
+#include <fstream>
+#include <ctime>
+
+#define checkCudaErrors(value) check_cuda( (value), #value, __FILE__, __LINE__)
+
+void check_cuda(cudaError_t result, char const *const function, const char * const file, int const line)
+{
+	if(result)
+	{
+		std::cerr<< "CUDA error = " << static_cast<unsigned int>(result) << " at " << file << ":" << line << " '" << function << "' \n";
+		cudaDeviceReset();
+		exit(99);
+	}
+}
+
+
+__global__ void render(float * buffer, int width, int height)
+{
+	int i = threadIdx.x + blockIdx.x * blockDim.x;
+	int j = threadIdx.y + blockIdx.y * blockDim.y;
+	if( (i > width) || (j > height))
+	{
+		return;
+	}
+	int pixel_index = j*width*3  + i*3;
+	buffer[pixel_index] = float(i)/float(width);
+	buffer[pixel_index + 1] = float(j)/float(height);
+	buffer[pixel_index + 2] = 0;
+}
 
 // CUDA kernel for vector addition
 // __global__ means this is called from the CPU, and runs on the GPU
@@ -97,5 +126,41 @@ int main() {
 
 	std::cout << "COMPLETED SUCCESSFULLY\n";
 
+	int width =1024;
+	int height = 768;
+	int thread_x =8;
+	int thread_y =8;
+	int number_of_pixels = width*height;
+	size_t buffer_size = 3*number_of_pixels*sizeof(float);
+	float *buffer =nullptr;
+	checkCudaErrors(cudaMallocManaged((void **)&buffer, buffer_size));
+	clock_t start, stop;
+	start = clock();
+	dim3 blocks(width/thread_x +1, height/thread_y+1);
+	dim3 threads(thread_x, thread_y);
+	render<<<blocks, threads>>>(buffer, width, height);
+	checkCudaErrors(cudaGetLastError());
+	cudaDeviceSynchronize();
+	stop =clock();
+	double seconds = ((double) (stop-start))/CLOCKS_PER_SEC;
+	std::cerr << "took " << seconds << " seconds. \n";
+	std::ofstream ofs;
+	ofs.open("./cuda_image.ppm");
+	ofs << "P6\n" << width << " " << height << "\n255\n";
+	for(int j = height-1; j >=0; --j)
+	{
+		for(int i = 0; i <width; ++i)
+		{
+			size_t pixel_index = j*3*width + 3*i;
+			char red = static_cast<char>(std::max(0.f, std::min(1.f, buffer[pixel_index]))*255);
+			char green = static_cast<char>(std::max(0.f, std::min(1.f, buffer[pixel_index+1]))*255);
+			char blue = static_cast<char>(std::max(0.f, std::min(1.f, buffer[pixel_index+2]))*255);
+			//std::cout << red << " " << green << " " << blue << std::endl;
+			ofs << red << " " << green << " " << blue << " ";
+		}
+	}
+	ofs.close();
+	cudaFree(buffer);
 	return 0;
 }
+
