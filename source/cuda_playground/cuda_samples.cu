@@ -9,7 +9,7 @@
 #include <cassert>
 #include <iostream>
 #include <vector>
-#include "cuda_playground/vector_add.cu"
+#include "vector_add.cu"
 #include <fstream>
 #include <ctime>
 
@@ -30,14 +30,14 @@ __global__ void render(float * buffer, int width, int height)
 {
 	int i = threadIdx.x + blockIdx.x * blockDim.x;
 	int j = threadIdx.y + blockIdx.y * blockDim.y;
-	if( (i > width) || (j > height))
+	if( (i > width-1) || (j > height-1))
 	{
 		return;
 	}
 	int pixel_index = j*width*3  + i*3;
-	buffer[pixel_index] = float(i)/float(width);
-	buffer[pixel_index + 1] = float(j)/float(height);
-	buffer[pixel_index + 2] = 0;
+	buffer[pixel_index] = 0.2f;
+	buffer[pixel_index + 1] = 0.7f;
+	buffer[pixel_index + 2] = 0.8f;
 }
 
 // CUDA kernel for vector addition

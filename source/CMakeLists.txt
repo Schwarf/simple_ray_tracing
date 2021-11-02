@@ -27,12 +27,17 @@ enable_cxx_compiler_flag_if_supported("-fopenmp")
 
 
 add_executable(ray_cast ray_casting.cpp)
-add_executable(cuda cuda.cu)
+# add_executable(cuda_sample cuda_playground/cuda_samples.cu)
+add_executable(cuda_cast render.cu)
 
 include_directories(cpp_implementation)
+include_directories(cuda_implementation)
 add_subdirectory(cpp_implementation)
+add_subdirectory(cuda_implementation)
 add_subdirectory(cuda_playground)
 add_subdirectory(tests)
+
+#target_link_libraries(cuda_cast cuda_misc_lib)
 
 target_link_libraries(ray_cast materials_lib materials_interfaces ray_lib ray_interfaces misc_lib misc_interfaces objects_lib objects_interfaces)
 

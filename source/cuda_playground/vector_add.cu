@@ -1,7 +1,7 @@
 
 #pragma once
 
-class IntegerVectorAddition
+__device__ class IntegerVectorAddition
 {
 public:
 	IntegerVectorAddition() = default;
@@ -24,9 +24,11 @@ public:
 		int thread_id = (blockIdx.x * blockDim.x) + threadIdx.x;
 
 		// Boundary check
-		if (thread_id < size_one_) {
-			result[thread_id] = summand_one_[thread_id] + summand_two_[thread_id];
+		if (thread_id > size_one_)
+		{
+			return;
 		}
+		result[thread_id] = summand_one_[thread_id] + summand_two_[thread_id];
 	}
 	private:
 
