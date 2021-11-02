@@ -13,6 +13,7 @@ class ITargetObject: public IRayIntersection
 public:
 	virtual void set_material(std::shared_ptr<IMaterial> material) = 0;
 	virtual std::shared_ptr<IMaterial> get_material() = 0;
+	virtual ~ITargetObject() = default;
 };
 
 #endif //SIMPLE_RAY_TRACING_I_GEOMETRIC_OBJECT_H

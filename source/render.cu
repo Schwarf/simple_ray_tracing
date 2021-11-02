@@ -4,6 +4,7 @@
 
 #include "cuda_implementation/miscellaneous/templates/c_vector.cuh"
 #include "cuda_implementation/rays/ray.cuh"
+#include "cuda_implementation/objects/sphere.cuh"
 #include <fstream>
 
 #define checkCudaErrors(value) check_cuda( (value), #value, __FILE__, __LINE__)
@@ -21,12 +22,22 @@ __global__ void render_it(c_vector3 *buffer, size_t max_width, size_t max_height
 	float x_direction = float(width) - float(max_width) / 2.f;
 	float y_direction = float(height) - float(max_height) / 2.f;
 	float z_direction = -float(max_height + max_width) / 2.f;
+	auto sphere_center = c_vector3{-3.5, 3.5, -15};
+	auto sphere_radius = 1.5;
+	auto sphere = Sphere(sphere_center, sphere_radius);
+
 	c_vector3 direction = c_vector3{x_direction, y_direction, z_direction}.normalize();
 	c_vector3 origin = c_vector3{0, 0, 0};
 	auto ray = Ray(origin, direction);
 
 	size_t pixel_index = height * max_width + width;
-	buffer[pixel_index] = c_vector3{0.2, 0.7, 0.8};
+	c_vector3 hit_normal = c_vector3{0, 0, 0};
+	c_vector3 hit_point = c_vector3{0, 0, 0};
+
+	if(sphere.does_ray_intersect(ray,hit_normal, hit_point))
+		buffer[pixel_index] = c_vector3{0.9, 0.2, 0.3};
+	else
+		buffer[pixel_index] = c_vector3{0.2, 0.7, 0.8};
 }
 
 int main()
