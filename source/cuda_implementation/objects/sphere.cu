@@ -4,10 +4,11 @@
 
 #include "sphere.cuh"
 
-__device__ Sphere::Sphere(c_vector3 &center, float radius)
+__device__ Sphere::Sphere(c_vector3 &center, float radius, IMaterial * material)
 {
 	center_ = center;
 	radius_ = radius;
+	material_ = material;
 }
 
 __device__ c_vector3 Sphere::center() const
@@ -43,4 +44,9 @@ __device__ bool Sphere::does_ray_intersect(const IRay &ray, c_vector3 &hit_norma
 	hit_point = ray.origin() + ray.direction_normalized() * closest_hit_distance;
 	hit_normal = (hit_point - center_).normalize();
 	return true;
+}
+
+__device__ IMaterial * Sphere::material() const
+{
+	return material_;
 }
