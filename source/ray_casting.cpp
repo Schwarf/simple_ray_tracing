@@ -231,17 +231,23 @@ int main()
 
 	render(object_list, scene_illumination);
 	c_vector<3, double> coeff{1.0, 5.0, -5.0};
-	c_vector<4, double> coeff2{1.0, -6.0, 11.0, -6.0};
+	c_vector<4, double> coefficient_cubic{1.0, -6.0, 11.0, -6.0};
+	c_vector<4, double> coefficient_cubic2{1.0, -5.0, 8.0, -4.0};
 	double epsilon = 1.e-10;
 	auto q_equation = QuadraticEquation<double>(coeff, epsilon);
-	auto c_equation = CubicEquation<double>(coeff2, epsilon);
-	for(int i = 0; i < 2; ++i)
+	auto cubic_equation = CubicEquation<double>(coefficient_cubic, epsilon);
+	auto cubic_equation2 = CubicEquation<double>(coefficient_cubic2, epsilon);
+	for(int i = 0; i < q_equation.number_of_solutions(); ++i)
 	{
 		std::cout << q_equation.solutions()[i] << std::endl;
 	}
-	for(int i = 0; i < 3; ++i)
+	for(int i = 0; i < cubic_equation.number_of_solutions(); ++i)
 	{
-		std::cout << c_equation.solutions()[i] << std::endl;
+		std::cout << cubic_equation.solutions()[i] << std::endl;
+	}
+	for(int i = 0; i < cubic_equation2.number_of_solutions(); ++i)
+	{
+		std::cout << cubic_equation2.solutions()[i] << std::endl;
 	}
 
 	return 0;
