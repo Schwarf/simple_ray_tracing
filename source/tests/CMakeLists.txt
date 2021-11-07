@@ -12,7 +12,7 @@ include_directories(${gmock_SOURCE_DIR}/include ${gmock_SOURCE_DIR})
 # 'test1.cpp tests2.cpp' are source files with tests
 add_executable(testfiles rays/test_light_source.cpp miscellaneous/test_image_buffer.cpp miscellaneous/test_c_vector.cpp
         rays/test_ray.cpp objects/test_sphere.cpp objects/mock_ray.h miscellaneous/test_validate.cpp
-        materials/test_material.cpp materials/mock_material_builder.h)
+        materials/test_material.cpp materials/mock_material_builder.h miscellaneous/test_quadratic_equation.cpp)
 
 target_link_libraries(testfiles objects_lib)
 target_link_libraries(testfiles materials_lib)

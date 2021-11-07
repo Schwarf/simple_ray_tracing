@@ -93,7 +93,7 @@ CubicEquation<T>::CubicEquation(const c_vector<4, T> &coefficients, const T &eps
 		solutions_[0] = std::cbrt(root_discriminant - q) - std::cbrt(root_discriminant + q);
 		number_of_solutions_ = 1;
 	}
-	for (size_t index = 0; index < 3; ++index) {
+	for (size_t index = 0; index < number_of_solutions_; ++index) {
 		solutions_[index] -= 1. / 3. * r_quadratic_coefficient;
 	}
 

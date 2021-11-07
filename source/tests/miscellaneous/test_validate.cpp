@@ -17,7 +17,7 @@ protected:
 
 TEST_F(SetupValidate, test_above_threshold_does_not_throw)
 {
-	auto validate = Validate();
+	auto validate = Validate<float>();
 	std::string variable_name = "above_threshold";
 	std::string class_name = "TestValidate";
 
@@ -26,7 +26,7 @@ TEST_F(SetupValidate, test_above_threshold_does_not_throw)
 
 TEST_F(SetupValidate, test_below_threshold_does_not_throw)
 {
-	auto validate = Validate();
+	auto validate = Validate<float>();
 	std::string variable_name = "below_threshold";
 	std::string class_name = "TestValidate";
 
@@ -35,7 +35,7 @@ TEST_F(SetupValidate, test_below_threshold_does_not_throw)
 
 TEST_F(SetupValidate, test_above_threshold_does_throw)
 {
-	auto validate = Validate();
+	auto validate = Validate<float>();
 	std::string variable_name = "below_threshold";
 	std::string class_name = "TestValidate";
 	std::string message = "In class " + class_name + " " + variable_name + "=" + std::to_string(below_threshold)
@@ -52,7 +52,7 @@ TEST_F(SetupValidate, test_above_threshold_does_throw)
 
 TEST_F(SetupValidate, test_below_threshold_does_throw)
 {
-	auto validate = Validate();
+	auto validate = Validate<float>();
 	std::string variable_name = "below_threshold";
 	std::string class_name = "TestValidate";
 

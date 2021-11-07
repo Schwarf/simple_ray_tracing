@@ -76,8 +76,6 @@ public:
 		std::string message =
 			message_part1 + class_name + " " + variable_name + "=" + variable_part + message_part2 + threshold_part;
 		throw std::out_of_range(message);
-
-
 	}
 };
 
