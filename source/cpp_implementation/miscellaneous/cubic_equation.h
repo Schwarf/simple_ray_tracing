@@ -83,7 +83,6 @@ CubicEquation<T>::CubicEquation(const c_vector<4, T> &coefficients, const T &eps
 		auto phi = 1. / 3. * std::acos(-q / std::sqrt(-p_cubed));
 		auto t = 2 * std::sqrt(-p);
 		solutions_[0] = t * std::cos(phi);
-		std::cout << "PI " << t << "  " << std::cos(phi - M_PI / 3.) << std::endl;
 		solutions_[1] = -t * std::cos(phi + M_PI / 3.);
 		solutions_[2] = -t * std::cos(phi - M_PI / 3.);
 		number_of_solutions_ = 3;
