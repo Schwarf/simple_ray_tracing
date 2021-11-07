@@ -52,7 +52,7 @@ QuarticEquation<T>::QuarticEquation(const c_vector<5, T> &coefficients, const T 
 	auto r_constant = constant / quartic_coefficient;
 
 	auto r_cubic_coefficient_squared = r_cubic_coefficient * r_cubic_coefficient;
-	auto p = -3. / 8. * r_cubic_coefficient + r_quadratic_coefficient;
+	auto p = -3. / 8. * r_cubic_coefficient_squared + r_quadratic_coefficient;
 	auto q = 1. / 8 * r_cubic_coefficient_squared * r_cubic_coefficient
 		- 1. / 2. * r_cubic_coefficient * r_quadratic_coefficient + r_linear_coefficient;
 	auto r = -3. / 256. * r_cubic_coefficient_squared * r_cubic_coefficient_squared
@@ -74,15 +74,19 @@ QuarticEquation<T>::QuarticEquation(const c_vector<5, T> &coefficients, const T 
 	}
 	else {
 		T c_cube = 1.;
-		T c_quadratic = -1. / 2. * p;
+		T c_quadratic = -p/ 2.;
 		T c_linear = -r;
-		T c_constant = 1. / 2. * r * p - 1. / 8. * q * q;
+		T c_constant = r * p/2. - q * q/8.;
 		c_vector<4, T> cubic_coefficients{c_cube, c_quadratic, c_linear, c_constant};
 		auto cubic_solver = CubicEquation<T>(cubic_coefficients, epsilon);
+		if(cubic_solver.number_of_solutions()  != 1)
+		{
+			std::cout << "Error in quartic equation. Expect only one real solution in cubic sub-equation!" << std::endl;
+		}
 		auto z = cubic_solver.solutions()[0];
 		auto u = z * z - r;
 		auto v = 2 * z - p;
-		if (std:abs(u) < epsilon)
+		if (std::abs(u) < epsilon)
 		{
 			u = 0;
 		}
@@ -118,7 +122,7 @@ QuarticEquation<T>::QuarticEquation(const c_vector<5, T> &coefficients, const T 
 }
 
 template<typename T>
-c_vector<3, T> QuarticEquation<T>::solutions()
+c_vector<4, T> QuarticEquation<T>::solutions()
 {
 	return solutions_;
 }
