@@ -9,3 +9,7 @@ Build in "source" folder with cmake version >= 3.20:
 cmake -Bcmake-build-debug -DCMAKE_BUILD_TYPE=DEBUG 
 
 cmake --build cmake-build-debug/ -- -j 19
+
+### ToDo
+- The unit tests for cubic equation lack accuracy (even in double precision). 
+  This might be a bug. The behaviour is reproducible for epsilon > 1.e-4 (quite large).
