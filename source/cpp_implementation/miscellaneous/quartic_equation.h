@@ -95,6 +95,18 @@ QuarticEquation<T>::QuarticEquation(const c_vector<5, T> &coefficients, const T 
 		}
 		else
 			return;
+
+		if (std::abs(v) < epsilon)
+		{
+			v = 0;
+		}
+		else if (v > 0) {
+			v = std::sqrt(v);
+		}
+		else
+			return;
+
+
 		c_quadratic = 1.;
 		c_linear = q < 0 ? -v : v;
 		c_constant = z - u;
