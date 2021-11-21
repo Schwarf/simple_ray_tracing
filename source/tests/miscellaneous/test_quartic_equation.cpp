@@ -43,11 +43,12 @@ protected:
 	float e5_{630.f};
 	std::vector<float> solutions5_{-6.26497173, 2.26605988};
 
-	float a6_{-2.};
-	float b6_{0.};
-	float c6_{6.};
-	float d6_{-2.};
-	std::vector<float> solutions6_{-1.87938524, 1.53208889,  0.34729636};
+	float a6_{5.f};
+	float b6_{17.f};
+	float c6_{16.f};
+	float d6_{67.f};
+	float e6_{1630.31f};
+	std::vector<float> solutions6_{};
 
 	float a7_{-2.e-9};
 	float b7_{0.};
@@ -124,4 +125,11 @@ TEST_F(SetupQuarticEquation, quartic_equation_cubic_coefficient_is_zero_two_solu
 	EXPECT_EQ(solver.number_of_solutions(), 2);
 	EXPECT_TRUE(check_for_solution(solver.solutions()[0], solutions5_));
 	EXPECT_TRUE(check_for_solution(solver.solutions()[1], solutions5_));
+}
+
+TEST_F(SetupQuarticEquation, quartic_equation_cubic_zero_solutions)
+{
+	c_vector<5, float> coefficients{a6_, b6_, c6_, d6_, e6_};
+	auto solver = QuarticEquation<float>(coefficients, epsilon_);
+	EXPECT_EQ(solver.number_of_solutions(), 0);
 }
