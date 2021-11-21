@@ -7,14 +7,17 @@ add_library(misc_lib STATIC miscellaneous/validate.h miscellaneous/templates/c_v
             miscellaneous/image_buffer.cpp miscellaneous/image_buffer.h miscellaneous/quartic_equation.h)
 add_library(misc_interfaces INTERFACE miscellaneous/interfaces/i_validate.h miscellaneous/interfaces/i_image_buffer.h miscellaneous/quadratic_equation.h)
 
-add_library(objects_lib STATIC objects/sphere.cpp objects/sphere.h objects/rectangle.cpp objects/rectangle.h objects/object_list.cpp objects/object_list.h)
-add_library(objects_interfaces INTERFACE objects/interfaces/i_object_list.h objects/interfaces/i_sphere.h
-            objects/interfaces/i_target_object.h objects/interfaces/i_rectangle.h)
-
 add_library(materials_lib STATIC materials/material.cpp materials/material.h materials/material_builder.cpp
         materials/material_builder.h )
+
+add_library(objects_lib STATIC objects/sphere.cpp objects/sphere.h objects/rectangle.cpp objects/rectangle.h objects/object_list.cpp objects/object_list.h create_scenes/create_object_list.cpp create_scenes/create_object_list.h)
+add_library(objects_interfaces INTERFACE objects/interfaces/i_object_list.h objects/interfaces/i_sphere.h
+            objects/interfaces/i_target_object.h objects/interfaces/i_rectangle.h)
 
 add_library(materials_interfaces INTERFACE materials/interfaces/i_reflection_coefficients.h materials/interfaces/i_material_builder.h
         materials/interfaces/i_specular_exponent.h materials/interfaces/i_material.h
         materials/interfaces/i_refraction_coefficient.h)
 
+add_library(scenes_lib STATIC create_scenes/create_object_list.cpp create_scenes/create_object_list.h create_scenes/create_scene_illumination.cpp create_scenes/create_scene_illumination.h)
+
+target_link_libraries(scenes_lib objects_lib materials_lib ray_lib)
