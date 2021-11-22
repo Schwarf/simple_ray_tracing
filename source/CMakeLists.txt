@@ -38,5 +38,5 @@ add_subdirectory(tests)
 target_link_libraries(cuda_cast cuda_misc_lib cuda_interfaces)
 set_target_properties(cuda_cast PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 
-target_link_libraries(ray_cast misc_lib misc_interfaces scenes_lib)
+target_link_libraries(ray_cast misc_lib misc_interfaces scenes_lib camera_lib)
 
