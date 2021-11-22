@@ -40,6 +40,14 @@ float Camera::focal_length()
 	return focal_length_;
 }
 
+void Camera::get_pixel_coordinates(const int & width_index, const int & hight_index, float & u, float & v)
+{
+	if(antialiasing_enabled_)
+	{
+		UniformRandomNumberGenerator::get_random(0.f, 1.f);
+	}
+}
+
 void Camera::render_image(std::shared_ptr<IObjectList> &objects_in_scene, std::shared_ptr<ISceneIllumination> &scene_illumination)
 {
 	#pragma omp parallel for
@@ -109,4 +117,17 @@ c_vector3 Camera::get_pixel_color(std::shared_ptr<IRay> &ray,
 std::shared_ptr<IImageBuffer> Camera::get_image_buffer()
 {
 	return image_buffer_;
+}
+void Camera::enable_antialiasing()
+{
+	antialiasing_enabled_ = true;
+}
+void Camera::disable_antialiasing()
+{
+	antialiasing_enabled_ = false;
+}
+
+bool Camera::antialiasing_enabled()
+{
+	return antialiasing_enabled_;
 }

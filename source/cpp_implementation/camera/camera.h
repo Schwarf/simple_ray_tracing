@@ -10,18 +10,23 @@
 #include "camera/interfaces/i_camera.h"
 #include "rays/interfaces/i_ray.h"
 #include "rays/interfaces/i_ray_interactions.h"
-
+#include <random>
 #include "rays/ray.h"
 #include "miscellaneous/image_buffer.h"
 #include "rays/ray_interactions.h"
+#include "miscellaneous/templates/random_number_generator.h"
 
 class Camera final: ICamera
 {
 public:
 	Camera(int image_width, int image_height, float viewport_width, float focal_length);
-	void render_image(std::shared_ptr<IObjectList> &objects_in_scene, std::shared_ptr<ISceneIllumination> &scene_illumination) final;
+	void render_image(std::shared_ptr<IObjectList> &objects_in_scene,
+					  std::shared_ptr<ISceneIllumination> &scene_illumination) final;
 	std::shared_ptr<IRay> get_ray(float width_coordinate, float height_coordinate) final;
 	std::shared_ptr<IImageBuffer> get_image_buffer() final;
+	void enable_antialiasing() final;
+	void disable_antialiasing() final;
+	bool antialiasing_enabled() override;
 
 private:
 	int image_width() override;
@@ -31,7 +36,9 @@ private:
 	c_vector3 get_pixel_color(std::shared_ptr<IRay> &ray,
 							  std::shared_ptr<IObjectList> &objects_in_scene,
 							  std::shared_ptr<ISceneIllumination> &scene_illumination,
-							  size_t recursion_depth=0) final;
+							  size_t recursion_depth = 0) final;
+	void get_pixel_coordinates(const int & width_index, const int & hight_index, float & u, float & v);
+
 
 
 private:
@@ -44,6 +51,7 @@ private:
 	c_vector3 vertical_direction_{0., 0., 0.};
 	c_vector3 lower_left_corner_{0., 0., 0.};
 	std::shared_ptr<IImageBuffer> image_buffer_;
+	bool antialiasing_enabled_{};
 };
 
 

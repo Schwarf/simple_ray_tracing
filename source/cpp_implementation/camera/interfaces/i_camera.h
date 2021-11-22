@@ -21,6 +21,9 @@ public:
 	virtual float aspect_ratio() = 0;
 	virtual float focal_length() = 0;
 	virtual std::shared_ptr<IImageBuffer> get_image_buffer()=0;
+	virtual void enable_antialiasing() = 0;
+	virtual void disable_antialiasing() = 0;
+	virtual bool antialiasing_enabled() = 0;
 
 private:
 	virtual c_vector3 get_pixel_color(std::shared_ptr<IRay> &ray,
