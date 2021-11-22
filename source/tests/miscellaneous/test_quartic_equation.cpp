@@ -50,11 +50,6 @@ protected:
 	float e6_{1630.31f};
 	std::vector<float> solutions6_{};
 
-	float a7_{-2.e-9};
-	float b7_{0.};
-	float c7_{6.};
-	float d7_{-2.};
-
 	float epsilon_{1e-5};
 
 	bool check_for_solution(float value, std::vector<float> &solutions) const

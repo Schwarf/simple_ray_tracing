@@ -22,7 +22,7 @@ __device__ float Sphere::radius() const
 }
 
 
-__device__ bool Sphere::does_ray_intersect(const IRay &ray, c_vector3 &hit_normal, c_vector3 &hit_point) const
+__device__ bool Sphere::does_ray_intersect(std::shared_ptr<IRay> &ray, c_vector3 &hit_normal, c_vector3 &hit_point) const
 {
 	c_vector3 origin_to_center = (center_ - ray.origin());
 	float origin_to_center_dot_direction = origin_to_center * ray.direction_normalized();

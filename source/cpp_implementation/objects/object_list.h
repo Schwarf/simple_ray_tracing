@@ -17,7 +17,7 @@ public:
 	size_t number_of_objects() final;
 	~ObjectList() override = default;
 	std::shared_ptr<ITargetObject> object(size_t index) final;
-	std::shared_ptr<ITargetObject> get_object_hit_by_ray(const IRay &ray,
+	std::shared_ptr<ITargetObject> get_object_hit_by_ray(std::shared_ptr<IRay> &ray,
 														 c_vector3 &hit_normal,
 														 c_vector3 &hit_point) final;
 private:

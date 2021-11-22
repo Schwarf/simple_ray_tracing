@@ -28,11 +28,11 @@ void Sphere::init() const
 	validate_.is_above_threshold("radius", radius_, 0.0, " Sphere");
 }
 
-bool Sphere::does_ray_intersect(const IRay &ray, c_vector3 &hit_normal, c_vector3 &hit_point) const
+bool Sphere::does_ray_intersect(std::shared_ptr<IRay> &ray, c_vector3 &hit_normal, c_vector3 &hit_point) const
 {
 	float closest_hit_distance = -1.0;
-	c_vector3 origin_to_center = (center_ - ray.origin());
-	float origin_to_center_dot_direction = origin_to_center * ray.direction_normalized();
+	c_vector3 origin_to_center = (center_ - ray->origin());
+	float origin_to_center_dot_direction = origin_to_center * ray->direction_normalized();
 	float epsilon = 1e-3;
 	float discriminant = origin_to_center_dot_direction * origin_to_center_dot_direction -
 		((origin_to_center * origin_to_center) - radius_ * radius_);
@@ -48,7 +48,7 @@ bool Sphere::does_ray_intersect(const IRay &ray, c_vector3 &hit_normal, c_vector
 	if (closest_hit_distance < epsilon) {
 		return false;
 	}
-	hit_point = ray.origin() + ray.direction_normalized() * closest_hit_distance;
+	hit_point = ray->origin() + ray->direction_normalized() * closest_hit_distance;
 	hit_normal = (hit_point - center_).normalize();
 	return true;
 }

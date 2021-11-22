@@ -23,7 +23,7 @@ public:
 
 	~Rectangle() final = default;
 
-	bool does_ray_intersect(const IRay &ray, c_vector3 &closest_hit_distance, c_vector3 &hit_point) const final;
+	bool does_ray_intersect(std::shared_ptr<IRay> &ray, c_vector3 &closest_hit_distance, c_vector3 &hit_point) const final;
 
 	void set_material(std::shared_ptr<IMaterial> material) final;
 

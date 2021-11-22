@@ -20,7 +20,7 @@ std::shared_ptr<ITargetObject> ObjectList::object(size_t index)
 	return object_vector_[index];
 }
 
-std::shared_ptr<ITargetObject> ObjectList::get_object_hit_by_ray(const IRay &ray,
+std::shared_ptr<ITargetObject> ObjectList::get_object_hit_by_ray(std::shared_ptr<IRay> &ray,
 																 c_vector3 &hit_normal,
 																 c_vector3 &hit_point)
 {

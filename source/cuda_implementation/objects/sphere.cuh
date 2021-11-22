@@ -4,6 +4,7 @@
 
 #ifndef SIMPLE_RAY_TRACING_SPHERE_H
 #define SIMPLE_RAY_TRACING_SPHERE_H
+#include <memory>
 #include "interfaces/i_sphere.cuh"
 #include "./../materials/interfaces/i_material.cuh"
 
@@ -19,7 +20,7 @@ public:
 
 	__device__ ~Sphere() override = default;
 
-	__device__ bool does_ray_intersect(const IRay &ray, c_vector3 &hit_normal, c_vector3 &hit_point) const final;
+	__device__ bool does_ray_intersect(std::shared_ptr<IRay> &ray, c_vector3 &hit_normal, c_vector3 &hit_point) const final;
 
 	__device__ IMaterial * material() const final;
 

@@ -1,7 +1,8 @@
 add_library(ray_lib STATIC rays/ray_interactions.cpp rays/ray_interactions.h rays/ray.cpp rays/ray.h
-        rays/scene_illumination.cpp rays/scene_illumination.h rays/light_source.cpp rays/light_source.h)
+        rays/scene_illumination.cpp rays/scene_illumination.h rays/light_source.cpp rays/light_source.h rays/camera.cpp rays/camera.h)
+
 add_library(ray_interfaces INTERFACE rays/interfaces/i_ray_intersection.h rays/interfaces/i_ray.h rays/interfaces/i_ray_interactions.h
-        rays/interfaces/i_scene_illumination.h rays/interfaces/i_light_source.h)
+        rays/interfaces/i_scene_illumination.h rays/interfaces/i_light_source.h  rays/interfaces/i_camera.h)
 
 add_library(misc_lib STATIC miscellaneous/validate.h miscellaneous/templates/c_vector.h
             miscellaneous/image_buffer.cpp miscellaneous/image_buffer.h miscellaneous/quartic_equation.h)

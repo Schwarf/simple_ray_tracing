@@ -13,8 +13,9 @@
 #include "miscellaneous/cubic_equation.h"
 #include "create_scenes/create_object_list.h"
 #include "create_scenes/create_scene_illumination.h"
+#include "rays/camera.h"
 
-c_vector3 cast_ray(const IRay &ray,
+c_vector3 cast_ray(std::shared_ptr<IRay> ray,
 				   ObjectList &object_list,
 				   SceneIllumination &scene_illumination,
 				   size_t recursion_depth = 0)
@@ -27,12 +28,12 @@ c_vector3 cast_ray(const IRay &ray,
 		return scene_illumination.background_color();
 	}
 	auto interaction = RayInteractions();
-	auto reflected_ray = Ray(hit_point, interaction.reflection(ray.direction_normalized(), hit_normal).normalize());
-	auto refracted_ray = Ray(hit_point,
-							 interaction.refraction(ray.direction_normalized(),
+	std::shared_ptr<IRay> reflected_ray = std::make_shared<Ray>(Ray(hit_point, interaction.reflection(ray->direction_normalized(), hit_normal).normalize()));
+	std::shared_ptr<IRay> refracted_ray = std::make_shared<Ray>(Ray(hit_point,
+							 interaction.refraction(ray->direction_normalized(),
 													hit_normal,
 													object->get_material()->refraction_coefficient(),
-													air_refraction_index).normalize());
+													air_refraction_index).normalize()));
 	recursion_depth++;
 	auto reflected_color = cast_ray(reflected_ray, object_list, scene_illumination, recursion_depth);
 	auto refracted_color = cast_ray(refracted_ray, object_list, scene_illumination, recursion_depth);
@@ -43,7 +44,7 @@ c_vector3 cast_ray(const IRay &ray,
 	for (size_t ls_index = 0; ls_index < scene_illumination.number_of_light_sources(); ++ls_index) {
 		light_source = scene_illumination.light_source(ls_index);
 		auto light_direction = (light_source->position() - hit_point).normalize();
-		auto light_source_ray = Ray(hit_point, light_direction);
+		std::shared_ptr<IRay> light_source_ray = std::make_shared<Ray>(Ray(hit_point, light_direction));
 		auto shadow_point = c_vector3{0., 0., 0.};
 		auto shadow_normal = c_vector3{0., 0., 0.};
 		auto object_in_shadow = object_list.get_object_hit_by_ray(light_source_ray, shadow_normal, shadow_point);
@@ -55,7 +56,7 @@ c_vector3 cast_ray(const IRay &ray,
 
 		diffuse_intensity += light_source->intensity() * std::max(0.f, light_direction * hit_normal);
 		specular_intensity +=
-			std::pow(std::max(0.f, interaction.reflection(light_direction, hit_normal) * ray.direction_normalized()),
+			std::pow(std::max(0.f, interaction.reflection(light_direction, hit_normal) * ray->direction_normalized()),
 					 object->get_material()->specular_exponent()) * light_source->intensity();
 	}
 
@@ -75,15 +76,13 @@ void render(ObjectList &object_list, SceneIllumination &scene_illumination)
 	auto width = 1024;
 	auto height = 768;
 	auto image_buffer = ImageBuffer(width, height);
+	auto camera = Camera(width, height, 2.0, 1.0);
 	#pragma omp parallel for
 	for (int height_index = 0; height_index < height; height_index++) {
 		for (int width_index = 0; width_index < width; width_index++) {
-			float x_direction = float(width_index) - float(width) / 2.f;
-			float y_direction = float(height_index) - float(height) / 2.f;
-			float z_direction = -float(height + width) / 2.f;
-			c_vector3 direction = c_vector3{x_direction, y_direction, z_direction}.normalize();
-			c_vector3 origin = c_vector3{0, 0, 0};
-			auto ray = Ray(origin, direction);
+			auto u = double(width_index)/(width-1);
+			auto v = double(height_index)/(height-1);
+			auto ray = camera.get_ray(u, v);
 			auto color_values = cast_ray(ray, object_list, scene_illumination);
 			image_buffer.set_pixel_value(width_index, height_index, color_values);
 
