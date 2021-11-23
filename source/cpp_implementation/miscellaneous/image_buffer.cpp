@@ -27,9 +27,11 @@ ImageBuffer::ImageBuffer(const int width, const int height)
 	buffer_.resize(height_ * width_);
 }
 
-void ImageBuffer::set_pixel_value(size_t width_index, size_t height_index, const c_vector3 &pixel_color_value)
+void ImageBuffer::set_pixel_value(size_t width_index, size_t height_index, const c_vector3 &pixel_color_value, size_t samples_per_pixel)
 {
-	buffer_[width_index + height_index * width_] = pixel_color_value;
+	auto scale = 1.f/float(samples_per_pixel);
+	auto pixel_color_mean_value = pixel_color_value*scale;
+	buffer_[width_index + height_index * width_] = pixel_color_mean_value;
 }
 
 c_vector3 ImageBuffer::get_rgb_pixel(size_t index)

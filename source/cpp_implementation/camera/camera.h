@@ -37,13 +37,13 @@ private:
 							  std::shared_ptr<IObjectList> &objects_in_scene,
 							  std::shared_ptr<ISceneIllumination> &scene_illumination,
 							  size_t recursion_depth = 0) final;
-	void get_pixel_coordinates(const int & width_index, const int & hight_index, float & u, float & v);
+	void get_pixel_coordinates(const size_t & width_index, const size_t & height_index, float & u, float & v);
 
 
 
 private:
-	int image_width_{};
-	int image_height_{};
+	size_t image_width_{};
+	size_t image_height_{};
 	float focal_length_{};
 	float aspect_ratio_{};
 	c_vector3 origin_{0., 0., 0.};
@@ -52,6 +52,7 @@ private:
 	c_vector3 lower_left_corner_{0., 0., 0.};
 	std::shared_ptr<IImageBuffer> image_buffer_;
 	bool antialiasing_enabled_{};
+	UniformRandomNumberGenerator generator_{};
 };
 
 

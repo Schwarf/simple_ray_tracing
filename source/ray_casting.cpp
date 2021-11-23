@@ -26,6 +26,7 @@ int main()
 	auto viewport_width = 2.f;
 
 	auto camera = Camera(image_width, image_height, viewport_width, focal_length);
+	camera.enable_antialiasing();
 	camera.render_image(objects_in_scene, scene_lights);
 	auto image_buffer = camera.get_image_buffer();
 	std::ofstream ofs;

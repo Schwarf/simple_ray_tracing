@@ -20,7 +20,9 @@ Camera::Camera(int image_width, int image_height, float viewport_width, float fo
 
 std::shared_ptr<IRay> Camera::get_ray(float width_coordinate, float height_coordinate)
 {
-	auto direction = lower_left_corner_ + width_coordinate*horizontal_direction_ + height_coordinate*vertical_direction_ -origin_;
+	auto direction =
+		lower_left_corner_ + width_coordinate * horizontal_direction_ + height_coordinate * vertical_direction_
+			- origin_;
 	return std::make_shared<Ray>(Ray(origin_, direction));
 }
 int Camera::image_width()
@@ -40,32 +42,44 @@ float Camera::focal_length()
 	return focal_length_;
 }
 
-void Camera::get_pixel_coordinates(const int & width_index, const int & hight_index, float & u, float & v)
+void Camera::get_pixel_coordinates(const size_t &width_index, const size_t &height_index, float &u, float &v)
 {
-	if(antialiasing_enabled_)
-	{
-		UniformRandomNumberGenerator::get_random(0.f, 1.f);
+	if (antialiasing_enabled_) {
+		auto add_u = generator_.get_random(0.f, 1.f);
+		auto add_v = generator_.get_random(0.f, 1.f);
+		u = (float(width_index) + add_u) / float(image_width_ - 1);
+		v = (float(height_index) + add_v) / float(image_width_ - 1);
+		return;
 	}
+	u = float(width_index)  / float(image_width_ - 1);
+	v = float(height_index)  / float(image_width_ - 1);
 }
 
-void Camera::render_image(std::shared_ptr<IObjectList> &objects_in_scene, std::shared_ptr<ISceneIllumination> &scene_illumination)
+void Camera::render_image(std::shared_ptr<IObjectList> &objects_in_scene,
+						  std::shared_ptr<ISceneIllumination> &scene_illumination)
 {
+	float u{};
+	float v{};
+	size_t samples_per_pixel = 1;
+	if(antialiasing_enabled_)
+		samples_per_pixel = 10;
 	#pragma omp parallel for
-	for (int height_index = 0; height_index < image_height_; height_index++) {
-		for (int width_index = 0; width_index < image_width_; width_index++) {
-			auto u = double(width_index)/(image_width_-1);
-			auto v = double(height_index)/(image_height_-1);
-			auto ray = get_ray(u, v);
-			auto color_values = get_pixel_color(ray, objects_in_scene, scene_illumination);
-			image_buffer_->set_pixel_value(width_index, height_index, color_values);
+	for (size_t height_index = 0; height_index < image_height_; height_index++) {
+		for (size_t width_index = 0; width_index < image_width_; width_index++) {
+			c_vector3 color_values{0,0,0};
+			for(size_t sample =0; sample < samples_per_pixel; ++sample) {
+				get_pixel_coordinates(width_index, height_index, u, v);
+				auto ray = get_ray(u, v);
+				color_values = color_values + get_pixel_color(ray, objects_in_scene, scene_illumination);
+			}
+			image_buffer_->set_pixel_value(width_index, height_index, color_values, samples_per_pixel);
 		}
 	}
-
 
 }
 c_vector3 Camera::get_pixel_color(std::shared_ptr<IRay> &ray,
 								  std::shared_ptr<IObjectList> &objects_in_scene,
-								  std::shared_ptr <ISceneIllumination> &scene_illumination,
+								  std::shared_ptr<ISceneIllumination> &scene_illumination,
 								  size_t recursion_depth)
 {
 	auto hit_point = c_vector3{0, 0, 0};
@@ -76,12 +90,16 @@ c_vector3 Camera::get_pixel_color(std::shared_ptr<IRay> &ray,
 		return scene_illumination->background_color();
 	}
 	auto interaction = RayInteractions();
-	std::shared_ptr<IRay> reflected_ray = std::make_shared<Ray>(Ray(hit_point, interaction.reflection(ray->direction_normalized(), hit_normal).normalize()));
-	std::shared_ptr<IRay> refracted_ray = std::make_shared<Ray>(Ray(hit_point,
-																	interaction.refraction(ray->direction_normalized(),
-																						   hit_normal,
-																						   object->get_material()->refraction_coefficient(),
-																						   air_refraction_index).normalize()));
+
+	auto reflection_direction = interaction.reflection(ray->direction_normalized(), hit_normal).normalize();
+	std::shared_ptr<IRay> reflected_ray = std::make_shared<Ray>(Ray(hit_point, reflection_direction));
+	auto refraction_coefficient = object->get_material()->refraction_coefficient();
+	auto refraction_direction =
+		interaction.refraction(ray->direction_normalized(), hit_normal, refraction_coefficient, air_refraction_index)
+			.normalize();
+	std::shared_ptr<IRay> refracted_ray = std::make_shared<Ray>(Ray(hit_point, refraction_direction));
+
+	// Start recursion
 	recursion_depth++;
 	auto reflected_color = get_pixel_color(reflected_ray, objects_in_scene, scene_illumination, recursion_depth);
 	auto refracted_color = get_pixel_color(refracted_ray, objects_in_scene, scene_illumination, recursion_depth);
@@ -106,14 +124,15 @@ c_vector3 Camera::get_pixel_color(std::shared_ptr<IRay> &ray,
 		specular_intensity +=
 			std::pow(std::max(0.f, interaction.reflection(light_direction, hit_normal) * ray->direction_normalized()),
 					 object->get_material()->specular_exponent()) * light_source->intensity();
-		}
+	}
 	auto diffuse_reflection =
 		object->get_material()->rgb_color() * diffuse_intensity * object->get_material()->diffuse_reflection();
 	auto specular_reflection = specular_intensity * c_vector3{1, 1, 1} * object->get_material()->specular_reflection();
 	auto ambient_reflection = reflected_color * object->get_material()->ambient_reflection();
-	auto refraction = refracted_color*object->get_material()->shininess();
+	auto refraction = refracted_color * object->get_material()->shininess();
 	return diffuse_reflection + specular_reflection + ambient_reflection + refraction;
 }
+
 std::shared_ptr<IImageBuffer> Camera::get_image_buffer()
 {
 	return image_buffer_;
