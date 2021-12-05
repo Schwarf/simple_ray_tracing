@@ -27,14 +27,14 @@ ImageBuffer::ImageBuffer(const int width, const int height)
 	buffer_.resize(height_ * width_);
 }
 
-void ImageBuffer::set_pixel_value(size_t width_index, size_t height_index, const c_vector3 &pixel_color_value, size_t samples_per_pixel)
+void ImageBuffer::set_pixel_value(int width_index, int height_index, const c_vector3 &pixel_color_value, int samples_per_pixel)
 {
 	auto scale = 1.f/float(samples_per_pixel);
 	auto pixel_color_mean_value = pixel_color_value*scale;
 	buffer_[width_index + height_index * width_] = pixel_color_mean_value;
 }
 
-c_vector3 ImageBuffer::get_rgb_pixel(size_t index)
+c_vector3 ImageBuffer::get_rgb_pixel(int index)
 {
 	auto red = (255 * std::max(0.f, std::min(1.f, buffer_[index][0])));
 	auto green = (255 * std::max(0.f, std::min(1.f, buffer_[index][1])));
@@ -44,6 +44,6 @@ c_vector3 ImageBuffer::get_rgb_pixel(size_t index)
 
 c_vector3 ImageBuffer::get_rgb_pixel(int width_index, int height_index)
 {
-	size_t index = width_index + height_index * width_;
+	int index = width_index + height_index * width_;
 	return get_rgb_pixel(index);
 }

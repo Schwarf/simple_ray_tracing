@@ -42,8 +42,8 @@ private:
 
 
 private:
-	size_t image_width_{};
-	size_t image_height_{};
+	int image_width_{};
+	int image_height_{};
 	float focal_length_{};
 	float aspect_ratio_{};
 	c_vector3 origin_{0., 0., 0.};
@@ -52,7 +52,7 @@ private:
 	c_vector3 lower_left_corner_{0., 0., 0.};
 	std::shared_ptr<IImageBuffer> image_buffer_;
 	bool antialiasing_enabled_{};
-	UniformRandomNumberGenerator generator_{};
+	UniformRandomNumberGenerator random_number_generator_{};
 };
 
 

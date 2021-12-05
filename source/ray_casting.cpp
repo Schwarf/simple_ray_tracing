@@ -10,7 +10,6 @@
 #include "create_scenes/create_object_list.h"
 #include "create_scenes/create_scene_illumination.h"
 #include "camera/camera.h"
-#include "miscellaneous/templates/random_number_generator.h"
 
 int main()
 {

@@ -45,14 +45,14 @@ float Camera::focal_length()
 void Camera::get_pixel_coordinates(const size_t &width_index, const size_t &height_index, float &u, float &v)
 {
 	if (antialiasing_enabled_) {
-		auto add_u = generator_.get_random(0.f, 1.f);
-		auto add_v = generator_.get_random(0.f, 1.f);
+		auto add_u = random_number_generator_.get_random(0.f, 1.f);
+		auto add_v = random_number_generator_.get_random(0.f, 1.f);
 		u = (float(width_index) + add_u) / float(image_width_ - 1);
-		v = (float(height_index) + add_v) / float(image_width_ - 1);
+		v = (float(height_index) + add_v) / float(image_height_ - 1);
 		return;
 	}
 	u = float(width_index)  / float(image_width_ - 1);
-	v = float(height_index)  / float(image_width_ - 1);
+	v = float(height_index)  / float(image_height_ - 1);
 }
 
 void Camera::render_image(std::shared_ptr<IObjectList> &objects_in_scene,
@@ -60,12 +60,12 @@ void Camera::render_image(std::shared_ptr<IObjectList> &objects_in_scene,
 {
 	float u{};
 	float v{};
-	size_t samples_per_pixel = 1;
+	int samples_per_pixel = 1;
 	if(antialiasing_enabled_)
 		samples_per_pixel = 10;
 	#pragma omp parallel for
-	for (size_t height_index = 0; height_index < image_height_; height_index++) {
-		for (size_t width_index = 0; width_index < image_width_; width_index++) {
+	for (int height_index = 0; height_index < image_height_; height_index++) {
+		for (int width_index = 0; width_index < image_width_; width_index++) {
 			c_vector3 color_values{0,0,0};
 			for(size_t sample =0; sample < samples_per_pixel; ++sample) {
 				get_pixel_coordinates(width_index, height_index, u, v);
