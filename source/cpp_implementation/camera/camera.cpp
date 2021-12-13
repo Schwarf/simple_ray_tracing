@@ -61,6 +61,7 @@ void Camera::render_image(std::shared_ptr<IObjectList> &objects_in_scene,
 	float u{};
 	float v{};
 	int samples_per_pixel = 1;
+	size_t recursion_depth = 2;
 	if(antialiasing_enabled_)
 		samples_per_pixel = 10;
 	#pragma omp parallel for
@@ -70,7 +71,7 @@ void Camera::render_image(std::shared_ptr<IObjectList> &objects_in_scene,
 			for(size_t sample =0; sample < samples_per_pixel; ++sample) {
 				get_pixel_coordinates(width_index, height_index, u, v);
 				auto ray = get_ray(u, v);
-				color_values = color_values + get_pixel_color(ray, objects_in_scene, scene_illumination);
+				color_values = color_values + get_pixel_color(ray, objects_in_scene, scene_illumination, recursion_depth);
 			}
 			image_buffer_->set_pixel_value(width_index, height_index, color_values, samples_per_pixel);
 		}
@@ -86,7 +87,7 @@ c_vector3 Camera::get_pixel_color(std::shared_ptr<IRay> &ray,
 	auto hit_normal = c_vector3{0, 0, 0};
 	auto air_refraction_index = 1.f;
 	auto object = objects_in_scene->get_object_hit_by_ray(ray, hit_normal, hit_point);
-	if (object == nullptr || recursion_depth > 1) {
+	if (object == nullptr || recursion_depth < 1) {
 		auto mix_parameter = 1.f/2.f*(ray->direction_normalized()[1] + 1.f);
 		return scene_illumination->background_color(mix_parameter);
 	}
@@ -101,7 +102,7 @@ c_vector3 Camera::get_pixel_color(std::shared_ptr<IRay> &ray,
 	std::shared_ptr<IRay> refracted_ray = std::make_shared<Ray>(Ray(hit_point, refraction_direction));
 
 	// Start recursion
-	recursion_depth++;
+	recursion_depth--;
 	auto reflected_color = get_pixel_color(reflected_ray, objects_in_scene, scene_illumination, recursion_depth);
 	auto refracted_color = get_pixel_color(refracted_ray, objects_in_scene, scene_illumination, recursion_depth);
 
