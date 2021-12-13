@@ -20,7 +20,6 @@ public:
 	virtual size_t number_of_solutions() const final;
 
 private:
-	Validate <T> validate_;
 	c_vector<2, T> solutions_{std::numeric_limits<T>::quiet_NaN(), std::numeric_limits<T>::quiet_NaN()};
 	size_t number_of_solutions_{};
 };
@@ -34,8 +33,7 @@ QuadraticEquation<T>::QuadraticEquation(const c_vector<3, T> & coefficients, con
 		absolute_average += std::abs(coefficients[index]);
 	}
 	absolute_average /= 3.f;
-	validate_
-		.is_not_zero("quadratic_coefficient", coefficients[0]/absolute_average, epsilon, "QuadraticEquation");
+	Validate<T>::is_not_zero("quadratic_coefficient", coefficients[0]/absolute_average, epsilon, "QuadraticEquation");
 
 	T quadratic_coefficient = coefficients[0];
 	T linear_coefficient = coefficients[1];

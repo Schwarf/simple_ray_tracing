@@ -25,7 +25,7 @@ float Sphere::radius() const
 
 void Sphere::init() const
 {
-	validate_.is_above_threshold("radius", radius_, 0.0, " Sphere");
+	Validate<float>::is_above_threshold("radius", radius_, 0.0, " Sphere");
 }
 
 bool Sphere::does_ray_intersect(std::shared_ptr<IRay> &ray, c_vector3 &hit_normal, c_vector3 &hit_point) const

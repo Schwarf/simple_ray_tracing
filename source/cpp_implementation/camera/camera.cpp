@@ -87,7 +87,8 @@ c_vector3 Camera::get_pixel_color(std::shared_ptr<IRay> &ray,
 	auto air_refraction_index = 1.f;
 	auto object = objects_in_scene->get_object_hit_by_ray(ray, hit_normal, hit_point);
 	if (object == nullptr || recursion_depth > 1) {
-		return scene_illumination->background_color();
+		auto mix_parameter = 1.f/2.f*(ray->direction_normalized()[1] + 1.f);
+		return scene_illumination->background_color(mix_parameter);
 	}
 	auto interaction = RayInteractions();
 

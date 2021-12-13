@@ -58,8 +58,6 @@ private:
 	float refraction_coefficient_{-1.0};
 	c_vector3 rgb_color_{-1, -1, -1};
 	std::string name_;
-	Validate<float> validate_;
-
 };
 
 

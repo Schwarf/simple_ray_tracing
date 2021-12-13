@@ -12,8 +12,8 @@ public:
 	virtual void add_light_source(std::shared_ptr<ILightSource> light_source) = 0;
 	virtual std::shared_ptr<ILightSource> light_source(size_t index) = 0;
 	virtual size_t number_of_light_sources() = 0;
-	virtual c_vector3 background_color() = 0;
-	virtual void set_background_color(const c_vector3 &color) = 0;
+	virtual c_vector3 background_color(float parameter) = 0;
+	virtual void set_background_colors(const c_vector3 &color1, const c_vector3 &color2) = 0;
 	virtual ~ISceneIllumination() = default;
 };
 

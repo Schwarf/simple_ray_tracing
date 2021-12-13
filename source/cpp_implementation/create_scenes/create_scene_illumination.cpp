@@ -25,7 +25,10 @@ SceneIllumination create_scene_illumination()
 
 	scene_illumination.add_light_source(light_source2);
 	scene_illumination.add_light_source(light_source3);
-	scene_illumination.set_background_color(c_vector3{0.2, 0.7, 0.8});
+
+	auto background_color1 = c_vector3{0.2f, 0.7f, 0.8f};
+	auto background_color2 = c_vector3{1.f, 1.f, 1.f};
+	scene_illumination.set_background_colors(background_color1, background_color2);
 
 	return scene_illumination;
 }

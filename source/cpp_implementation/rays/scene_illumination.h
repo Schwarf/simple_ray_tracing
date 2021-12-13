@@ -6,7 +6,8 @@
 #define SCENE_ILLUMINATION_H
 
 
-#include <rays/interfaces/i_scene_illumination.h>
+#include "rays/interfaces/i_scene_illumination.h"
+#include "miscellaneous/validate.h"
 #include <algorithm>
 #include <vector>
 
@@ -23,12 +24,13 @@ public:
 	void add_light_source(std::shared_ptr<ILightSource> light_source) final;
 	std::shared_ptr<ILightSource> light_source(size_t index) final;
 	size_t number_of_light_sources() final;
-	c_vector3 background_color() final;
-	void set_background_color(const c_vector3 &color) final;
+	c_vector3 background_color(float parameter) final;
+	void set_background_colors(const c_vector3 &color1, const c_vector3 &color2) final;
 
 private:
 	std::vector<std::shared_ptr<ILightSource>> light_source_vector_;
-	c_vector3 background_color_;
+	c_vector3 background_color1_;
+	c_vector3 background_color2_;
 
 };
 

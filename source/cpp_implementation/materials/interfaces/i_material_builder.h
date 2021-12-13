@@ -5,7 +5,6 @@
 #ifndef SIMPLE_RAY_TRACING_I_MATERIAL_SETTER_H
 #define SIMPLE_RAY_TRACING_I_MATERIAL_SETTER_H
 #include "i_material.h"
-#include "miscellaneous/interfaces/i_validate.h"
 
 class IMaterialBuilder: public IMaterial
 {

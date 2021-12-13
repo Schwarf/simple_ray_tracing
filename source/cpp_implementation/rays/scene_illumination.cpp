@@ -6,20 +6,23 @@
 
 SceneIllumination::SceneIllumination(std::shared_ptr<ILightSource> light_source)
 {
-	background_color_ = c_vector3{0, 0, 0};
+	background_color1_ = c_vector3{1, 1, 1};
+	background_color1_ = c_vector3{1, 1, 1};
 	light_source_vector_.push_back(light_source);
 }
 
 SceneIllumination::SceneIllumination(const SceneIllumination &rhs)
 {
-	this->background_color_ = rhs.background_color_;
+	this->background_color1_ = rhs.background_color1_;
+	this->background_color2_ = rhs.background_color2_;
 	this->light_source_vector_ = rhs.light_source_vector_;
 }
 
 SceneIllumination::SceneIllumination(SceneIllumination &&rhs) noexcept
 {
 	this->light_source_vector_ = std::move(rhs.light_source_vector_);
-	this->background_color_ = rhs.background_color_;
+	this->background_color1_ = rhs.background_color1_;
+	this->background_color2_ = rhs.background_color2_;
 }
 SceneIllumination &SceneIllumination::operator=(const SceneIllumination &rhs)
 {
@@ -47,12 +50,14 @@ size_t SceneIllumination::number_of_light_sources()
 {
 	return light_source_vector_.size();
 }
-c_vector3 SceneIllumination::background_color()
+c_vector3 SceneIllumination::background_color(const float parameter)
 {
-	return background_color_;
+
+	return (1.f-parameter)*background_color1_ + parameter*background_color2_;
 }
-void SceneIllumination::set_background_color(const c_vector3 &color)
+void SceneIllumination::set_background_colors(const c_vector3 &color1, const c_vector3 &color2)
 {
-	background_color_ = color;
+	background_color1_ = color1;
+	background_color2_ = color2;
 }
 

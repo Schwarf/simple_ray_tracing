@@ -6,7 +6,6 @@
 #define QUARTIC_EQUATION_H
 #include "interfaces/i_solve.h"
 #include "quadratic_equation.h"
-#include "validate.h"
 #include "stdexcept"
 #include "limits"
 #include "cubic_equation.h"
@@ -21,7 +20,6 @@ public:
 	virtual size_t number_of_solutions() const final;
 
 private:
-	Validate<T> validate_;
 	c_vector<4, T> solutions_
 		{std::numeric_limits<T>::quiet_NaN(), std::numeric_limits<T>::quiet_NaN(), std::numeric_limits<T>::quiet_NaN(),
 		 std::numeric_limits<T>::quiet_NaN()};
@@ -38,7 +36,7 @@ QuarticEquation<T>::QuarticEquation(const c_vector<5, T> &coefficients, const T 
 	}
 	absolute_average /= 5.f;
 
-	validate_.is_not_zero("quartic_coefficient", coefficients[0] / absolute_average, epsilon, "QuarticEquation");
+	Validate<float>::is_not_zero("quartic_coefficient", coefficients[0] / absolute_average, epsilon, "QuarticEquation");
 
 	T quartic_coefficient = coefficients[0];
 	T cubic_coefficient = coefficients[1];
