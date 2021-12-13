@@ -8,6 +8,7 @@
 
 #include "rays/interfaces/i_scene_illumination.h"
 #include "miscellaneous/validate.h"
+#include "objects/sphere.h"
 #include <algorithm>
 #include <vector>
 
@@ -26,9 +27,11 @@ public:
 	size_t number_of_light_sources() final;
 	c_vector3 background_color(float parameter) final;
 	void set_background_colors(const c_vector3 &color1, const c_vector3 &color2) final;
-
+	void set_ground_sphere(const std::shared_ptr<ISphere> &ground_sphere) final;
+	std::shared_ptr<ISphere> get_ground() override;
 private:
 	std::vector<std::shared_ptr<ILightSource>> light_source_vector_;
+	std::shared_ptr<ISphere> ground_;
 	c_vector3 background_color1_;
 	c_vector3 background_color2_;
 

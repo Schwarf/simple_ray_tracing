@@ -6,6 +6,8 @@
 #define CREATE_SCENE_ILLUMINATION_H
 #include "rays/scene_illumination.h"
 #include "rays/light_source.h"
+#include "materials/material_builder.h"
+#include "materials/material.h"
 
 SceneIllumination create_scene_illumination();
 

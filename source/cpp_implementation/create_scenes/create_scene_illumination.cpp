@@ -30,5 +30,24 @@ SceneIllumination create_scene_illumination()
 	auto background_color2 = c_vector3{1.f, 1.f, 1.f};
 	scene_illumination.set_background_colors(background_color1, background_color2);
 
+	auto almost_zero = 0.0000001f;
+	auto ground_material_builder = MaterialBuilder();
+	ground_material_builder.set_specular_reflection(almost_zero);
+	ground_material_builder.set_diffuse_reflection(0.1);
+	ground_material_builder.set_ambient_reflection(0.05);
+	ground_material_builder.set_shininess(almost_zero);
+	ground_material_builder.set_rgb_color(c_vector3{0.1, 0.5, 0.1});
+	ground_material_builder.set_refraction_coefficient(almost_zero);
+	ground_material_builder.set_specular_exponent(almost_zero);
+	std::shared_ptr<IMaterial> ground_material = std::make_shared<Material>(Material("ground_material", ground_material_builder));
+
+	auto radius = 50.f;
+	auto center = c_vector3 {0, radius, -1};
+	auto ground_sphere = std::make_shared<Sphere>(Sphere(center, radius));
+	ground_sphere->set_material(ground_material);
+
+	scene_illumination.set_ground_sphere(ground_sphere);
+
+
 	return scene_illumination;
 }

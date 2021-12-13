@@ -5,7 +5,9 @@
 #ifndef I_SCENE_ILLUMINATION_H
 #define I_SCENE_ILLUMINATION_H
 #include "rays/interfaces/i_light_source.h"
+#include "materials/interfaces/i_material.h"
 #include <memory>
+#include <objects/interfaces/i_sphere.h>
 class ISceneIllumination
 {
 public:
@@ -14,6 +16,8 @@ public:
 	virtual size_t number_of_light_sources() = 0;
 	virtual c_vector3 background_color(float parameter) = 0;
 	virtual void set_background_colors(const c_vector3 &color1, const c_vector3 &color2) = 0;
+	virtual void set_ground_sphere(const std::shared_ptr<ISphere> &ground_sphere) = 0;
+	virtual std::shared_ptr<ISphere> get_ground() = 0;
 	virtual ~ISceneIllumination() = default;
 };
 

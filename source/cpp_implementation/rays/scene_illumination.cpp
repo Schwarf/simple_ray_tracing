@@ -60,4 +60,13 @@ void SceneIllumination::set_background_colors(const c_vector3 &color1, const c_v
 	background_color1_ = color1;
 	background_color2_ = color2;
 }
+void SceneIllumination::set_ground_sphere(const std::shared_ptr<ISphere> &ground_sphere)
+{
+	ground_ = ground_sphere;
+}
+
+std::shared_ptr<ISphere> SceneIllumination::get_ground()
+{
+	return ground_;
+}
 
