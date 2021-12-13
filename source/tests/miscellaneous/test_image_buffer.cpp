@@ -44,11 +44,12 @@ TEST_F(SetupImageBuffer, test_image_get_pixel)
 	auto image_buffer = ImageBuffer(width, height);
 	auto height_index = 5;
 	auto width_index = 5;
+	auto samples_per_pixel = 1;
 	auto pixel = image_buffer.get_rgb_pixel(width_index, height_index);
 	for (int i = 0; i < 3; ++i) {
 		EXPECT_FLOAT_EQ(pixel[i], 0.0);
 	}
-	image_buffer.set_pixel_value(width_index, height_index, red_pixel);
+	image_buffer.set_pixel_value(width_index, height_index, red_pixel, samples_per_pixel);
 	pixel = image_buffer.get_rgb_pixel(width_index, height_index);
 	for (int i = 0; i < 3; ++i) {
 		float expected = (255 * std::max(0.f, std::min(1.f, red_pixel[i])));
@@ -62,13 +63,14 @@ TEST_F(SetupImageBuffer, test_image_set_pixel)
 	auto image_buffer = ImageBuffer(width, height);
 	auto height_index = 3;
 	auto width_index = 4;
-	image_buffer.set_pixel_value(width_index, height_index, blue_pixel);
+	auto samples_per_pixel = 1;
+	image_buffer.set_pixel_value(width_index, height_index, blue_pixel, samples_per_pixel);
 	auto pixel = image_buffer.get_rgb_pixel(width_index, height_index);
 	for (int i = 0; i < 3; ++i) {
 		float expected = (255 * std::max(0.f, std::min(1.f, blue_pixel[i])));
 		EXPECT_FLOAT_EQ(pixel[i], expected);
 	}
-	image_buffer.set_pixel_value(width_index, height_index, green_pixel);
+	image_buffer.set_pixel_value(width_index, height_index, green_pixel, samples_per_pixel);
 	pixel = image_buffer.get_rgb_pixel(width_index, height_index);
 	for (int i = 0; i < 3; ++i) {
 		float expected = (255 * std::max(0.f, std::min(1.f, green_pixel[i])));
