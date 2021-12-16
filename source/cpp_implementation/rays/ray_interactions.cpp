@@ -19,7 +19,7 @@ std::shared_ptr<IRay>  RayInteractions::refracted_ray(const std::shared_ptr<IRay
 {
 	float cosine = -std::max(-1.f, std::min(1.f, ray->direction_normalized()*hit_record->hit_normal()));
 	auto hit_normal = hit_record->hit_normal();
-	auto material_refraction_index = hit_record->material()->refraction_coefficient();
+	auto material_refraction_index = hit_record->material()->refraction_index();
 	auto air_index = air_refraction_index;
 	if(cosine < 0) {
 		// ray is inside sphere, switch refraction_indices and normal

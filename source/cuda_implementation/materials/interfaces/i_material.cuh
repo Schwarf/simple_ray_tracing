@@ -10,7 +10,7 @@
 #include "i_refraction_coefficient.cuh"
 
 
-class IMaterial: public IRefractionCoefficient, public ISpecularExponent, public IReflectionCoefficients
+class IMaterial: public IRefractionCoefficients, public ISpecularExponent, public IPhongReflectionCoefficients
 {
 public:
 	__device__ virtual c_vector3 rgb_color() const = 0;

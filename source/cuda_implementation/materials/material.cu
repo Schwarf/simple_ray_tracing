@@ -9,15 +9,15 @@ __device__ c_vector3 Material::rgb_color() const
 {
 	return rgb_color_;
 }
-__device__ float Material::specular_reflection() const
+__device__ float Material::specular() const
 {
 	return specular_exponent_;
 }
-__device__ float Material::diffuse_reflection() const
+__device__ float Material::diffuse() const
 {
 	return diffuse_reflection_;
 }
-__device__ float Material::ambient_reflection() const
+__device__ float Material::ambient() const
 {
 	return ambient_reflection_;
 }
@@ -41,7 +41,7 @@ __device__ void Material::set_shininess(float shininess)
 {
 	 shininess_ = shininess;
 }
-__device__ float Material::refraction_coefficient() const
+__device__ float Material::refraction_index() const
 {
 	return refraction_coefficient_;
 }
@@ -49,7 +49,7 @@ __device__ void Material::set_refraction_coefficient(float refraction_coefficien
 {
 	refraction_coefficient_ = refraction_coefficient;
 }
-__device__ float Material::specular_exponent() const
+__device__ float Material::transparency() const
 {
 	return specular_reflection_;
 }

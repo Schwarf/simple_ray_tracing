@@ -6,14 +6,14 @@
 #define SIMPLE_RAY_TRACING_I_REFLECTION_COEFFICIENTS_H
 
 
-class IReflectionCoefficients
+class IPhongReflectionCoefficients
 {
 public:
-	__device__ virtual float specular_reflection() const = 0;
+	__device__ virtual float specular() const = 0;
 
-	__device__ virtual float diffuse_reflection() const = 0;
+	__device__ virtual float diffuse() const = 0;
 
-	__device__ virtual float ambient_reflection() const = 0;
+	__device__ virtual float ambient() const = 0;
 
 	__device__ virtual float shininess() const = 0;
 
@@ -25,7 +25,7 @@ public:
 
 	__device__ virtual void set_shininess(float shininess) = 0;
 
-	__device__ virtual ~IReflectionCoefficients() = default;
+	__device__ virtual ~IPhongReflectionCoefficients() = default;
 };
 
 #endif //SIMPLE_RAY_TRACING_I_REFLECTION_COEFFICIENTS_H

@@ -13,12 +13,12 @@ class Material final: public IMaterial
 public:
 	__device__ Material() = default;
 	__device__ c_vector3 rgb_color() const final;
-	__device__ float specular_reflection() const final;
-	__device__ float diffuse_reflection() const final; 
-	__device__ float ambient_reflection() const final; 
+	__device__ float specular() const final;
+	__device__ float diffuse() const final;
+	__device__ float ambient() const final;
 	__device__ float shininess() const final;
-	__device__ float refraction_coefficient() const final;
-	__device__ float specular_exponent() const final;
+	__device__ float refraction_index() const final;
+	__device__ float transparency() const final;
 	__device__ void set_rgb_color(c_vector3 color) final;
 	__device__ void set_specular_reflection(float specular_coefficient) final;
 	__device__ void set_diffuse_reflection(float diffuse_coefficient) final; 

@@ -8,26 +8,26 @@
 Material::Material(const std::string &name, const IMaterialBuilder &builder)
 {
 	name_ = name;
-	specular_reflection_ = builder.specular_reflection();
-	diffuse_reflection_ = builder.diffuse_reflection();
-	ambient_reflection_ = builder.ambient_reflection();
+	specular_reflection_ = builder.specular();
+	diffuse_reflection_ = builder.diffuse();
+	ambient_reflection_ = builder.ambient();
 	shininess_ = builder.shininess();
-	specular_exponent_ = builder.specular_exponent();
+	transparency_ = builder.transparency();
 	rgb_color_ = builder.rgb_color();
-	refraction_coefficient_ = builder.refraction_coefficient();
+	refraction_index_ = builder.refraction_index();
 }
 
-float Material::specular_reflection() const
+float Material::specular() const
 {
 	return specular_reflection_;
 }
 
-float Material::diffuse_reflection() const
+float Material::diffuse() const
 {
 	return diffuse_reflection_;
 }
 
-float Material::ambient_reflection() const
+float Material::ambient() const
 {
 	return ambient_reflection_;
 }
@@ -42,14 +42,14 @@ std::string Material::name() const
 	return name_;
 }
 
-float Material::refraction_coefficient() const
+float Material::refraction_index() const
 {
-	return refraction_coefficient_;
+	return refraction_index_;
 }
 
-float Material::specular_exponent() const
+float Material::transparency() const
 {
-	return specular_exponent_;
+	return transparency_;
 }
 
 c_vector3 Material::rgb_color() const

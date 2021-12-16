@@ -4,14 +4,13 @@
 
 #ifndef SIMPLE_RAY_TRACING_I_MATERIAL_H
 #define SIMPLE_RAY_TRACING_I_MATERIAL_H
-#include "i_reflection_coefficients.h"
-#include "i_specular_exponent.h"
+#include "i_phong_reflection_coefficients.h"
 #include "miscellaneous/templates/c_vector.h"
-#include "i_refraction_coefficient.h"
+#include "i_refraction_coefficients.h"
 #include <string>
 
 
-class IMaterial: public IRefractionCoefficient, public ISpecularExponent, public IReflectionCoefficients
+class IMaterial: public IRefractionCoefficients, public IPhongReflectionCoefficients
 {
 public:
 	virtual std::string name() const = 0;

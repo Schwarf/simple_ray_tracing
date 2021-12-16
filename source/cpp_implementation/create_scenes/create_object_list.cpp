@@ -6,71 +6,72 @@
 
 ObjectList create_object_list()
 {
+	float almost_zero = 1.e-7;
 	auto sphere_center = c_vector3{5, 3., -16};
 	float sphere_radius = 2;
 	auto sphere = Sphere(sphere_center, sphere_radius);
-	auto builder1 = MaterialBuilder();
-	builder1.set_specular_reflection(0.3);
-	builder1.set_diffuse_reflection(0.6);
-	builder1.set_ambient_reflection(0.3);
-	builder1.set_shininess(0.00001);
-	builder1.set_rgb_color(c_vector3{0.7, 0.4, 0.4});
-	builder1.set_refraction_coefficient(1.0);
-	builder1.set_specular_exponent(50.);
-	sphere.set_material(std::make_unique<Material>(Material("red_sphere", builder1)));
+	auto red_builder = MaterialBuilder();
+	red_builder.set_specular_coefficient(0.3);
+	red_builder.set_diffuse_coefficient(0.6);
+	red_builder.set_ambient_coefficient(0.3);
+	red_builder.set_shininess(50.);
+	red_builder.set_rgb_color(c_vector3{0.7, 0.4, 0.4});
+	red_builder.set_refraction_index(1.0);
+	red_builder.set_transparency(almost_zero);
+	sphere.set_material(std::make_unique<Material>(Material("red_sphere", red_builder)));
 
 	auto sphere_center2 = c_vector3{1.5, 2.5, -18};
 	auto sphere_radius2 = 2;
 	auto sphere2 = Sphere(sphere_center2, sphere_radius2);
-	auto builder2 = MaterialBuilder();
-	builder2.set_specular_reflection(0.3);
-	builder2.set_diffuse_reflection(0.6);
-	builder2.set_ambient_reflection(0.3);
-	builder2.set_shininess(0.00001);
-	builder2.set_rgb_color(c_vector3{0.4, 0.4, 0.7});
-	builder2.set_refraction_coefficient(1.0);
-	builder2.set_specular_exponent(10.);
-	sphere2.set_material(std::make_unique<Material>(Material("blue_sphere", builder2)));
+	auto blue_builder = MaterialBuilder();
+	blue_builder.set_specular_coefficient(0.3);
+	blue_builder.set_diffuse_coefficient(0.6);
+	blue_builder.set_ambient_coefficient(0.3);
+	blue_builder.set_shininess(10);
+	blue_builder.set_rgb_color(c_vector3{0.4, 0.4, 0.7});
+	blue_builder.set_refraction_index(1.0);
+	blue_builder.set_transparency(almost_zero);
+	sphere2.set_material(std::make_unique<Material>(Material("blue_sphere", blue_builder)));
 
 
 	auto sphere_center3 = c_vector3{4.5, -1.5, -20};
 	auto sphere_radius3 = 4;
 	auto sphere3 = Sphere(sphere_center3, sphere_radius3);
-	auto builder3 = MaterialBuilder();
-	builder3.set_specular_reflection(0.3);
-	builder3.set_diffuse_reflection(0.6);
-	builder3.set_ambient_reflection(0.3);
-	builder3.set_shininess(0.00001);
-	builder3.set_rgb_color(c_vector3{0.4, 0.7, 0.4});
-	builder3.set_refraction_coefficient(1.0);
-	builder3.set_specular_exponent(50.);
-	sphere3.set_material(std::make_unique<Material>(Material("green_sphere", builder3)));
+	auto green_builder = MaterialBuilder();
+	green_builder.set_specular_coefficient(0.3);
+	green_builder.set_diffuse_coefficient(0.6);
+	green_builder.set_ambient_coefficient(0.3);
+	green_builder.set_shininess(10.);
+	green_builder.set_rgb_color(c_vector3{0.4, 0.7, 0.4});
+	green_builder.set_refraction_index(1.0);
+	green_builder.set_transparency(almost_zero);
+	sphere3.set_material(std::make_unique<Material>(Material("green_sphere", green_builder)));
 
 	auto sphere_center4 = c_vector3{-4.5, -1.5, -16};
 	auto sphere_radius4 = 2.5;
 	auto sphere4 = Sphere(sphere_center4, sphere_radius4);
-	auto builder4 = MaterialBuilder();
-	builder4.set_specular_reflection(0.5);
-	builder4.set_diffuse_reflection(0.000001);
-	builder4.set_ambient_reflection(0.1);
-	builder4.set_shininess(0.8);
-	builder4.set_rgb_color(c_vector3{0.6, 0.7, 0.8});
-	builder4.set_refraction_coefficient(1.5);
-	builder4.set_specular_exponent(125.);
-	sphere4.set_material(std::make_unique<Material>(Material("glass_sphere", builder4)));
+	auto glass_builder = MaterialBuilder();
+	glass_builder.set_specular_coefficient(0.5);
+	glass_builder.set_diffuse_coefficient(almost_zero);
+	glass_builder.set_ambient_coefficient(0.1);
+	glass_builder.set_shininess(125.);
+	glass_builder.set_rgb_color(c_vector3{0.5, 0.5, 0.5});
+	glass_builder.set_refraction_index(1.5);
+	glass_builder.set_transparency(0.8);
+	sphere4.set_material(std::make_unique<Material>(Material("glass_sphere", glass_builder)));
 
 
 	auto sphere_center5 = c_vector3{-3.5, 3.5, -15};
 	auto sphere_radius5 = 1.5;
 	auto sphere5 = Sphere(sphere_center5, sphere_radius5);
 	auto builder5 = MaterialBuilder();
-	builder5.set_specular_reflection(10.0);
-	builder5.set_diffuse_reflection(0.000001);
-	builder5.set_ambient_reflection(0.8);
-	builder5.set_shininess(0.00001);
-	builder5.set_rgb_color(c_vector3{0.999, 0.999, 0.999});
-	builder5.set_refraction_coefficient(1.);
-	builder5.set_specular_exponent(1200.);
+	builder5.set_specular_coefficient(10.0);
+	builder5.set_diffuse_coefficient(almost_zero);
+	builder5.set_ambient_coefficient(0.8);
+	builder5.set_shininess(1200.);
+	builder5.set_rgb_color(c_vector3{0.39, 0.3, 0.3});
+	builder5.set_refraction_index(1.);
+	builder5.set_transparency(almost_zero);
 	sphere5.set_material(std::make_unique<Material>(Material("mirror_sphere", builder5)));
 
 

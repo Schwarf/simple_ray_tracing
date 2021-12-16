@@ -22,11 +22,11 @@ public:
 
 	Material &operator=(Material &&rhs) =default;
 
-	float specular_reflection() const final;
+	float specular() const final;
 
-	float diffuse_reflection() const final;
+	float diffuse() const final;
 
-	float ambient_reflection() const final;
+	float ambient() const final;
 
 	float shininess() const final;
 
@@ -34,9 +34,9 @@ public:
 
 	std::string name() const final;
 
-	float refraction_coefficient() const final;
+	float refraction_index() const final;
 
-	float specular_exponent() const final;
+	float transparency() const final;
 
 	c_vector3 rgb_color() const final;
 
@@ -45,9 +45,9 @@ private:
 	float diffuse_reflection_{-1.0};
 	float ambient_reflection_{-1.0};
 	float shininess_{-1.0};
-	float specular_exponent_{-1.0};
+	float transparency_{-1.0};
 	c_vector3 rgb_color_{0., 0., 0.};
-	float refraction_coefficient_{-1.0};
+	float refraction_index_{-1.0};
 	std::string name_;
 };
 

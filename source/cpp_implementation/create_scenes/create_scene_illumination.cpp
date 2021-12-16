@@ -32,13 +32,13 @@ SceneIllumination create_scene_illumination()
 
 	auto almost_zero = 0.0000001f;
 	auto ground_material_builder = MaterialBuilder();
-	ground_material_builder.set_specular_reflection(almost_zero);
-	ground_material_builder.set_diffuse_reflection(0.1);
-	ground_material_builder.set_ambient_reflection(0.05);
+	ground_material_builder.set_specular_coefficient(almost_zero);
+	ground_material_builder.set_diffuse_coefficient(0.1);
+	ground_material_builder.set_ambient_coefficient(0.05);
 	ground_material_builder.set_shininess(almost_zero);
 	ground_material_builder.set_rgb_color(c_vector3{0.1, 0.5, 0.1});
-	ground_material_builder.set_refraction_coefficient(almost_zero);
-	ground_material_builder.set_specular_exponent(almost_zero);
+	ground_material_builder.set_refraction_index(almost_zero);
+	ground_material_builder.set_transparency(almost_zero);
 	std::shared_ptr<IMaterial> ground_material = std::make_shared<Material>(Material("ground_material", ground_material_builder));
 
 	auto radius = 50.f;

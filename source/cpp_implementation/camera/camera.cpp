@@ -104,6 +104,7 @@ Color Camera::get_pixel_color(std::shared_ptr<IRay> &ray,
 
 	float diffuse_intensity = 0.f;
 	float specular_intensity = 0.f;
+
 	std::shared_ptr<ILightSource> light_source = nullptr;
 	for (size_t ls_index = 0; ls_index < scene_illumination->number_of_light_sources(); ++ls_index) {
 		light_source = scene_illumination->light_source(ls_index);
@@ -122,13 +123,15 @@ Color Camera::get_pixel_color(std::shared_ptr<IRay> &ray,
 		diffuse_intensity += light_source->intensity() * std::max(0.f, light_direction * hit_normal);
 		specular_intensity +=
 			std::pow(std::max(0.f, ray_interaction_.reflected_ray(light_source_ray, hit_record)->direction_normalized() * ray->direction_normalized()),
-					 object->get_material()->specular_exponent()) * light_source->intensity();
+					 object->get_material()->shininess()) * light_source->intensity();
 	}
+
 	Color diffuse_color =
-		object->get_material()->rgb_color() * diffuse_intensity * object->get_material()->diffuse_reflection();
-	Color specular_color = specular_intensity * c_vector3{1, 1, 1} * object->get_material()->specular_reflection();
-	Color ambient_color = reflected_color * object->get_material()->ambient_reflection();
-	Color refraction_color = refracted_color * object->get_material()->shininess();
+		object->get_material()->rgb_color() * diffuse_intensity * object->get_material()->diffuse();
+	Color white = c_vector3{1, 1, 1};
+	Color specular_color = specular_intensity * white * object->get_material()->specular();
+	Color ambient_color = reflected_color * object->get_material()->ambient();
+	Color refraction_color = refracted_color * object->get_material()->transparency();
 	return diffuse_color + specular_color + ambient_color + refraction_color;
 }
 

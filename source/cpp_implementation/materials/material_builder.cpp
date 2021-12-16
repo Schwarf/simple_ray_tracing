@@ -5,25 +5,25 @@
 
 #include "material_builder.h"
 
-void MaterialBuilder::set_specular_reflection(const float &specular_reflection)
+void MaterialBuilder::set_specular_coefficient(const float &specular_coefficient)
 {
 	std::string class_name = "MaterialBuilder";
-	Validate<float>::is_above_threshold("specular_reflection", specular_reflection, 0.0, class_name);
-	specular_reflection_ = specular_reflection;
+	Validate<float>::is_above_threshold("specular", specular_coefficient, 0.0, class_name);
+	specular_reflection_ = specular_coefficient;
 }
 
-void MaterialBuilder::set_diffuse_reflection(const float &diffuse_reflection)
+void MaterialBuilder::set_diffuse_coefficient(const float &diffuse_coefficient)
 {
 	std::string class_name = "MaterialBuilder";
-	Validate<float>::is_above_threshold("diffuse_reflection", diffuse_reflection, 0.0, class_name);
-	diffuse_reflection_ = diffuse_reflection;
+	Validate<float>::is_above_threshold("diffuse", diffuse_coefficient, 0.0, class_name);
+	diffuse_reflection_ = diffuse_coefficient;
 }
 
-void MaterialBuilder::set_ambient_reflection(const float &ambient_reflection)
+void MaterialBuilder::set_ambient_coefficient(const float &ambient_coefficient)
 {
 	std::string class_name = "MaterialBuilder";
-	Validate<float>::is_above_threshold("ambient_reflection", ambient_reflection, 0.0, class_name);
-	ambient_reflection_ = ambient_reflection;
+	Validate<float>::is_above_threshold("ambient", ambient_coefficient, 0.0, class_name);
+	ambient_reflection_ = ambient_coefficient;
 }
 
 void MaterialBuilder::set_shininess(const float &shininess)
@@ -34,19 +34,19 @@ void MaterialBuilder::set_shininess(const float &shininess)
 	shininess_ = shininess;
 }
 
-void MaterialBuilder::set_specular_exponent(const float &specular_exponent)
+void MaterialBuilder::set_transparency(const float &transparency)
 {
 	std::string class_name = "MaterialBuilder";
-	Validate<float>::is_above_threshold("specular_exponent", specular_exponent, 0.0, class_name);
-	specular_exponent_ = specular_exponent;
+	Validate<float>::is_above_threshold("transparency", transparency, 0.0, class_name);
+	transparency_ = transparency;
 }
 
-void MaterialBuilder::set_refraction_coefficient(const float &refraction_coefficient)
+void MaterialBuilder::set_refraction_index(const float &refraction_index)
 {
 	std::string class_name = "MaterialBuilder";
-	Validate<float>::is_above_threshold("refraction_coefficient", refraction_coefficient, 0.0, class_name);
+	Validate<float>::is_above_threshold("refraction_index", refraction_index, 0.0, class_name);
 
-	refraction_coefficient_ = refraction_coefficient;
+	refraction_index_ = refraction_index;
 }
 
 void MaterialBuilder::set_name(const std::string &name)
@@ -54,17 +54,17 @@ void MaterialBuilder::set_name(const std::string &name)
 	name_ = name;
 }
 
-float MaterialBuilder::specular_reflection() const
+float MaterialBuilder::specular() const
 {
 	return specular_reflection_;
 }
 
-float MaterialBuilder::diffuse_reflection() const
+float MaterialBuilder::diffuse() const
 {
 	return diffuse_reflection_;
 }
 
-float MaterialBuilder::ambient_reflection() const
+float MaterialBuilder::ambient() const
 {
 	return ambient_reflection_;
 }
@@ -82,14 +82,14 @@ std::string MaterialBuilder::name() const
 	return name_;
 }
 
-float MaterialBuilder::refraction_coefficient() const
+float MaterialBuilder::refraction_index() const
 {
-	return refraction_coefficient_;
+	return refraction_index_;
 }
 
-float MaterialBuilder::specular_exponent() const
+float MaterialBuilder::transparency() const
 {
-	return specular_exponent_;
+	return transparency_;
 }
 
 void MaterialBuilder::set_rgb_color(const c_vector3 &rgb_color)
