@@ -27,18 +27,18 @@ public:
 	std::shared_ptr<IImageBuffer> get_image_buffer() final;
 	void enable_antialiasing() final;
 	void disable_antialiasing() final;
-	bool antialiasing_enabled() override;
+	bool antialiasing_enabled() final;
+	int image_width() final;
+	int image_height() final;
+	float aspect_ratio() final;
+	float focal_length() final;
 
 private:
-	int image_width() override;
-	int image_height() override;
-	float aspect_ratio() override;
-	float focal_length() override;
 	Color get_pixel_color(std::shared_ptr<IRay> &ray,
 							  std::shared_ptr<IObjectList> &objects_in_scene,
 							  std::shared_ptr<ISceneIllumination> &scene_illumination,
 							  size_t recursion_depth) final;
-	void get_pixel_coordinates(const size_t & width_index, const size_t & height_index, float & u, float & v);
+	void get_pixel_coordinates(const size_t & width_index, const size_t & height_index, float & u, float & v) const;
 
 
 

@@ -43,7 +43,7 @@ float Camera::focal_length()
 	return focal_length_;
 }
 
-void Camera::get_pixel_coordinates(const size_t &width_index, const size_t &height_index, float &u, float &v)
+void Camera::get_pixel_coordinates(const size_t &width_index, const size_t &height_index, float &u, float &v) const
 {
 	if (antialiasing_enabled_) {
 		auto add_u = UniformRandomNumberGenerator::get_random<float>(0.f, 1.f);
