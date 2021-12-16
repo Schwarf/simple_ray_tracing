@@ -13,3 +13,4 @@ cmake --build cmake-build-debug/ -- -j 19
 ### ToDo
 - The unit tests for cubic equation lack accuracy (even in double precision). 
   This might be a bug. The behaviour is reproducible for epsilon > 1.e-4 (quite large).
+- The 'transparency' value for refraction (see mirror sphere) remains unclear. Even the name is just a guess.
