@@ -7,7 +7,8 @@
 std::shared_ptr<IRay> RayInteractions::reflected_ray(const std::shared_ptr<IRay> &ray, const std::shared_ptr<IHitRecord> &hit_record) const
 {
 	Vector3D new_ray_direction = ray->direction_normalized() - hit_record->hit_normal() * 2.f * (
-		ray->direction_normalized()*hit_record->hit_normal());
+		ray->direction_normalized()*hit_record->hit_normal()) + UniformRandomNumberGenerator::random_vector_in_unit_sphere<float>()
+		    * UniformRandomNumberGenerator::get_random<float>(0.f, 0.1f);
 	std::shared_ptr<IRay> reflected_ray = std::make_shared<Ray>(Ray(hit_record->hit_point(), new_ray_direction));
 	return reflected_ray;
 
@@ -29,7 +30,8 @@ std::shared_ptr<IRay>  RayInteractions::refracted_ray(const std::shared_ptr<IRay
 	}
 	float ratio = air_index/material_refraction_index;
 	float k = 1.f - ratio*ratio*(1.f - cosine*cosine);
-	auto new_ray_direction = Vector3D{1.,0.,0.,};
+	auto new_ray_direction = UniformRandomNumberGenerator::random_vector_in_unit_sphere<float>() *
+	    					 UniformRandomNumberGenerator::get_random<float>(0.f, 0.1f);
 	if (k > 0) {
 		new_ray_direction = ray->direction_normalized()*ratio + hit_normal*(ratio*cosine - std::sqrt(k));
 	}

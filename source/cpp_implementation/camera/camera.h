@@ -37,7 +37,7 @@ private:
 	Color get_pixel_color(std::shared_ptr<IRay> &ray,
 							  std::shared_ptr<IObjectList> &objects_in_scene,
 							  std::shared_ptr<ISceneIllumination> &scene_illumination,
-							  size_t recursion_depth = 0) final;
+							  size_t recursion_depth) final;
 	void get_pixel_coordinates(const size_t & width_index, const size_t & height_index, float & u, float & v);
 
 
@@ -53,7 +53,6 @@ private:
 	Point3D lower_left_corner_{0., 0., 0.};
 	std::shared_ptr<IImageBuffer> image_buffer_;
 	bool antialiasing_enabled_{};
-	UniformRandomNumberGenerator random_number_generator_{};
 	RayInteractions ray_interaction_;
 };
 

@@ -46,8 +46,8 @@ float Camera::focal_length()
 void Camera::get_pixel_coordinates(const size_t &width_index, const size_t &height_index, float &u, float &v)
 {
 	if (antialiasing_enabled_) {
-		auto add_u = random_number_generator_.get_random(0.f, 1.f);
-		auto add_v = random_number_generator_.get_random(0.f, 1.f);
+		auto add_u = UniformRandomNumberGenerator::get_random<float>(0.f, 1.f);
+		auto add_v = UniformRandomNumberGenerator::get_random<float>(0.f, 1.f);
 		u = (float(width_index) + add_u) / float(image_width_ - 1);
 		v = (float(height_index) + add_v) / float(image_height_ - 1);
 		return;
