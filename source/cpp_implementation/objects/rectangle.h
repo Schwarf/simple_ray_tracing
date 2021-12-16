@@ -7,7 +7,7 @@
 #include "interfaces/i_rectangle.h"
 #include "miscellaneous/validate.h"
 
-class Rectangle: IRectangle
+class Rectangle final: IRectangle
 {
 public:
 	Rectangle(c_vector3 width_vector,
@@ -36,7 +36,6 @@ private:
 	c_vector3 bottom_left_position_;
 	c_vector3 normal_;
 	std::shared_ptr<IMaterial> material_;
-	Validate <float> validate_;
 	void init() const;
 };
 

@@ -31,6 +31,11 @@ void ImageBuffer::set_pixel_value(int width_index, int height_index, const c_vec
 {
 	auto scale = 1.f/float(samples_per_pixel);
 	auto pixel_color_mean_value = pixel_color_value*scale;
+	// Use gamma correction with gamma =2 --> color^(1/gamma) = sqrt
+	// auto pixel_color_mean_value = c_vector3{std::sqrt(pixel_color_value[0]*scale),
+	//										std::sqrt(pixel_color_value[1]*scale),
+	//										std::sqrt(pixel_color_value[2]*scale)};
+
 	buffer_[width_index + height_index * width_] = pixel_color_mean_value;
 }
 
