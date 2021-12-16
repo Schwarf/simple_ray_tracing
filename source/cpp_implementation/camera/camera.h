@@ -54,6 +54,7 @@ private:
 	std::shared_ptr<IImageBuffer> image_buffer_;
 	bool antialiasing_enabled_{};
 	UniformRandomNumberGenerator random_number_generator_{};
+	RayInteractions ray_interaction_;
 };
 
 

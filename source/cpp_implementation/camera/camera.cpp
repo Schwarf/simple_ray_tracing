@@ -79,7 +79,7 @@ void Camera::render_image(std::shared_ptr<IObjectList> &objects_in_scene,
 	}
 
 }
-c_vector3 Camera::get_pixel_color(std::shared_ptr<IRay> &ray,
+Color Camera::get_pixel_color(std::shared_ptr<IRay> &ray,
 								  std::shared_ptr<IObjectList> &objects_in_scene,
 								  std::shared_ptr<ISceneIllumination> &scene_illumination,
 								  size_t recursion_depth)
@@ -91,17 +91,11 @@ c_vector3 Camera::get_pixel_color(std::shared_ptr<IRay> &ray,
 		auto mix_parameter = 1.f/2.f*(ray->direction_normalized()[1] + 1.f);
 		return scene_illumination->background_color(mix_parameter);
 	}
-	auto interaction = RayInteractions();
 	auto hit_normal = hit_record->hit_normal();
 	auto hit_point = hit_record->hit_point();
 
-	auto reflection_direction = interaction.reflection(ray->direction_normalized(), hit_normal).normalize();
-	std::shared_ptr<IRay> reflected_ray = std::make_shared<Ray>(Ray(hit_point, reflection_direction));
-	auto refraction_coefficient = object->get_material()->refraction_coefficient();
-	auto refraction_direction =
-		interaction.refraction(ray->direction_normalized(), hit_normal, refraction_coefficient, air_refraction_index)
-			.normalize();
-	std::shared_ptr<IRay> refracted_ray = std::make_shared<Ray>(Ray(hit_point, refraction_direction));
+	std::shared_ptr<IRay> reflected_ray = ray_interaction_.reflected_ray(ray, hit_record);
+	std::shared_ptr<IRay> refracted_ray = ray_interaction_.refracted_ray(ray, hit_record, air_refraction_index);
 
 	// Start recursion
 	recursion_depth--;
@@ -127,15 +121,15 @@ c_vector3 Camera::get_pixel_color(std::shared_ptr<IRay> &ray,
 
 		diffuse_intensity += light_source->intensity() * std::max(0.f, light_direction * hit_normal);
 		specular_intensity +=
-			std::pow(std::max(0.f, interaction.reflection(light_direction, hit_normal) * ray->direction_normalized()),
+			std::pow(std::max(0.f, ray_interaction_.reflected_ray(light_source_ray, hit_record)->direction_normalized() * ray->direction_normalized()),
 					 object->get_material()->specular_exponent()) * light_source->intensity();
 	}
-	auto diffuse_reflection =
+	Color diffuse_color =
 		object->get_material()->rgb_color() * diffuse_intensity * object->get_material()->diffuse_reflection();
-	auto specular_reflection = specular_intensity * c_vector3{1, 1, 1} * object->get_material()->specular_reflection();
-	auto ambient_reflection = reflected_color * object->get_material()->ambient_reflection();
-	auto refraction = refracted_color * object->get_material()->shininess();
-	return diffuse_reflection + specular_reflection + ambient_reflection + refraction;
+	Color specular_color = specular_intensity * c_vector3{1, 1, 1} * object->get_material()->specular_reflection();
+	Color ambient_color = reflected_color * object->get_material()->ambient_reflection();
+	Color refraction_color = refracted_color * object->get_material()->shininess();
+	return diffuse_color + specular_color + ambient_color + refraction_color;
 }
 
 std::shared_ptr<IImageBuffer> Camera::get_image_buffer()

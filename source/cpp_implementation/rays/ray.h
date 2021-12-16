@@ -10,7 +10,7 @@
 class Ray final: public IRay
 {
 public:
-	Ray(Point3D &origin, Vector3D &direction);
+	Ray(const Point3D &origin, Vector3D &direction);
 	Vector3D direction_normalized() const final;
 
 	Point3D origin() const final;

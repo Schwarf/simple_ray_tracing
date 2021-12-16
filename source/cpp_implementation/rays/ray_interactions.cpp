@@ -4,25 +4,35 @@
 
 #include "ray_interactions.h"
 
-
-Vector3D RayInteractions::reflection(const Vector3D &light_direction, const Vector3D &point_normal) const
+std::shared_ptr<IRay> RayInteractions::reflected_ray(const std::shared_ptr<IRay> &ray, const std::shared_ptr<IHitRecord> &hit_record) const
 {
-	return light_direction - point_normal * 2.f * (light_direction * point_normal);
+	Vector3D new_ray_direction = ray->direction_normalized() - hit_record->hit_normal() * 2.f * (
+		ray->direction_normalized()*hit_record->hit_normal());
+	std::shared_ptr<IRay> reflected_ray = std::make_shared<Ray>(Ray(hit_record->hit_point(), new_ray_direction));
+	return reflected_ray;
+
 }
-Vector3D RayInteractions::refraction(const Vector3D &light_direction,
-									  const Vector3D &point_normal,
-									  const float &material_refraction_index, const float &air_refraction_index) const
+std::shared_ptr<IRay>  RayInteractions::refracted_ray(const std::shared_ptr<IRay> &ray,
+													  const std::shared_ptr<IHitRecord> &hit_record,
+													  const float &air_refraction_index) const
 {
-	float cosine = -std::max(-1.f, std::min(1.f, light_direction*point_normal));
+	float cosine = -std::max(-1.f, std::min(1.f, ray->direction_normalized()*hit_record->hit_normal()));
+	auto hit_normal = hit_record->hit_normal();
+	auto material_refraction_index = hit_record->material()->refraction_coefficient();
+	auto air_index = air_refraction_index;
 	if(cosine < 0) {
-		return this->refraction(light_direction, -point_normal, air_refraction_index, material_refraction_index);
+		// ray is inside sphere, switch refraction_indices and normal
+		hit_normal = -1.f*hit_normal;
+		auto help = material_refraction_index;
+		material_refraction_index = air_refraction_index;
+		air_index = help;
 	}
-	float ratio = air_refraction_index/material_refraction_index;
+	float ratio = air_index/material_refraction_index;
 	float k = 1.f - ratio*ratio*(1.f - cosine*cosine);
-	auto result = Vector3D{1.,0.,0.,};
+	auto new_ray_direction = Vector3D{1.,0.,0.,};
 	if (k > 0) {
-		result = light_direction*ratio + point_normal*(ratio*cosine - std::sqrt(k));
+		new_ray_direction = ray->direction_normalized()*ratio + hit_normal*(ratio*cosine - std::sqrt(k));
 	}
-	return result;
-
+	std::shared_ptr<IRay> refracted_ray = std::make_shared<Ray>(Ray(hit_record->hit_point(), new_ray_direction));
+	return refracted_ray;
 }

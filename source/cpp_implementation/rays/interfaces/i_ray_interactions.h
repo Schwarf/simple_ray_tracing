@@ -12,9 +12,9 @@
 class IRayInteractions
 {
 public:
-	virtual Vector3D reflection(const Vector3D &light_direction, const Vector3D &point_normal) const = 0;
-	virtual Vector3D refraction(const Vector3D &light_direction, const Vector3D &point_normal, const float &material_refraction_index,
-								const float &air_refraction_index) const = 0;
+	virtual std::shared_ptr<IRay> reflected_ray(const std::shared_ptr<IRay> &ray, const std::shared_ptr<IHitRecord> & hit_record) const = 0;
+	virtual std::shared_ptr<IRay> refracted_ray(const std::shared_ptr<IRay> &ray, const std::shared_ptr<IHitRecord> & hit_record,
+												const float &air_refraction_index) const = 0;
 };
 
 #endif //SIMPLE_RAY_TRACING_I_RAY_REFLECTION_H
