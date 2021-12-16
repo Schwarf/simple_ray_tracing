@@ -122,5 +122,8 @@ std::ostream &operator<<(std::ostream &out, const c_vector<dimension, T> &v)
 	return out;
 
 }
+using Point3D = c_vector3;
+using Vector3D = c_vector3;
+using Color = c_vector3;
 
 #endif //SOURCE_C_VECTOR_H

@@ -1,5 +1,5 @@
 add_library(ray_lib STATIC rays/ray_interactions.cpp rays/ray_interactions.h rays/ray.cpp rays/ray.h
-        rays/scene_illumination.cpp rays/scene_illumination.h rays/light_source.cpp rays/light_source.h)
+        rays/scene_illumination.cpp rays/scene_illumination.h rays/light_source.cpp rays/light_source.h rays/hit_record.cpp rays/hit_record.h)
 
 add_library(ray_interfaces INTERFACE rays/interfaces/i_ray_intersection.h rays/interfaces/i_ray.h rays/interfaces/i_ray_interactions.h
         rays/interfaces/i_scene_illumination.h rays/interfaces/i_light_source.h)
@@ -21,7 +21,7 @@ add_library(materials_interfaces INTERFACE materials/interfaces/i_reflection_coe
 
 add_library(scenes_lib STATIC create_scenes/create_object_list.cpp create_scenes/create_object_list.h create_scenes/create_scene_illumination.cpp create_scenes/create_scene_illumination.h)
 
-add_library(camera_interfaces INTERFACE camera/interfaces/i_camera.h)
+add_library(camera_interfaces INTERFACE camera/interfaces/i_camera.h rays/interfaces/i_hit_record.h)
 add_library(camera_lib STATIC camera/camera.cpp camera/camera.h)
 
 target_link_libraries(scenes_lib objects_lib materials_lib ray_lib)

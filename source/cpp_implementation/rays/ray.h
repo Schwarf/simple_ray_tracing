@@ -10,15 +10,15 @@
 class Ray final: public IRay
 {
 public:
-	Ray(c_vector3 &origin, c_vector3 &direction);
-	c_vector3 direction_normalized() const final;
+	Ray(Point3D &origin, Vector3D &direction);
+	Vector3D direction_normalized() const final;
 
-	c_vector3 origin() const final;
+	Point3D origin() const final;
 
 	~Ray() final = default;
 private:
-	c_vector3 direction_normalized_;
-	c_vector3 origin_;
+	Vector3D direction_normalized_;
+	Point3D origin_;
 };
 
 

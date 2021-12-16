@@ -9,7 +9,7 @@
 class ILightSource
 {
 public:
-	virtual c_vector3 position() const = 0;
+	virtual Point3D position() const = 0;
 	virtual float intensity() const = 0;
 	virtual ~ILightSource() = default;
 };

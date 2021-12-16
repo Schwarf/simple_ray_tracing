@@ -11,7 +11,7 @@ __device__ Sphere::Sphere(c_vector3 &center, float radius, IMaterial * material)
 	material_ = material;
 }
 
-__device__ c_vector3 Sphere::center() const
+__device__ Point3D Sphere::center() const
 {
 	return center_;
 }

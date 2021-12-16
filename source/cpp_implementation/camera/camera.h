@@ -15,6 +15,7 @@
 #include "miscellaneous/image_buffer.h"
 #include "rays/ray_interactions.h"
 #include "miscellaneous/templates/random_number_generator.h"
+#include <rays/hit_record.h>
 
 class Camera final: ICamera
 {
@@ -33,7 +34,7 @@ private:
 	int image_height() override;
 	float aspect_ratio() override;
 	float focal_length() override;
-	c_vector3 get_pixel_color(std::shared_ptr<IRay> &ray,
+	Color get_pixel_color(std::shared_ptr<IRay> &ray,
 							  std::shared_ptr<IObjectList> &objects_in_scene,
 							  std::shared_ptr<ISceneIllumination> &scene_illumination,
 							  size_t recursion_depth = 0) final;
@@ -46,10 +47,10 @@ private:
 	int image_height_{};
 	float focal_length_{};
 	float aspect_ratio_{};
-	c_vector3 origin_{0., 0., 0.};
-	c_vector3 horizontal_direction_{0., 0., 0.};
-	c_vector3 vertical_direction_{0., 0., 0.};
-	c_vector3 lower_left_corner_{0., 0., 0.};
+	Point3D origin_{0., 0., 0.};
+	Vector3D horizontal_direction_{0., 0., 0.};
+	Vector3D vertical_direction_{0., 0., 0.};
+	Point3D lower_left_corner_{0., 0., 0.};
 	std::shared_ptr<IImageBuffer> image_buffer_;
 	bool antialiasing_enabled_{};
 	UniformRandomNumberGenerator random_number_generator_{};

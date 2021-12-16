@@ -4,7 +4,7 @@
 
 #include "sphere.h"
 
-Sphere::Sphere(c_vector3 &center, float radius)
+Sphere::Sphere(Point3D &center, float radius)
 	:
 	material_(nullptr)
 {
@@ -13,7 +13,7 @@ Sphere::Sphere(c_vector3 &center, float radius)
 	init();
 }
 
-c_vector3 Sphere::center() const
+Point3D Sphere::center() const
 {
 	return center_;
 }
@@ -28,7 +28,7 @@ void Sphere::init() const
 	Validate<float>::is_above_threshold("radius", radius_, 0.0, " Sphere");
 }
 
-bool Sphere::does_ray_intersect(std::shared_ptr<IRay> &ray, c_vector3 &hit_normal, c_vector3 &hit_point) const
+bool Sphere::does_ray_intersect(std::shared_ptr<IRay> &ray, std::shared_ptr<IHitRecord> &hit_record) const
 {
 	float closest_hit_distance = -1.0;
 	c_vector3 origin_to_center = (center_ - ray->origin());
@@ -48,8 +48,9 @@ bool Sphere::does_ray_intersect(std::shared_ptr<IRay> &ray, c_vector3 &hit_norma
 	if (closest_hit_distance < epsilon) {
 		return false;
 	}
-	hit_point = ray->origin() + ray->direction_normalized() * closest_hit_distance;
-	hit_normal = (hit_point - center_).normalize();
+	hit_record->set_hit_point(ray->origin() + ray->direction_normalized() * closest_hit_distance);
+	hit_record->set_hit_normal((hit_record->hit_point() - center_).normalize());
+	hit_record->set_material(this->get_material());
 	return true;
 }
 
@@ -58,7 +59,7 @@ void Sphere::set_material(std::shared_ptr<IMaterial> material)
 	material_ = material;
 }
 
-std::shared_ptr<IMaterial> Sphere::get_material()
+std::shared_ptr<IMaterial> Sphere::get_material() const
 {
 	return material_;
 }

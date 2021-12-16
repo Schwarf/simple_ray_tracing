@@ -2,6 +2,7 @@
 // Created by andreas on 22.11.21.
 //
 
+
 #include "camera.h"
 
 Camera::Camera(int image_width, int image_height, float viewport_width, float focal_length)
@@ -83,15 +84,16 @@ c_vector3 Camera::get_pixel_color(std::shared_ptr<IRay> &ray,
 								  std::shared_ptr<ISceneIllumination> &scene_illumination,
 								  size_t recursion_depth)
 {
-	auto hit_point = c_vector3{0, 0, 0};
-	auto hit_normal = c_vector3{0, 0, 0};
+	std::shared_ptr<IHitRecord> hit_record = std::make_shared<HitRecord>(HitRecord()) ;
 	auto air_refraction_index = 1.f;
-	auto object = objects_in_scene->get_object_hit_by_ray(ray, hit_normal, hit_point);
+	auto object = objects_in_scene->get_object_hit_by_ray(ray, hit_record);
 	if (object == nullptr || recursion_depth < 1) {
 		auto mix_parameter = 1.f/2.f*(ray->direction_normalized()[1] + 1.f);
 		return scene_illumination->background_color(mix_parameter);
 	}
 	auto interaction = RayInteractions();
+	auto hit_normal = hit_record->hit_normal();
+	auto hit_point = hit_record->hit_point();
 
 	auto reflection_direction = interaction.reflection(ray->direction_normalized(), hit_normal).normalize();
 	std::shared_ptr<IRay> reflected_ray = std::make_shared<Ray>(Ray(hit_point, reflection_direction));
@@ -113,9 +115,10 @@ c_vector3 Camera::get_pixel_color(std::shared_ptr<IRay> &ray,
 		light_source = scene_illumination->light_source(ls_index);
 		auto light_direction = (light_source->position() - hit_point).normalize();
 		std::shared_ptr<IRay> light_source_ray = std::make_shared<Ray>(Ray(hit_point, light_direction));
-		auto shadow_point = c_vector3{0., 0., 0.};
-		auto shadow_normal = c_vector3{0., 0., 0.};
-		auto object_in_shadow = objects_in_scene->get_object_hit_by_ray(light_source_ray, shadow_normal, shadow_point);
+		std::shared_ptr<IHitRecord> shadow_hit_record = std::make_shared<HitRecord>(HitRecord()) ;
+
+		auto object_in_shadow = objects_in_scene->get_object_hit_by_ray(light_source_ray, shadow_hit_record);
+		auto shadow_point = shadow_hit_record->hit_point();
 		auto distance_shadow_point_to_point = (shadow_point - hit_point).norm();
 		auto distance_light_source_to_point = (light_source->position() - hit_point).norm();
 		if (object_in_shadow != nullptr && distance_shadow_point_to_point < distance_light_source_to_point) {

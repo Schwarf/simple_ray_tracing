@@ -19,7 +19,7 @@ c_vector3 Rectangle::bottom_left_position() const
 	return bottom_left_position_;
 }
 
-bool Rectangle::does_ray_intersect(std::shared_ptr<IRay> &ray, c_vector3 &closest_hit_distance, c_vector3 &hit_point) const
+bool Rectangle::does_ray_intersect(std::shared_ptr<IRay> &ray, std::shared_ptr<IHitRecord> &hit_record) const
 {
 	auto denominator_dot_product = this->bottom_left_position() * ray->direction_normalized();
 	auto epsilon = 1.e-5;
@@ -43,7 +43,7 @@ bool Rectangle::does_ray_intersect(std::shared_ptr<IRay> &ray, c_vector3 &closes
 	if (check_height > height_ || check_height < 0.f) {
 		return false;
 	}
-	hit_point = point;
+
 	return true;
 }
 
@@ -52,7 +52,7 @@ void Rectangle::set_material(std::shared_ptr<IMaterial> material)
 	material_ = material;
 }
 
-std::shared_ptr<IMaterial> Rectangle::get_material()
+std::shared_ptr<IMaterial> Rectangle::get_material() const
 {
 	return material_;
 }

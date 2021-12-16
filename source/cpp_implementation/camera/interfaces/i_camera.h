@@ -26,7 +26,7 @@ public:
 	virtual bool antialiasing_enabled() = 0;
 
 private:
-	virtual c_vector3 get_pixel_color(std::shared_ptr<IRay> &ray,
+	virtual Color get_pixel_color(std::shared_ptr<IRay> &ray,
 									  std::shared_ptr<IObjectList> &objects_in_scene,
 									  std::shared_ptr<ISceneIllumination> &scene_illumination,
 									  size_t recursion_depth) = 0;

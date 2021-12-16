@@ -10,14 +10,14 @@
 class LightSource final: public ILightSource
 {
 public:
-	LightSource(const c_vector3 &position, float intensity);
+	LightSource(const Point3D &position, float intensity);
 
-	c_vector3 position() const final;
+	Point3D position() const final;
 
 	float intensity() const final;
 
 private:
-	c_vector3 position_;
+	Point3D position_;
 	float intensity_;
 };
 

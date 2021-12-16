@@ -10,10 +10,10 @@
 class Rectangle final: IRectangle
 {
 public:
-	Rectangle(c_vector3 width_vector,
-			  c_vector3 height_vector,
+	Rectangle(Vector3D width_vector,
+			  Vector3D height_vector,
 			  const c_vector3 &bottom_left_position,
-			  const c_vector3 &normal);
+			  const Vector3D &normal);
 
 	float width() const final;
 
@@ -23,18 +23,19 @@ public:
 
 	~Rectangle() final = default;
 
-	bool does_ray_intersect(std::shared_ptr<IRay> &ray, c_vector3 &closest_hit_distance, c_vector3 &hit_point) const final;
 
 	void set_material(std::shared_ptr<IMaterial> material) final;
 
-	std::shared_ptr<IMaterial> get_material() final;
+	std::shared_ptr<IMaterial> get_material() const final;
+	bool does_ray_intersect(std::shared_ptr<IRay> &ray, std::shared_ptr<IHitRecord> &hit_record) const final;
+
 private:
 	float width_;
 	float height_;
-	c_vector3 width_vector_;
-	c_vector3 height_vector_;
-	c_vector3 bottom_left_position_;
-	c_vector3 normal_;
+	Vector3D width_vector_;
+	Vector3D height_vector_;
+	Point3D bottom_left_position_;
+	Vector3D normal_;
 	std::shared_ptr<IMaterial> material_;
 	void init() const;
 };

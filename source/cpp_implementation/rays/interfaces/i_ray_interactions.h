@@ -12,8 +12,8 @@
 class IRayInteractions
 {
 public:
-	virtual c_vector3 reflection(const c_vector3 &light_direction, const c_vector3 &point_normal) const = 0;
-	virtual c_vector3 refraction(const c_vector3 &light_direction, const c_vector3 &point_normal, const float &material_refraction_index,
+	virtual Vector3D reflection(const Vector3D &light_direction, const Vector3D &point_normal) const = 0;
+	virtual Vector3D refraction(const Vector3D &light_direction, const Vector3D &point_normal, const float &material_refraction_index,
 								const float &air_refraction_index) const = 0;
 };
 

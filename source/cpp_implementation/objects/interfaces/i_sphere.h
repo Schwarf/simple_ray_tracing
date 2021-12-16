@@ -11,7 +11,7 @@
 class ISphere: public ITargetObject
 {
 public:
-	virtual c_vector3 center() const = 0;
+	virtual Point3D center() const = 0;
 	virtual float radius() const = 0;
 	virtual ~ISphere() = default;
 };

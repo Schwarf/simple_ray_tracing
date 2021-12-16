@@ -5,6 +5,7 @@
 #ifndef SIMPLE_RAY_TRACING_SPHERE_H
 #define SIMPLE_RAY_TRACING_SPHERE_H
 #include <memory>
+#include <miscellaneous/templates/c_vector.h>
 #include "interfaces/i_sphere.cuh"
 #include "./../materials/interfaces/i_material.cuh"
 
@@ -14,7 +15,7 @@ public:
 	__device__ Sphere(c_vector3 &center, float radius, IMaterial * material);
 	__device__ Sphere(const Sphere &) = default;
 	__device__ Sphere(Sphere &&) = default;
-	__device__ c_vector3 center() const final;
+	__device__ Point3D center() const final;
 
 	__device__ float radius() const final;
 

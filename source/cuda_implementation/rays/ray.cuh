@@ -12,7 +12,7 @@ class Ray final: public IRay
 {
 public:
 	__device__ Ray(c_vector3 &origin, c_vector3 &direction);
-	__device__ c_vector3 direction_normalized() const final;
+	__device__ Vector3D direction_normalized() const final;
 
 	__device__ c_vector3 origin() const final;
 

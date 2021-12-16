@@ -55,7 +55,7 @@ c_vector3 SceneIllumination::background_color(const float parameter)
 
 	return (1.f-parameter)*background_color1_ + parameter*background_color2_;
 }
-void SceneIllumination::set_background_colors(const c_vector3 &color1, const c_vector3 &color2)
+void SceneIllumination::set_background_colors(const Color &color1, const Color &color2)
 {
 	background_color1_ = color1;
 	background_color2_ = color2;

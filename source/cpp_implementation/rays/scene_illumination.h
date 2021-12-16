@@ -25,15 +25,15 @@ public:
 	void add_light_source(std::shared_ptr<ILightSource> light_source) final;
 	std::shared_ptr<ILightSource> light_source(size_t index) final;
 	size_t number_of_light_sources() final;
-	c_vector3 background_color(float parameter) final;
-	void set_background_colors(const c_vector3 &color1, const c_vector3 &color2) final;
+	Color background_color(float parameter) final;
+	void set_background_colors(const Color &color1, const Color &color2) final;
 	void set_ground_sphere(const std::shared_ptr<ISphere> &ground_sphere) final;
 	std::shared_ptr<ISphere> get_ground() override;
 private:
 	std::vector<std::shared_ptr<ILightSource>> light_source_vector_;
 	std::shared_ptr<ISphere> ground_;
-	c_vector3 background_color1_;
-	c_vector3 background_color2_;
+	Color background_color1_;
+	Color background_color2_;
 
 };
 

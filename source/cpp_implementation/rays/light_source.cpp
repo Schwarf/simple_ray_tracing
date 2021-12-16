@@ -14,7 +14,7 @@ float LightSource::intensity() const
 	return intensity_;
 }
 
-LightSource::LightSource(const c_vector3 &position, float intensity)
+LightSource::LightSource(const Point3D &position, float intensity)
 {
 	position_ = position;
 	intensity_ = intensity;
