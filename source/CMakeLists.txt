@@ -27,16 +27,9 @@ enable_cxx_compiler_flag_if_supported("-fopenmp")
 
 
 add_executable(ray_cast ray_casting.cpp)
-add_executable(cuda_cast render.cu)
-
 include_directories(cpp_implementation)
 add_subdirectory(cpp_implementation)
-add_subdirectory(cuda_implementation)
 add_subdirectory(tests)
-
-
-target_link_libraries(cuda_cast cuda_misc_lib cuda_interfaces)
-set_target_properties(cuda_cast PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 
 target_link_libraries(ray_cast misc_lib misc_interfaces scenes_lib camera_lib)
 
