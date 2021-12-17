@@ -10,9 +10,9 @@ protected:
 	int width{10};
 	int height{15};
 	int size{width * height};
-	c_vector3 red_pixel{0.99, 0.05, 0.1};
-	c_vector3 green_pixel{0.1, 0.99, 0.2};
-	c_vector3 blue_pixel{0.2, 0.3, 0.99};
+	Color red_pixel{0.99, 0.05, 0.1};
+	Color green_pixel{0.1, 0.99, 0.2};
+	Color blue_pixel{0.2, 0.3, 0.99};
 };
 
 TEST_F(SetupImageBuffer, test_image_buffer_width)

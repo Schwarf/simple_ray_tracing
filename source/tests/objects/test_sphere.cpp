@@ -11,9 +11,9 @@ class SetupSphere: public testing::Test
 {
 protected:
 	float radius{10.5};
-	c_vector3 center{-6.0, 3.678, -17.78};
-	c_vector3 null_vector{0., 0., 0.};
-	bool ray_intersection(IRay &ray, c_vector3 &hit_normal, c_vector3 &hit_point)
+	Point3D center{-6.0, 3.678, -17.78};
+	Vector3D null_vector{0., 0., 0.};
+	bool ray_intersection(IRay &ray, HitRecord & hit_record)
 	{
 		// see e.g. here
 		// https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection
@@ -31,13 +31,14 @@ protected:
 		if (t0 < 0) {
 			return false;
 		}
-		hit_point = ray.origin() + t0 * ray.direction_normalized();
-		hit_normal = (hit_point - center).normalize();
+		hit_record.set_hit_point(ray.origin() + t0 * ray.direction_normalized());
+		hit_record.set_hit_normal((hit_record.hit_point() - center).normalize());
 
 		return true;
 	}
-	c_vector3 ray_direction{100.5, 100.5, -500.0};
-	c_vector3 ray_origin{-1.1212, 1.313, 2.331};
+	Vector3D ray_direction{100.5, 100.5, -500.0};
+	Point3D ray_origin{-1.1212, 1.313, 2.331};
+	std::shared_ptr<IHitRecord> hit_record = std::make_shared<HitRecord>(HitRecord());
 };
 
 
@@ -60,11 +61,9 @@ TEST_F(SetupSphere, test_ray_intersection_ray_direction_is_called)
 	auto sphere = Sphere(center, radius);
 	MockRay mock_ray;
 	std::shared_ptr<IRay> mock (std::shared_ptr<MockRay>(), &mock_ray);
-	c_vector3 hit_normal = null_vector;
-	c_vector3 hit_point = null_vector;
 	using ::testing::Exactly;
 	EXPECT_CALL(mock_ray, direction_normalized()).Times(Exactly(1));
-	sphere.does_ray_intersect(mock, hit_normal, hit_point);
+	sphere.does_ray_intersect(mock, hit_record);
 }
 
 TEST_F(SetupSphere, test_ray_intersection_ray_origin_is_called)
@@ -72,11 +71,9 @@ TEST_F(SetupSphere, test_ray_intersection_ray_origin_is_called)
 	auto sphere = Sphere(center, radius);
 	MockRay mock_ray;
 	std::shared_ptr<IRay> mock (std::shared_ptr<MockRay>(), &mock_ray);
-	c_vector3 hit_normal = null_vector;
-	c_vector3 hit_point = null_vector;
 	using ::testing::Exactly;
 	EXPECT_CALL(mock_ray, origin()).Times(Exactly(1));
-	sphere.does_ray_intersect(mock, hit_normal, hit_point);
+	sphere.does_ray_intersect(mock,hit_record);
 }
 
 TEST_F(SetupSphere, test_ray_intersection_closest_distance)
@@ -88,16 +85,11 @@ TEST_F(SetupSphere, test_ray_intersection_closest_distance)
 	EXPECT_CALL(mock_ray, origin()).WillRepeatedly(testing::Return(ray_origin));
 	EXPECT_CALL(mock_ray, direction_normalized()).WillRepeatedly(testing::Return(ray_direction));
 
-	c_vector3 expected_hit_normal = null_vector;
-	c_vector3 expected_hit_point = c_vector3{0., 0., 0.};
-	ray_intersection(mock_ray, expected_hit_normal, expected_hit_point);
-
-	c_vector3 hit_normal = null_vector;
-	c_vector3 hit_point = c_vector3{0., 0., 0.};
-
-	sphere.does_ray_intersect(mock, hit_normal, hit_point);
+	HitRecord expected_hit_record;
+	ray_intersection(mock_ray, expected_hit_record);
+	sphere.does_ray_intersect(mock, hit_record);
 	for (int i = 0; i < 3; ++i) {
-		EXPECT_FLOAT_EQ(expected_hit_normal[i], hit_normal[i]);
+		EXPECT_FLOAT_EQ(expected_hit_record.hit_normal()[i], hit_record->hit_normal()[i]);
 	}
 }
 
@@ -111,15 +103,11 @@ TEST_F(SetupSphere, test_ray_intersection_hit_point)
 	EXPECT_CALL(mock_ray, origin()).WillRepeatedly(testing::Return(ray_origin));
 	EXPECT_CALL(mock_ray, direction_normalized()).WillRepeatedly(testing::Return(ray_direction));
 
-	c_vector3 expected_hit_normal = null_vector;
-	c_vector3 expected_hit_point = c_vector3{0., 0., 0.};
-	ray_intersection(mock_ray, expected_hit_normal, expected_hit_point);
+	HitRecord expected_hit_record;
+	ray_intersection(mock_ray, expected_hit_record);
+	sphere.does_ray_intersect(mock, hit_record);
 
-	c_vector3 hit_normal = null_vector;
-	c_vector3 hit_point = c_vector3{0., 0., 0.};
-
-	sphere.does_ray_intersect(mock, hit_normal, hit_point);
 	for (int i = 0; i < 3; ++i) {
-		EXPECT_FLOAT_EQ(expected_hit_point[i], hit_point[i]);
+		EXPECT_FLOAT_EQ(expected_hit_record.hit_point()[i], hit_record->hit_point()[i]);
 	}
 }

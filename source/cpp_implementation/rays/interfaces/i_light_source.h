@@ -4,7 +4,7 @@
 
 #ifndef SIMPLE_RAY_TRACING_I_LIGHT_SOURCE_H
 #define SIMPLE_RAY_TRACING_I_LIGHT_SOURCE_H
-#include "miscellaneous/templates/c_vector.h"
+#include "miscellaneous/templates/n_tuple.h"
 
 class ILightSource
 {

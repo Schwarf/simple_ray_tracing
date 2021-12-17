@@ -4,7 +4,7 @@
 
 #include "light_source.h"
 
-c_vector3 LightSource::position() const
+Point3D LightSource::position() const
 {
 	return position_;
 }

@@ -14,15 +14,15 @@ protected:
 	float diffuse_reflection{0.2};
 	float ambient_reflection{0.3};
 	float shininess{0.4};
-	float specular_exponent{0.5};
-	float refraction_coefficient{0.9};
-	c_vector3 rgb_color{0.6, 0.7, 0.8};
+	float transparency{0.5};
+	float refraction_index{1.2};
+	Color rgb_color{0.6, 0.7, 0.8};
 };
 
 TEST_F(SetupMaterial, test_specular_reflection)
 {
 	MockMaterialBuilder builder;
-	EXPECT_CALL(builder, specular_reflection).WillOnce(testing::Return(specular_reflection));
+	EXPECT_CALL(builder, specular).WillOnce(testing::Return(specular_reflection));
 	Material material("specular", builder);
 	EXPECT_FLOAT_EQ(material.specular(), specular_reflection);
 }
@@ -30,7 +30,7 @@ TEST_F(SetupMaterial, test_specular_reflection)
 TEST_F(SetupMaterial, test_diffuse_reflection)
 {
 	MockMaterialBuilder builder;
-	EXPECT_CALL(builder, diffuse_reflection).WillOnce(testing::Return(diffuse_reflection));
+	EXPECT_CALL(builder, diffuse).WillOnce(testing::Return(diffuse_reflection));
 	Material material("specular", builder);
 	EXPECT_FLOAT_EQ(material.diffuse(), diffuse_reflection);
 }
@@ -38,7 +38,7 @@ TEST_F(SetupMaterial, test_diffuse_reflection)
 TEST_F(SetupMaterial, test_ambient_reflection)
 {
 	MockMaterialBuilder builder;
-	EXPECT_CALL(builder, ambient_reflection).WillOnce(testing::Return(ambient_reflection));
+	EXPECT_CALL(builder, ambient).WillOnce(testing::Return(ambient_reflection));
 	Material material("specular", builder);
 	EXPECT_FLOAT_EQ(material.ambient(), ambient_reflection);
 }
@@ -52,20 +52,20 @@ TEST_F(SetupMaterial, test_shininess)
 }
 
 
-TEST_F(SetupMaterial, test_specular_exponent)
+TEST_F(SetupMaterial, test_transparency)
 {
 	MockMaterialBuilder builder;
-	EXPECT_CALL(builder, specular_exponent).WillOnce(testing::Return(specular_exponent));
+	EXPECT_CALL(builder, transparency).WillOnce(testing::Return(transparency));
 	Material material("specular", builder);
-	EXPECT_FLOAT_EQ(material.transparency(), specular_exponent);
+	EXPECT_FLOAT_EQ(material.transparency(), transparency);
 }
 
 TEST_F(SetupMaterial, test_refraction_coefficient)
 {
 	MockMaterialBuilder builder;
-	EXPECT_CALL(builder, refraction_coefficient).WillOnce(testing::Return(refraction_coefficient));
+	EXPECT_CALL(builder, refraction_index).WillOnce(testing::Return(refraction_index));
 	Material material("specular", builder);
-	EXPECT_FLOAT_EQ(material.refraction_index(), refraction_coefficient);
+	EXPECT_FLOAT_EQ(material.refraction_index(), refraction_index);
 }
 
 

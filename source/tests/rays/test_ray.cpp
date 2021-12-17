@@ -9,8 +9,8 @@
 class SetupRay: public testing::Test
 {
 protected:
-	c_vector3 origin{10.6, 10., 7.};
-	c_vector3 direction{-2, 1.2, 2.5};
+	Point3D origin{10.6, 10., 7.};
+	Vector3D direction{-2, 1.2, 2.5};
 };
 
 TEST_F(SetupRay, test_orgin)

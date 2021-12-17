@@ -52,7 +52,7 @@ float Material::transparency() const
 	return transparency_;
 }
 
-c_vector3 Material::rgb_color() const
+Color Material::rgb_color() const
 {
 	return rgb_color_;
 }

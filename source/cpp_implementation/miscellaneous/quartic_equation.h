@@ -15,12 +15,12 @@ template<typename T>
 class QuarticEquation: public ISolve<4, T>
 {
 public:
-	QuarticEquation(const c_vector<5, T> &coefficients, const T &epsilon);
-	virtual c_vector<4, T> solutions() final;
+	QuarticEquation(const n_tuple<5, T> &coefficients, const T &epsilon);
+	virtual n_tuple<4, T> solutions() final;
 	virtual size_t number_of_solutions() const final;
 
 private:
-	c_vector<4, T> solutions_
+	n_tuple<4, T> solutions_
 		{std::numeric_limits<T>::quiet_NaN(), std::numeric_limits<T>::quiet_NaN(), std::numeric_limits<T>::quiet_NaN(),
 		 std::numeric_limits<T>::quiet_NaN()};
 	size_t number_of_solutions_{};
@@ -28,7 +28,7 @@ private:
 
 
 template<typename T>
-QuarticEquation<T>::QuarticEquation(const c_vector<5, T> &coefficients, const T &epsilon)
+QuarticEquation<T>::QuarticEquation(const n_tuple<5, T> &coefficients, const T &epsilon)
 {
 	T absolute_average{};
 	for (size_t index = 0; index < 5; index++) {
@@ -62,7 +62,7 @@ QuarticEquation<T>::QuarticEquation(const c_vector<5, T> &coefficients, const T 
 		T c_quadratic = 0.;
 		T c_linear = p;
 		T c_constant = q;
-		c_vector<4, T> cubic_coefficients{c_cube, c_quadratic, c_linear, c_constant};
+		n_tuple<4, T> cubic_coefficients{c_cube, c_quadratic, c_linear, c_constant};
 		auto cubic_solver = CubicEquation<T>(cubic_coefficients, epsilon);
 		number_of_solutions_ = cubic_solver.number_of_solutions() + 1;
 		solutions_[0] = 0;
@@ -75,7 +75,7 @@ QuarticEquation<T>::QuarticEquation(const c_vector<5, T> &coefficients, const T 
 		T c_quadratic = -p/ 2.;
 		T c_linear = -r;
 		T c_constant = r * p/2. - q * q/8.;
-		c_vector<4, T> cubic_coefficients{c_cube, c_quadratic, c_linear, c_constant};
+		n_tuple<4, T> cubic_coefficients{c_cube, c_quadratic, c_linear, c_constant};
 		auto cubic_solver = CubicEquation<T>(cubic_coefficients, epsilon);
 		if(cubic_solver.number_of_solutions()  != 1)
 		{
@@ -108,7 +108,7 @@ QuarticEquation<T>::QuarticEquation(const c_vector<5, T> &coefficients, const T 
 		c_quadratic = 1.;
 		c_linear = q < 0 ? -v : v;
 		c_constant = z - u;
-		c_vector<3, T> quadratic_coefficients{c_quadratic, c_linear, c_constant};
+		n_tuple<3, T> quadratic_coefficients{c_quadratic, c_linear, c_constant};
 		auto quadratic_solver = QuadraticEquation<T>(quadratic_coefficients, epsilon);
 		number_of_solutions_ = quadratic_solver.number_of_solutions();
 		for (size_t index = 0; index < quadratic_solver.number_of_solutions(); ++index) {
@@ -117,7 +117,7 @@ QuarticEquation<T>::QuarticEquation(const c_vector<5, T> &coefficients, const T 
 		c_quadratic = 1.;
 		c_linear = q < 0 ? v : -v;
 		c_constant = z + u;
-		c_vector<3, T> quadratic_coefficients2{c_quadratic, c_linear, c_constant};
+		n_tuple<3, T> quadratic_coefficients2{c_quadratic, c_linear, c_constant};
 		auto quadratic_solver2 = QuadraticEquation<T>(quadratic_coefficients2, epsilon);
 
 		for (size_t index = 0; index < quadratic_solver2.number_of_solutions(); ++index) {
@@ -132,7 +132,7 @@ QuarticEquation<T>::QuarticEquation(const c_vector<5, T> &coefficients, const T 
 }
 
 template<typename T>
-c_vector<4, T> QuarticEquation<T>::solutions()
+n_tuple<4, T> QuarticEquation<T>::solutions()
 {
 	return solutions_;
 }

@@ -19,7 +19,7 @@ public:
 
 	virtual void set_transparency(const float &transparency) = 0;
 
-	virtual void set_rgb_color(const c_vector3 &color) = 0;
+	virtual void set_rgb_color(const Color &color) = 0;
 
 	virtual void set_refraction_index(const float &refraction_index) = 0;
 

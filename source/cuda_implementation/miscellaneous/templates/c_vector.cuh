@@ -10,9 +10,9 @@
 #include "../../../../../../../../../usr/include/c++/9/cassert"
 #include "../../../../../../../../../usr/include/c++/9/iostream"
 
-// Definition of c_vector
+// Definition of n_tuple
 template<size_t dimension, typename T>
-struct c_vector
+struct n_tuple
 {
 	T elements[dimension] = {};
 
@@ -32,7 +32,7 @@ struct c_vector
 		for (size_t index = dimension; index--; result = *this * (*this));
 		return std::sqrt(result);
 	}
-	__host__ __device__ c_vector<dimension, T> &normalize()
+	__host__ __device__ n_tuple<dimension, T> &normalize()
 	{
 		T norm = this->norm();
 		*this = (*this) / norm;
@@ -41,32 +41,32 @@ struct c_vector
 
 };
 
-// Multiply c_vector with number
+// Multiply n_tuple with number
 template<size_t dimension, typename T>
-__host__ __device__ c_vector<dimension, T> operator*(const c_vector<dimension, T> &lhs, const T rhs)
+__host__ __device__ n_tuple<dimension, T> operator*(const n_tuple<dimension, T> &lhs, const T rhs)
 {
-	c_vector<dimension, T> result;
+	n_tuple<dimension, T> result;
 	for (size_t index = dimension; index--; result[index] = lhs[index] * rhs);
 	return result;
 }
 
 template<size_t dimension, typename T>
-__host__ __device__ c_vector<dimension, T> operator*(const T lhs, const c_vector<dimension, T> &rhs)
+__host__ __device__ n_tuple<dimension, T> operator*(const T lhs, const n_tuple<dimension, T> &rhs)
 {
 	return rhs * lhs;
 }
 
 template<size_t dimension, typename T>
-__host__ __device__ c_vector<dimension, T> operator/(const c_vector<dimension, T> &lhs, const T rhs)
+__host__ __device__ n_tuple<dimension, T> operator/(const n_tuple<dimension, T> &lhs, const T rhs)
 {
-	c_vector<dimension, T> result;
+	n_tuple<dimension, T> result;
 	for (size_t index = dimension; index--; result[index] = lhs[index] / rhs);
 	return result;
 }
 
 // Dot-product
 template<size_t dimension, typename T>
-__host__ __device__ T operator*(const c_vector<dimension, T> &lhs, const c_vector<dimension, T> &rhs)
+__host__ __device__ T operator*(const n_tuple<dimension, T> &lhs, const n_tuple<dimension, T> &rhs)
 {
 	T result{};
 	for (size_t index = dimension; index--; result += lhs[index] * rhs[index]);
@@ -75,7 +75,7 @@ __host__ __device__ T operator*(const c_vector<dimension, T> &lhs, const c_vecto
 
 // Vector addition
 template<size_t dimension, typename T>
-__host__ __device__ c_vector<dimension, T> operator+(c_vector<dimension, T> lhs, const c_vector<dimension, T> &rhs)
+__host__ __device__ n_tuple<dimension, T> operator+(n_tuple<dimension, T> lhs, const n_tuple<dimension, T> &rhs)
 {
 	for (size_t index = dimension; index--; lhs[index] += rhs[index]);
 	return lhs;
@@ -83,7 +83,7 @@ __host__ __device__ c_vector<dimension, T> operator+(c_vector<dimension, T> lhs,
 
 // Vector subtraction
 template<size_t dimension, typename T>
-__host__ __device__ c_vector<dimension, T> operator-(c_vector<dimension, T> lhs, const c_vector<dimension, T> &rhs)
+__host__ __device__ n_tuple<dimension, T> operator-(n_tuple<dimension, T> lhs, const n_tuple<dimension, T> &rhs)
 {
 	for (size_t index = dimension; index--; lhs[index] -= rhs[index]);
 	return lhs;
@@ -91,17 +91,17 @@ __host__ __device__ c_vector<dimension, T> operator-(c_vector<dimension, T> lhs,
 
 // Invert direction_normalized
 template<size_t dimension, typename T>
-__host__ __device__ c_vector<dimension, T> operator-(const c_vector<dimension, T> &lhs)
+__host__ __device__ n_tuple<dimension, T> operator-(const n_tuple<dimension, T> &lhs)
 {
-	c_vector<dimension, T> result;
+	n_tuple<dimension, T> result;
 	for (size_t index = dimension; index--; result[index] = -lhs[index]);
 	return result;
 }
 
-typedef c_vector<3, float> c_vector3;
+typedef n_tuple<3, float> float_triple;
 
 template<size_t dimension, typename T>
-__host__ __device__ std::ostream &operator<<(std::ostream &out, const c_vector<dimension, T> &v)
+__host__ __device__ std::ostream &operator<<(std::ostream &out, const n_tuple<dimension, T> &v)
 {
 	for (size_t index = 0; index < dimension; index++)
 		out << v[index] << " ";

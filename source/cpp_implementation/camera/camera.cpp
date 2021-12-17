@@ -15,7 +15,7 @@ Camera::Camera(int image_width, int image_height, float viewport_width, float fo
 	horizontal_direction_[0] = viewport_width;
 	vertical_direction_[1] = viewport_height;
 	lower_left_corner_ =
-		origin_ - horizontal_direction_ / 2.f - vertical_direction_ / 2.f - c_vector3{0, 0, focal_length};
+		origin_ - horizontal_direction_ / 2.f - vertical_direction_ / 2.f - Point3D {0, 0, focal_length};
 	image_buffer_ = std::make_shared<ImageBuffer>(ImageBuffer(image_width_, image_height_));
 }
 
@@ -68,7 +68,7 @@ void Camera::render_image(std::shared_ptr<IObjectList> &objects_in_scene,
 	#pragma omp parallel for
 	for (int height_index = 0; height_index < image_height_; height_index++) {
 		for (int width_index = 0; width_index < image_width_; width_index++) {
-			c_vector3 color_values{0,0,0};
+			Color color_values{0, 0, 0};
 			for(size_t sample =0; sample < samples_per_pixel; ++sample) {
 				get_pixel_coordinates(width_index, height_index, u, v);
 				auto ray = get_ray(u, v);
@@ -128,7 +128,7 @@ Color Camera::get_pixel_color(std::shared_ptr<IRay> &ray,
 
 	Color diffuse_color =
 		object->get_material()->rgb_color() * diffuse_intensity * object->get_material()->diffuse();
-	Color white = c_vector3{1, 1, 1};
+	Color white = Color{1, 1, 1};
 	Color specular_color = specular_intensity * white * object->get_material()->specular();
 	Color ambient_color = reflected_color * object->get_material()->ambient();
 	Color refraction_color = refracted_color * object->get_material()->transparency();

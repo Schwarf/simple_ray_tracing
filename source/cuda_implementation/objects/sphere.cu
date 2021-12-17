@@ -4,7 +4,7 @@
 
 #include "sphere.cuh"
 
-__device__ Sphere::Sphere(c_vector3 &center, float radius, IMaterial * material)
+__device__ Sphere::Sphere(float_triple &center, float radius, IMaterial * material)
 {
 	center_ = center;
 	radius_ = radius;
@@ -22,9 +22,9 @@ __device__ float Sphere::radius() const
 }
 
 
-__device__ bool Sphere::does_ray_intersect(std::shared_ptr<IRay> &ray, c_vector3 &hit_normal, c_vector3 &hit_point) const
+__device__ bool Sphere::does_ray_intersect(std::shared_ptr<IRay> &ray, float_triple &hit_normal, float_triple &hit_point) const
 {
-	c_vector3 origin_to_center = (center_ - ray.origin());
+	float_triple origin_to_center = (center_ - ray.origin());
 	float origin_to_center_dot_direction = origin_to_center * ray.direction_normalized();
 	float epsilon = 1e-3;
 	float discriminant = origin_to_center_dot_direction * origin_to_center_dot_direction -

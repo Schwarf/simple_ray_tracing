@@ -5,7 +5,7 @@
 #ifndef SIMPLE_RAY_TRACING_I_RECTANGLE_H
 #define SIMPLE_RAY_TRACING_I_RECTANGLE_H
 
-#include "miscellaneous/templates/c_vector.h"
+#include "miscellaneous/templates/n_tuple.h"
 #include "i_target_object.h"
 
 class IRectangle: public ITargetObject
@@ -15,7 +15,7 @@ public:
 
 	virtual float height() const = 0;
 
-	virtual c_vector3 bottom_left_position() const = 0;
+	virtual Point3D bottom_left_position() const = 0;
 
 	virtual ~IRectangle() = default;
 };

@@ -38,7 +38,7 @@ public:
 
 	float transparency() const final;
 
-	c_vector3 rgb_color() const final;
+	Color rgb_color() const final;
 
 private:
 	float specular_reflection_{-1.0};
@@ -46,7 +46,7 @@ private:
 	float ambient_reflection_{-1.0};
 	float shininess_{-1.0};
 	float transparency_{-1.0};
-	c_vector3 rgb_color_{0., 0., 0.};
+	Color rgb_color_{0., 0., 0.};
 	float refraction_index_{-1.0};
 	std::string name_;
 };

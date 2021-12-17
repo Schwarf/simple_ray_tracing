@@ -11,15 +11,15 @@
 class Ray final: public IRay
 {
 public:
-	__device__ Ray(c_vector3 &origin, c_vector3 &direction);
+	__device__ Ray(float_triple &origin, float_triple &direction);
 	__device__ Vector3D direction_normalized() const final;
 
-	__device__ c_vector3 origin() const final;
+	__device__ float_triple origin() const final;
 
 	__device__ ~Ray() final = default;
 private:
-	c_vector3 direction_normalized_;
-	c_vector3 origin_;
+	float_triple direction_normalized_;
+	float_triple origin_;
 };
 
 

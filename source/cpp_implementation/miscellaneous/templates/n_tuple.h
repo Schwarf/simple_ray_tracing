@@ -10,9 +10,9 @@
 #include <cassert>
 #include <iostream>
 
-// Definition of c_vector
+// Definition of n_tuple
 template<size_t dimension, typename T>
-struct c_vector
+struct n_tuple
 {
 	T elements[dimension] = {};
 
@@ -20,8 +20,8 @@ struct c_vector
 	{
 		if (index >= dimension) {
 			const std::string message_part1 =
-				"In class c_vector 'index = " + std::to_string(index) + "' is out of range: T & operator[]";
-			const std::string message_part2 = "Dimension of c_vector is: " + std::to_string(dimension);
+				"In class n_tuple 'index = " + std::to_string(index) + "' is out of range: T & operator[]";
+			const std::string message_part2 = "Dimension of n_tuple is: " + std::to_string(dimension);
 			std::string message = message_part1 + message_part2;
 			throw std::out_of_range(message);
 		}
@@ -32,8 +32,8 @@ struct c_vector
 	{
 		if (index >= dimension) {
 			const std::string message_part1 =
-				"In class c_vector 'index = " + std::to_string(index) + "' is out of range: const T & operator[]";
-			const std::string message_part2 = "Dimension of c_vector is: " + std::to_string(dimension);
+				"In class n_tuple 'index = " + std::to_string(index) + "' is out of range: const T & operator[]";
+			const std::string message_part2 = "Dimension of n_tuple is: " + std::to_string(dimension);
 			std::string message = message_part1 + message_part2;
 			throw std::out_of_range(message);
 		}
@@ -46,7 +46,7 @@ struct c_vector
 		for (size_t index = dimension; index--; result = *this * (*this));
 		return std::sqrt(result);
 	}
-	c_vector<dimension, T> &normalize()
+	n_tuple<dimension, T> &normalize()
 	{
 		T norm = this->norm();
 		*this = (*this) / norm;
@@ -55,32 +55,32 @@ struct c_vector
 
 };
 
-// Multiply c_vector with number
+// Multiply n_tuple with number
 template<size_t dimension, typename T>
-c_vector<dimension, T> operator*(const c_vector<dimension, T> &lhs, const T rhs)
+n_tuple<dimension, T> operator*(const n_tuple<dimension, T> &lhs, const T rhs)
 {
-	c_vector<dimension, T> result;
+	n_tuple<dimension, T> result;
 	for (size_t index = dimension; index--; result[index] = lhs[index] * rhs);
 	return result;
 }
 
 template<size_t dimension, typename T>
-c_vector<dimension, T> operator*(const T lhs, const c_vector<dimension, T> &rhs)
+n_tuple<dimension, T> operator*(const T lhs, const n_tuple<dimension, T> &rhs)
 {
 	return rhs * lhs;
 }
 
 template<size_t dimension, typename T>
-c_vector<dimension, T> operator/(const c_vector<dimension, T> &lhs, const T rhs)
+n_tuple<dimension, T> operator/(const n_tuple<dimension, T> &lhs, const T rhs)
 {
-	c_vector<dimension, T> result;
+	n_tuple<dimension, T> result;
 	for (size_t index = dimension; index--; result[index] = lhs[index] / rhs);
 	return result;
 }
 
 // Dot-product
 template<size_t dimension, typename T>
-T operator*(const c_vector<dimension, T> &lhs, const c_vector<dimension, T> &rhs)
+T operator*(const n_tuple<dimension, T> &lhs, const n_tuple<dimension, T> &rhs)
 {
 	T result{};
 	for (size_t index = dimension; index--; result += lhs[index] * rhs[index]);
@@ -89,7 +89,7 @@ T operator*(const c_vector<dimension, T> &lhs, const c_vector<dimension, T> &rhs
 
 // Vector addition
 template<size_t dimension, typename T>
-c_vector<dimension, T> operator+(c_vector<dimension, T> lhs, const c_vector<dimension, T> &rhs)
+n_tuple<dimension, T> operator+(n_tuple<dimension, T> lhs, const n_tuple<dimension, T> &rhs)
 {
 	for (size_t index = dimension; index--; lhs[index] += rhs[index]);
 	return lhs;
@@ -97,7 +97,7 @@ c_vector<dimension, T> operator+(c_vector<dimension, T> lhs, const c_vector<dime
 
 // Vector subtraction
 template<size_t dimension, typename T>
-c_vector<dimension, T> operator-(c_vector<dimension, T> lhs, const c_vector<dimension, T> &rhs)
+n_tuple<dimension, T> operator-(n_tuple<dimension, T> lhs, const n_tuple<dimension, T> &rhs)
 {
 	for (size_t index = dimension; index--; lhs[index] -= rhs[index]);
 	return lhs;
@@ -105,25 +105,27 @@ c_vector<dimension, T> operator-(c_vector<dimension, T> lhs, const c_vector<dime
 
 // Invert direction_normalized
 template<size_t dimension, typename T>
-c_vector<dimension, T> operator-(const c_vector<dimension, T> &lhs)
+n_tuple<dimension, T> operator-(const n_tuple<dimension, T> &lhs)
 {
-	c_vector<dimension, T> result;
+	n_tuple<dimension, T> result;
 	for (size_t index = dimension; index--; result[index] = -lhs[index]);
 	return result;
 }
 
-typedef c_vector<3, float> c_vector3;
-
 template<size_t dimension, typename T>
-std::ostream &operator<<(std::ostream &out, const c_vector<dimension, T> &v)
+std::ostream &operator<<(std::ostream &out, const n_tuple<dimension, T> &v)
 {
 	for (size_t index = 0; index < dimension; index++)
 		out << v[index] << " ";
 	return out;
 
 }
-using Point3D = c_vector3;
-using Vector3D = c_vector3;
-using Color = c_vector3;
+typedef n_tuple<2, float> float_duple;
+typedef n_tuple<3, float> float_triple;
+typedef n_tuple<4, float> float_quadruple;
+
+using Point3D = float_triple;
+using Vector3D = float_triple;
+using Color = float_triple;
 
 #endif //SOURCE_C_VECTOR_H

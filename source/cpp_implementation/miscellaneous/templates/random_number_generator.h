@@ -6,7 +6,7 @@
 #define RANDOM_NUMBER_GENERATOR_H
 #include <type_traits>
 #include <random>
-#include "c_vector.h"
+#include "n_tuple.h"
 
 class UniformRandomNumberGenerator
 {
@@ -26,14 +26,14 @@ public:
 	}
 
 	template <typename T>
-	static inline c_vector3 random_vector_in_unit_sphere()
+	static inline Vector3D random_vector_in_unit_sphere()
 	{
 		auto lower_bound = -1;
 		auto upper_bound = 1;
 		while(true) {
-			c_vector3 random_vector = {UniformRandomNumberGenerator::get_random<T>(lower_bound, upper_bound),
-									   UniformRandomNumberGenerator::get_random<T>(lower_bound, upper_bound),
-									   UniformRandomNumberGenerator::get_random<T>(lower_bound, upper_bound)};
+			Vector3D random_vector = {UniformRandomNumberGenerator::get_random<T>(lower_bound, upper_bound),
+										  UniformRandomNumberGenerator::get_random<T>(lower_bound, upper_bound),
+										  UniformRandomNumberGenerator::get_random<T>(lower_bound, upper_bound)};
 			if (random_vector.norm() < 1)
 				return random_vector;
 		}

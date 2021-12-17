@@ -14,7 +14,7 @@ float Rectangle::height() const
 	return height_;
 }
 
-c_vector3 Rectangle::bottom_left_position() const
+Point3D Rectangle::bottom_left_position() const
 {
 	return bottom_left_position_;
 }
@@ -57,10 +57,10 @@ std::shared_ptr<IMaterial> Rectangle::get_material() const
 	return material_;
 }
 
-Rectangle::Rectangle(c_vector3 width_vector,
-					 c_vector3 height_vector,
-					 const c_vector3 &position,
-					 const c_vector3 &normal)
+Rectangle::Rectangle(Vector3D width_vector,
+					 Vector3D height_vector,
+					 const Point3D &position,
+					 const Vector3D &normal)
 {
 	width_ = width_vector.norm();
 	height_ = height_vector.norm();

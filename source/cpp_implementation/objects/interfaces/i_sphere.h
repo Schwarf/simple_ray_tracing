@@ -4,7 +4,7 @@
 
 #ifndef SIMPLE_RAY_TRACING_I_SPHERE_H
 #define SIMPLE_RAY_TRACING_I_SPHERE_H
-#include "miscellaneous/templates/c_vector.h"
+#include "miscellaneous/templates/n_tuple.h"
 #include "rays/interfaces/i_ray_intersection.h"
 #include "i_target_object.h"
 

@@ -8,8 +8,8 @@
 class MockRay: public IRay
 {
 public:
-	MOCK_METHOD(c_vector3, origin, (), (const, final));
-	MOCK_METHOD(c_vector3, direction_normalized, (), (const, final));
+	MOCK_METHOD(Point3D, origin, (), (const, final));
+	MOCK_METHOD(Vector3D, direction_normalized, (), (const, final));
 };
 
 

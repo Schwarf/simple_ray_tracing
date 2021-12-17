@@ -5,7 +5,7 @@
 #include "material.cuh"
 
 
-__device__ c_vector3 Material::rgb_color() const
+__device__ float_triple Material::rgb_color() const
 {
 	return rgb_color_;
 }
@@ -57,7 +57,7 @@ __device__ void Material::set_specular_exponent(float specular_exponent)
 {
 	specular_exponent_ = specular_exponent;
 }
-__device__ void Material::set_rgb_color(c_vector3 color)
+__device__ void Material::set_rgb_color(float_triple color)
 {
 	rgb_color_ = color;
 }

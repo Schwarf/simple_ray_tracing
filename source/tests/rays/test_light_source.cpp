@@ -8,7 +8,7 @@
 class SetupLightSource: public testing::Test
 {
 protected:
-	c_vector3 position{0.2, 3.0, 4.0};
+	Point3D position{0.2, 3.0, 4.0};
 	float intensity = 0.5;
 };
 

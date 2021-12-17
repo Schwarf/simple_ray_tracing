@@ -4,7 +4,7 @@
 #include <memory>
 #include <fstream>
 #include <cmath>
-#include "miscellaneous/templates/c_vector.h"
+#include "miscellaneous/templates/n_tuple.h"
 #include "miscellaneous/quadratic_equation.h"
 #include "miscellaneous/cubic_equation.h"
 #include "create_scenes/create_object_list.h"
@@ -42,9 +42,9 @@ int main()
 	ofs.close();
 
 
-	c_vector<3, double> coeff{1.0, 5.0, -5.0};
-	c_vector<4, double> coefficient_cubic{1.0, -6.0, 11.0, -6.0};
-	c_vector<4, double> coefficient_cubic2{1.0, -5.0, 8.0, -4.0};
+	n_tuple<3, double> coeff{1.0, 5.0, -5.0};
+	n_tuple<4, double> coefficient_cubic{1.0, -6.0, 11.0, -6.0};
+	n_tuple<4, double> coefficient_cubic2{1.0, -5.0, 8.0, -4.0};
 	double epsilon = 1.e-10;
 	auto q_equation = QuadraticEquation<double>(coeff, epsilon);
 	auto cubic_equation = CubicEquation<double>(coefficient_cubic, epsilon);

@@ -12,14 +12,14 @@ class Rectangle final: IRectangle
 public:
 	Rectangle(Vector3D width_vector,
 			  Vector3D height_vector,
-			  const c_vector3 &bottom_left_position,
+			  const Point3D &bottom_left_position,
 			  const Vector3D &normal);
 
 	float width() const final;
 
 	float height() const final;
 
-	c_vector3 bottom_left_position() const final;
+	Point3D bottom_left_position() const final;
 
 	~Rectangle() final = default;
 

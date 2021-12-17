@@ -31,7 +31,7 @@ void Sphere::init() const
 bool Sphere::does_ray_intersect(std::shared_ptr<IRay> &ray, std::shared_ptr<IHitRecord> &hit_record) const
 {
 	float closest_hit_distance = -1.0;
-	c_vector3 origin_to_center = (center_ - ray->origin());
+	Vector3D origin_to_center = (center_ - ray->origin());
 	float origin_to_center_dot_direction = origin_to_center * ray->direction_normalized();
 	float epsilon = 1e-3;
 	float discriminant = origin_to_center_dot_direction * origin_to_center_dot_direction -

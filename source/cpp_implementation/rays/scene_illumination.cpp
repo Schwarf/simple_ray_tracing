@@ -6,8 +6,8 @@
 
 SceneIllumination::SceneIllumination(std::shared_ptr<ILightSource> light_source)
 {
-	background_color1_ = c_vector3{1, 1, 1};
-	background_color1_ = c_vector3{1, 1, 1};
+	background_color1_ = Color{1, 1, 1};
+	background_color1_ = Color{1, 1, 1};
 	light_source_vector_.push_back(light_source);
 }
 
@@ -50,7 +50,7 @@ size_t SceneIllumination::number_of_light_sources()
 {
 	return light_source_vector_.size();
 }
-c_vector3 SceneIllumination::background_color(const float parameter)
+Color SceneIllumination::background_color(const float parameter)
 {
 
 	return (1.f-parameter)*background_color1_ + parameter*background_color2_;

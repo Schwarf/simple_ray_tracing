@@ -92,7 +92,7 @@ float MaterialBuilder::transparency() const
 	return transparency_;
 }
 
-void MaterialBuilder::set_rgb_color(const c_vector3 &rgb_color)
+void MaterialBuilder::set_rgb_color(const Color &rgb_color)
 {
 	std::string class_name = "MaterialBuilder";
 	Validate<float>::is_in_open_interval("color value red", rgb_color[0], 0.0, 1.0, class_name);
@@ -101,7 +101,7 @@ void MaterialBuilder::set_rgb_color(const c_vector3 &rgb_color)
 	rgb_color_ = rgb_color;
 }
 
-c_vector3 MaterialBuilder::rgb_color() const
+Color MaterialBuilder::rgb_color() const
 {
 	return rgb_color_;
 }

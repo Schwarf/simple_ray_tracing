@@ -19,11 +19,11 @@ __device__ void build_material( IMaterial * p_material)
 	p_material->set_shininess(0.0001);
 	p_material->set_specular_exponent(50.0);
 	p_material->set_refraction_coefficient(1.0);
-	c_vector3 color = c_vector3{0.9, 0.2, 0.3};
+	float_triple color = float_triple{0.9, 0.2, 0.3};
 	p_material->set_rgb_color(color);
 }
 
-__global__ void render_it(c_vector3 *buffer, size_t max_width, size_t max_height)
+__global__ void render_it(float_triple *buffer, size_t max_width, size_t max_height)
 {
 	//size_t width = threadIdx.x + blockIdx.x * blockDim.x;
 	//size_t height = threadIdx.y + blockIdx.y * blockDim.y;
@@ -36,7 +36,7 @@ __global__ void render_it(c_vector3 *buffer, size_t max_width, size_t max_height
 	float x_direction = float(width) - float(max_width) / 2.f;
 	float y_direction = float(height) - float(max_height) / 2.f;
 	float z_direction = -float(max_height + max_width) / 2.f;
-	auto sphere_center = c_vector3{-3.5f, 3.5f, -15.f};
+	auto sphere_center = float_triple{-3.5f, 3.5f, -15.f};
 	auto sphere_radius = 1.5f;
 	Material material;
 	IMaterial * p_material = & material;
@@ -44,19 +44,19 @@ __global__ void render_it(c_vector3 *buffer, size_t max_width, size_t max_height
 	build_material(p_material);
 	auto sphere = Sphere(sphere_center, sphere_radius, p_material);
 
-	c_vector3 direction = c_vector3{x_direction, y_direction, z_direction}.normalize();
-	c_vector3 origin = c_vector3{0, 0, 0};
+	float_triple direction = float_triple{x_direction, y_direction, z_direction}.normalize();
+	float_triple origin = float_triple{0, 0, 0};
 	auto ray = Ray(origin, direction);
 
 	size_t pixel_index = height * max_width + width;
-	c_vector3 hit_normal = c_vector3{0, 0, 0};
-	c_vector3 hit_point = c_vector3{0, 0, 0};
+	float_triple hit_normal = float_triple{0, 0, 0};
+	float_triple hit_point = float_triple{0, 0, 0};
 
 	if(sphere.does_ray_intersect(ray,hit_normal, hit_point)) {
 		buffer[pixel_index] = sphere.material()->rgb_color();
 	}
 	else
-		buffer[pixel_index] = c_vector3{0.2, 0.7, 0.8};
+		buffer[pixel_index] = float_triple{0.2, 0.7, 0.8};
 }
 
 int main()
@@ -72,7 +72,7 @@ int main()
 	int number_of_threads{1024};
 	size_t buffer_size = width * height * sizeof(float3);
 	std::cout << buffer_size << std::endl;
-	c_vector3 *buffer;
+	float_triple *buffer;
 	cudaMallocManaged((void **)&buffer, buffer_size);
 
 	render_it<<<number_of_blocks, number_of_threads>>>(buffer, width, height);

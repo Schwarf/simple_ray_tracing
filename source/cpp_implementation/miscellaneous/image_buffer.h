@@ -7,7 +7,7 @@
 
 #include <memory>
 #include "miscellaneous/interfaces/i_image_buffer.h"
-#include "miscellaneous/templates/c_vector.h"
+#include "miscellaneous/templates/n_tuple.h"
 class ImageBuffer final: public IImageBuffer
 {
 
@@ -16,13 +16,13 @@ public:
 	~ImageBuffer() = default;
 	int width() const final;
 	int height() const final;
-	std::unique_ptr<std::vector<c_vector3>> buffer() final;
-	void set_pixel_value(int width_index, int height_index, const c_vector3 &pixel_color_value, int samples_per_pixel) final;
-	c_vector3 get_rgb_pixel(int index) final;
-	c_vector3 get_rgb_pixel(int width_index, int height_index) final;
+	std::unique_ptr<std::vector<Color>> buffer() final;
+	void set_pixel_value(int width_index, int height_index, const Color &pixel_color_value, int samples_per_pixel) final;
+	Color get_rgb_pixel(int index) final;
+	Color get_rgb_pixel(int width_index, int height_index) final;
 
 private:
-	std::vector<c_vector3> buffer_;
+	std::vector<Color> buffer_;
 	int width_;
 	int height_;
 };
