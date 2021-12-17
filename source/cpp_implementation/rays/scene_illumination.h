@@ -22,7 +22,7 @@ public:
 	SceneIllumination &operator=(const SceneIllumination &rhs);
 	SceneIllumination &operator=(SceneIllumination &&rhs) noexcept;
 	~SceneIllumination() override = default;
-	void add_light_source(std::shared_ptr<ILightSource> light_source) final;
+	void add_light_source(const std::shared_ptr<ILightSource> &light_source) final;
 	std::shared_ptr<ILightSource> light_source(size_t index) final;
 	size_t number_of_light_sources() final;
 	Color background_color(float parameter) final;

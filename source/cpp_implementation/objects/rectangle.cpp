@@ -47,7 +47,7 @@ bool Rectangle::does_ray_intersect(const std::shared_ptr<IRay> &ray, const std::
 	return true;
 }
 
-void Rectangle::set_material(std::shared_ptr<IMaterial> material)
+void Rectangle::set_material(const std::shared_ptr<IMaterial> &material)
 {
 	material_ = material;
 }

@@ -34,7 +34,7 @@ SceneIllumination &SceneIllumination::operator=(SceneIllumination &&rhs) noexcep
 	return *this;
 }
 
-void SceneIllumination::add_light_source(std::shared_ptr<ILightSource> light_source)
+void SceneIllumination::add_light_source(const std::shared_ptr<ILightSource> &light_source)
 {
 	light_source_vector_.push_back(light_source);
 }

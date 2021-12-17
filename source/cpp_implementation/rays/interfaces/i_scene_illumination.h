@@ -11,7 +11,7 @@
 class ISceneIllumination
 {
 public:
-	virtual void add_light_source(std::shared_ptr<ILightSource> light_source) = 0;
+	virtual void add_light_source(const std::shared_ptr<ILightSource> &light_source) = 0;
 	virtual std::shared_ptr<ILightSource> light_source(size_t index) = 0;
 	virtual size_t number_of_light_sources() = 0;
 	virtual Color background_color(float parameter) = 0;
