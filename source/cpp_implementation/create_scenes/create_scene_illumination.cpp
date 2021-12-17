@@ -26,8 +26,8 @@ SceneIllumination create_scene_illumination()
 	scene_illumination.add_light_source(light_source2);
 	scene_illumination.add_light_source(light_source3);
 
-	auto background_color1 = Point3D{0.2f, 0.7f, 0.8f};
-	auto background_color2 = Point3D{1.f, 1.f, 1.f};
+	auto background_color1 = Color{0.2f, 0.7f, 0.8f};
+	auto background_color2 = Color{1.f, 1.f, 1.f};
 	scene_illumination.set_background_colors(background_color1, background_color2);
 
 	auto almost_zero = 0.0000001f;

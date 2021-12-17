@@ -74,7 +74,7 @@ protected:
 
 TEST_F(SetupQuarticEquation, quartic_equation_four_integer_solutions)
 {
-	n_tuple<5, float> coefficients{a1_, b1_, c1_, d1_, e1_};
+	N_Tuple<5, float> coefficients{a1_, b1_, c1_, d1_, e1_};
 	auto solver = QuarticEquation<float>(coefficients, epsilon_);
 	EXPECT_EQ(solver.number_of_solutions(), 4);
 	EXPECT_TRUE(check_for_solution(solver.solutions()[0], solutions1_));
@@ -85,7 +85,7 @@ TEST_F(SetupQuarticEquation, quartic_equation_four_integer_solutions)
 
 TEST_F(SetupQuarticEquation, quartic_equation_two_solutions)
 {
-	n_tuple<5, float> coefficients{a2_, b2_, c2_, d2_, e2_};
+	N_Tuple<5, float> coefficients{a2_, b2_, c2_, d2_, e2_};
 	auto solver = QuarticEquation<float>(coefficients, epsilon_);
 	EXPECT_EQ(solver.number_of_solutions(), 2);
 	EXPECT_TRUE(check_for_solution(solver.solutions()[0], solutions2_));
@@ -95,7 +95,7 @@ TEST_F(SetupQuarticEquation, quartic_equation_two_solutions)
 
 TEST_F(SetupQuarticEquation, quartic_equation_linear_and_quadratic_coefficient_are_zero_two_solutions)
 {
-	n_tuple<5, float> coefficients{a3_, b3_, c3_, d3_, e3_};
+	N_Tuple<5, float> coefficients{a3_, b3_, c3_, d3_, e3_};
 	auto solver = QuarticEquation<float>(coefficients, epsilon_);
 	EXPECT_EQ(solver.number_of_solutions(), 2);
 	EXPECT_TRUE(check_for_solution(solver.solutions()[0], solutions3_));
@@ -104,7 +104,7 @@ TEST_F(SetupQuarticEquation, quartic_equation_linear_and_quadratic_coefficient_a
 
 TEST_F(SetupQuarticEquation, quartic_equation_four_solutions)
 {
-	n_tuple<5, float> coefficients{a4_, b4_, c4_, d4_, e4_};
+	N_Tuple<5, float> coefficients{a4_, b4_, c4_, d4_, e4_};
 	auto solver = QuarticEquation<float>(coefficients, epsilon_);
 	EXPECT_EQ(solver.number_of_solutions(), 4);
 	EXPECT_TRUE(check_for_solution(solver.solutions()[0], solutions4_));
@@ -115,7 +115,7 @@ TEST_F(SetupQuarticEquation, quartic_equation_four_solutions)
 
 TEST_F(SetupQuarticEquation, quartic_equation_cubic_coefficient_is_zero_two_solutions)
 {
-	n_tuple<5, float> coefficients{a5_, b5_, c5_, d5_, e5_};
+	N_Tuple<5, float> coefficients{a5_, b5_, c5_, d5_, e5_};
 	auto solver = QuarticEquation<float>(coefficients, epsilon_);
 	EXPECT_EQ(solver.number_of_solutions(), 2);
 	EXPECT_TRUE(check_for_solution(solver.solutions()[0], solutions5_));
@@ -124,7 +124,7 @@ TEST_F(SetupQuarticEquation, quartic_equation_cubic_coefficient_is_zero_two_solu
 
 TEST_F(SetupQuarticEquation, quartic_equation_cubic_zero_solutions)
 {
-	n_tuple<5, float> coefficients{a6_, b6_, c6_, d6_, e6_};
+	N_Tuple<5, float> coefficients{a6_, b6_, c6_, d6_, e6_};
 	auto solver = QuarticEquation<float>(coefficients, epsilon_);
 	EXPECT_EQ(solver.number_of_solutions(), 0);
 }

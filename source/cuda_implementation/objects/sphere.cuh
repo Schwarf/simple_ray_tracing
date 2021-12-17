@@ -12,7 +12,7 @@
 class Sphere final: public ISphere
 {
 public:
-	__device__ Sphere(float_triple &center, float radius, IMaterial * material);
+	__device__ Sphere(FloatTriple &center, float radius, IMaterial * material);
 	__device__ Sphere(const Sphere &) = default;
 	__device__ Sphere(Sphere &&) = default;
 	__device__ Point3D center() const final;
@@ -21,13 +21,13 @@ public:
 
 	__device__ ~Sphere() override = default;
 
-	__device__ bool does_ray_intersect(std::shared_ptr<IRay> &ray, float_triple &hit_normal, float_triple &hit_point) const final;
+	__device__ bool does_ray_intersect(std::shared_ptr<IRay> &ray, FloatTriple &hit_normal, FloatTriple &hit_point) const final;
 
 	__device__ IMaterial * material() const final;
 
 private:
 	void init() const;
-	float_triple center_;
+	FloatTriple center_;
 	float radius_;
 	IMaterial * material_;
 };

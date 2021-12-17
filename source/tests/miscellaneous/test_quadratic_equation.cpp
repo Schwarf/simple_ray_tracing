@@ -56,7 +56,7 @@ protected:
 
 TEST_F(SetupQuadraticEquation, quadratic_equation_no_solution)
 {
-	n_tuple<3, double> coefficients{a1_, b1_, c1_};
+	N_Tuple<3, double> coefficients{a1_, b1_, c1_};
 	auto solver = QuadraticEquation<double>(coefficients, epsilon_);
 	EXPECT_EQ(solver.number_of_solutions(), 0);
 }
@@ -64,7 +64,7 @@ TEST_F(SetupQuadraticEquation, quadratic_equation_no_solution)
 
 TEST_F(SetupQuadraticEquation, regular_quadratic_equation)
 {
-	n_tuple<3, double> coefficients{a2_, b2_, c2_};
+	N_Tuple<3, double> coefficients{a2_, b2_, c2_};
 	auto solver = QuadraticEquation<double>(coefficients, epsilon_);
 	EXPECT_EQ(solver.number_of_solutions(), 2);
 	EXPECT_TRUE(check_for_solution(solver.solutions()[0], solutions2_));
@@ -74,7 +74,7 @@ TEST_F(SetupQuadraticEquation, regular_quadratic_equation)
 
 TEST_F(SetupQuadraticEquation, quadratic_equation_very_small_quadratic_coefficient)
 {
-	n_tuple<3, double> coefficients{a3_, b3_, c3_};
+	N_Tuple<3, double> coefficients{a3_, b3_, c3_};
 	auto value = a3_ / (a3_ + b3_ + c3_) / 3.;
 	std::string message =
 		"In class QuadraticEquation quadratic_coefficient=" + std::to_string(value) + " is zero (within epsilon) "
@@ -90,7 +90,7 @@ TEST_F(SetupQuadraticEquation, quadratic_equation_very_small_quadratic_coefficie
 
 TEST_F(SetupQuadraticEquation, quadratic_equation_linear_coeeficient_is_zero)
 {
-	n_tuple<3, double> coefficients{a4_, b4_, c4_};
+	N_Tuple<3, double> coefficients{a4_, b4_, c4_};
 	auto solver = QuadraticEquation<double>(coefficients, epsilon_);
 	EXPECT_EQ(solver.number_of_solutions(), 2);
 	EXPECT_TRUE(check_for_solution(solver.solutions()[0], solutions4_));
@@ -99,7 +99,7 @@ TEST_F(SetupQuadraticEquation, quadratic_equation_linear_coeeficient_is_zero)
 
 TEST_F(SetupQuadraticEquation, quadratic_equation_constant_is_zero)
 {
-	n_tuple<3, double> coefficients{a5_, b5_, c5_};
+	N_Tuple<3, double> coefficients{a5_, b5_, c5_};
 	auto solver = QuadraticEquation<double>(coefficients, epsilon_);
 	EXPECT_EQ(solver.number_of_solutions(), 2);
 	EXPECT_TRUE(check_for_solution(solver.solutions()[0], solutions5_));

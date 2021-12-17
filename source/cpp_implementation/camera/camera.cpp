@@ -88,27 +88,27 @@ Color Camera::get_pixel_color(std::shared_ptr<IRay> &ray,
 	auto air_refraction_index = 1.f;
 	auto object = objects_in_scene->get_object_hit_by_ray(ray, hit_record);
 	if (object == nullptr || recursion_depth < 1) {
-		auto mix_parameter = 1.f/2.f*(ray->direction_normalized()[1] + 1.f);
+		auto mix_parameter = 1.f/2.f*( (ray->direction_normalized()[0]  + ray->direction_normalized()[1])/2.f + 1.f);
 		return scene_illumination->background_color(mix_parameter);
 	}
-	auto hit_normal = hit_record->hit_normal();
-	auto hit_point = hit_record->hit_point();
-
 	std::shared_ptr<IRay> reflected_ray = ray_interaction_.reflected_ray(ray, hit_record);
 	std::shared_ptr<IRay> refracted_ray = ray_interaction_.refracted_ray(ray, hit_record, air_refraction_index);
-
 	// Start recursion
 	recursion_depth--;
 	auto reflected_color = get_pixel_color(reflected_ray, objects_in_scene, scene_illumination, recursion_depth);
 	auto refracted_color = get_pixel_color(refracted_ray, objects_in_scene, scene_illumination, recursion_depth);
 
+
 	float diffuse_intensity = 0.f;
 	float specular_intensity = 0.f;
+	auto hit_normal = hit_record->hit_normal();
+	auto hit_point = hit_record->hit_point();
+
 
 	std::shared_ptr<ILightSource> light_source = nullptr;
 	for (size_t ls_index = 0; ls_index < scene_illumination->number_of_light_sources(); ++ls_index) {
 		light_source = scene_illumination->light_source(ls_index);
-		auto light_direction = (light_source->position() - hit_point).normalize();
+		auto light_direction = (light_source->position() - hit_record->hit_point()).normalize();
 		std::shared_ptr<IRay> light_source_ray = std::make_shared<Ray>(Ray(hit_point, light_direction));
 		std::shared_ptr<IHitRecord> shadow_hit_record = std::make_shared<HitRecord>(HitRecord()) ;
 
@@ -130,7 +130,7 @@ Color Camera::get_pixel_color(std::shared_ptr<IRay> &ray,
 		object->get_material()->rgb_color() * diffuse_intensity * object->get_material()->diffuse();
 	Color white = Color{1, 1, 1};
 	Color specular_color = specular_intensity * white * object->get_material()->specular();
-	Color ambient_color = reflected_color * object->get_material()->ambient();
+	Color ambient_color =  reflected_color * object->get_material()->ambient();
 	Color refraction_color = refracted_color * object->get_material()->transparency();
 	return diffuse_color + specular_color + ambient_color + refraction_color;
 }

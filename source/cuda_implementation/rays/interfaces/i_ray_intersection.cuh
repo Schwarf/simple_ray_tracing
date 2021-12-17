@@ -9,7 +9,7 @@
 class IRayIntersection
 {
 public:
-	__device__ virtual bool does_ray_intersect(std::shared_ptr<IRay> &ray, float_triple &hit_normal, float_triple &hit_point) const = 0;
+	__device__ virtual bool does_ray_intersect(std::shared_ptr<IRay> &ray, FloatTriple &hit_normal, FloatTriple &hit_point) const = 0;
 };
 
 #endif //SIMPLE_RAY_TRACING_I_RAY_INTERSECTION_H

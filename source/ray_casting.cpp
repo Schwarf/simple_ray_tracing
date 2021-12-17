@@ -42,9 +42,9 @@ int main()
 	ofs.close();
 
 
-	n_tuple<3, double> coeff{1.0, 5.0, -5.0};
-	n_tuple<4, double> coefficient_cubic{1.0, -6.0, 11.0, -6.0};
-	n_tuple<4, double> coefficient_cubic2{1.0, -5.0, 8.0, -4.0};
+	N_Tuple<3, double> coeff{1.0, 5.0, -5.0};
+	N_Tuple<4, double> coefficient_cubic{1.0, -6.0, 11.0, -6.0};
+	N_Tuple<4, double> coefficient_cubic2{1.0, -5.0, 8.0, -4.0};
 	double epsilon = 1.e-10;
 	auto q_equation = QuadraticEquation<double>(coeff, epsilon);
 	auto cubic_equation = CubicEquation<double>(coefficient_cubic, epsilon);
