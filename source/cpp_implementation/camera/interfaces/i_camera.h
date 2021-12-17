@@ -13,8 +13,8 @@
 class ICamera
 {
 public:
-	virtual void render_image(std::shared_ptr<IObjectList> &objects_in_scene,
-							  std::shared_ptr<ISceneIllumination> &scene_illumination) = 0;
+	virtual void render_image(const std::shared_ptr<IObjectList> &objects_in_scene,
+							  const std::shared_ptr<ISceneIllumination> &scene_illumination) = 0;
 	virtual std::shared_ptr<IRay> get_ray(float width_coordinate, float height_coordinate) = 0;
 	virtual int image_width() = 0;
 	virtual int image_height() = 0;
@@ -26,10 +26,10 @@ public:
 	virtual bool antialiasing_enabled() = 0;
 
 private:
-	virtual Color get_pixel_color(std::shared_ptr<IRay> &ray,
-									  std::shared_ptr<IObjectList> &objects_in_scene,
-									  std::shared_ptr<ISceneIllumination> &scene_illumination,
-									  size_t recursion_depth) = 0;
+	virtual Color get_pixel_color(const std::shared_ptr<IRay> &ray,
+								  const std::shared_ptr<IObjectList> &objects_in_scene,
+								  const std::shared_ptr<ISceneIllumination> &scene_illumination,
+								  size_t recursion_depth) = 0;
 };
 
 #endif //I_CAMERA_H

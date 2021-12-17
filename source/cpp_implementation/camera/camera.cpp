@@ -56,8 +56,8 @@ void Camera::get_pixel_coordinates(const size_t &width_index, const size_t &heig
 	v = float(height_index)  / float(image_height_ - 1);
 }
 
-void Camera::render_image(std::shared_ptr<IObjectList> &objects_in_scene,
-						  std::shared_ptr<ISceneIllumination> &scene_illumination)
+void Camera::render_image(const std::shared_ptr<IObjectList> &objects_in_scene,
+						  const std::shared_ptr<ISceneIllumination> &scene_illumination)
 {
 	float u{};
 	float v{};
@@ -79,10 +79,10 @@ void Camera::render_image(std::shared_ptr<IObjectList> &objects_in_scene,
 	}
 
 }
-Color Camera::get_pixel_color(std::shared_ptr<IRay> &ray,
-								  std::shared_ptr<IObjectList> &objects_in_scene,
-								  std::shared_ptr<ISceneIllumination> &scene_illumination,
-								  size_t recursion_depth)
+Color Camera::get_pixel_color(const std::shared_ptr<IRay> &ray,
+							  const std::shared_ptr<IObjectList> &objects_in_scene,
+							  const std::shared_ptr<ISceneIllumination> &scene_illumination,
+							  size_t recursion_depth)
 {
 	std::shared_ptr<IHitRecord> hit_record = std::make_shared<HitRecord>(HitRecord()) ;
 	auto air_refraction_index = 1.f;
@@ -106,11 +106,13 @@ Color Camera::get_pixel_color(std::shared_ptr<IRay> &ray,
 
 
 	std::shared_ptr<ILightSource> light_source = nullptr;
+	std::shared_ptr<IRay> light_source_ray =std::make_shared<Ray>(Ray());
+	std::shared_ptr<IHitRecord> shadow_hit_record = std::make_shared<HitRecord>(HitRecord());
 	for (size_t ls_index = 0; ls_index < scene_illumination->number_of_light_sources(); ++ls_index) {
 		light_source = scene_illumination->light_source(ls_index);
 		auto light_direction = (light_source->position() - hit_record->hit_point()).normalize();
-		std::shared_ptr<IRay> light_source_ray = std::make_shared<Ray>(Ray(hit_point, light_direction));
-		std::shared_ptr<IHitRecord> shadow_hit_record = std::make_shared<HitRecord>(HitRecord()) ;
+		light_source_ray->set_direction(light_direction);
+		light_source_ray->set_origin(hit_point);
 
 		auto object_in_shadow = objects_in_scene->get_object_hit_by_ray(light_source_ray, shadow_hit_record);
 		auto shadow_point = shadow_hit_record->hit_point();

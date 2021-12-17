@@ -28,7 +28,7 @@ void Sphere::init() const
 	Validate<float>::is_above_threshold("radius", radius_, 0.0, " Sphere");
 }
 
-bool Sphere::does_ray_intersect(std::shared_ptr<IRay> &ray, std::shared_ptr<IHitRecord> &hit_record) const
+bool Sphere::does_ray_intersect(const std::shared_ptr<IRay> &ray, const std::shared_ptr<IHitRecord> &hit_record) const
 {
 	float closest_hit_distance = -1.0;
 	Vector3D origin_to_center = (center_ - ray->origin());

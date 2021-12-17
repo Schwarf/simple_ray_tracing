@@ -21,7 +21,7 @@ public:
 
 	~Sphere() override = default;
 
-	bool does_ray_intersect(std::shared_ptr<IRay> &ray, std::shared_ptr<IHitRecord> &hit_record) const final;
+	bool does_ray_intersect(const std::shared_ptr<IRay> &ray, const std::shared_ptr<IHitRecord> &hit_record) const final;
 
 	void set_material(std::shared_ptr<IMaterial> material) final;
 
