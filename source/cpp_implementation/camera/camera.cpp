@@ -91,12 +91,10 @@ Color Camera::get_pixel_color(const std::shared_ptr<IRay> &ray,
 		auto mix_parameter = 1.f/2.f*( (ray->direction_normalized()[0]  + ray->direction_normalized()[1])/2.f + 1.f);
 		return scene_illumination->background_color(mix_parameter);
 	}
-	std::shared_ptr<IRay> reflected_ray = ray_interaction_.reflected_ray(ray, hit_record);
-	std::shared_ptr<IRay> refracted_ray = ray_interaction_.refracted_ray(ray, hit_record, air_refraction_index);
 	// Start recursion
 	recursion_depth--;
-	auto reflected_color = get_pixel_color(reflected_ray, objects_in_scene, scene_illumination, recursion_depth);
-	auto refracted_color = get_pixel_color(refracted_ray, objects_in_scene, scene_illumination, recursion_depth);
+	auto reflected_color = get_pixel_color(ray_interaction_.reflected_ray(ray, hit_record), objects_in_scene, scene_illumination, recursion_depth);
+	auto refracted_color = get_pixel_color(ray_interaction_.refracted_ray(ray, hit_record, air_refraction_index), objects_in_scene, scene_illumination, recursion_depth);
 
 
 	float diffuse_intensity = 0.f;

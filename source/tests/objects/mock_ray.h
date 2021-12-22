@@ -10,6 +10,9 @@ class MockRay: public IRay
 public:
 	MOCK_METHOD(Point3D, origin, (), (const, final));
 	MOCK_METHOD(Vector3D, direction_normalized, (), (const, final));
+	MOCK_METHOD(void, set_origin, (const Point3D &origin), (final));
+	MOCK_METHOD(void, set_direction, (Vector3D), (final));
+
 };
 
 
