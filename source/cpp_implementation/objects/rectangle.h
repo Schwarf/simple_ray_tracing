@@ -12,8 +12,7 @@ class Rectangle final: IRectangle
 public:
 	Rectangle(Vector3D width_vector,
 			  Vector3D height_vector,
-			  const Point3D &bottom_left_position,
-			  const Vector3D &normal);
+			  const Point3D &bottom_left_position);
 
 	float width() const final;
 

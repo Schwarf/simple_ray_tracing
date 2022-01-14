@@ -120,6 +120,16 @@ std::ostream &operator<<(std::ostream &out, const N_Tuple<dimension, T> &v)
 	return out;
 
 }
+template <size_t dimension = 3, typename T>
+N_Tuple<dimension, T> cross_product(const N_Tuple<dimension, T> &first, const N_Tuple<dimension, T> &second)
+{
+	N_Tuple<dimension, T> result;
+	result[0] = first[1]*second[2] - first[2]*second[1];
+	result[1] = first[2]*second[0] - first[0]*second[2];
+	result[2] = first[0]*second[1] - first[1]*second[0];
+	return result;
+}
+
 using float_duple = N_Tuple<2, float> ;
 using FloatTriple =  N_Tuple<3, float>;
 using float_quadruple =  N_Tuple<4, float>;

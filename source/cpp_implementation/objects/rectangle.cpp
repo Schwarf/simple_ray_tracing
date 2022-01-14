@@ -43,7 +43,7 @@ bool Rectangle::does_ray_intersect(const std::shared_ptr<IRay> &ray, const std::
 	if (check_height > height_ || check_height < 0.f) {
 		return false;
 	}
-
+	hit_record->set_hit_point(point);
 	return true;
 }
 
@@ -59,15 +59,14 @@ std::shared_ptr<IMaterial> Rectangle::get_material() const
 
 Rectangle::Rectangle(Vector3D width_vector,
 					 Vector3D height_vector,
-					 const Point3D &position,
-					 const Vector3D &normal)
+					 const Point3D &position)
 {
 	width_ = width_vector.norm();
 	height_ = height_vector.norm();
 	width_vector_ = width_vector.normalize();
 	height_vector_ = height_vector.normalize();
 	bottom_left_position_ = position;
-	normal_ = normal;
+	normal_ = cross_product(width_vector, height_vector).normalize();
 }
 
 void Rectangle::init() const

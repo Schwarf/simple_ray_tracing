@@ -61,7 +61,7 @@ void Camera::render_image(const std::shared_ptr<IObjectList> &objects_in_scene,
 {
 	float u{};
 	float v{};
-	int samples_per_pixel = 1;
+	size_t samples_per_pixel = 1;
 	size_t recursion_depth = 2;
 	if(antialiasing_enabled_)
 		samples_per_pixel = 10;

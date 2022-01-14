@@ -21,8 +21,8 @@ int main()
 	std::shared_ptr<IObjectList> objects_in_scene(std::shared_ptr<ObjectList>(), &object_list);
 	std::shared_ptr<ISceneIllumination> scene_lights(std::shared_ptr<SceneIllumination>(), &scene_illumination);
 
-	auto image_width = 1980;
-	auto image_height = 1020;
+	size_t image_width = 1020;
+	size_t image_height = 768;
 	auto focal_length = 1.f;
 	auto viewport_width = 2.f;
 
@@ -49,13 +49,13 @@ int main()
 	auto q_equation = QuadraticEquation<double>(coeff, epsilon);
 	auto cubic_equation = CubicEquation<double>(coefficient_cubic, epsilon);
 	auto cubic_equation2 = CubicEquation<double>(coefficient_cubic2, epsilon);
-	for (int i = 0; i < q_equation.number_of_solutions(); ++i) {
+	for (size_t i = 0; i < q_equation.number_of_solutions(); ++i) {
 		std::cout << q_equation.solutions()[i] << std::endl;
 	}
-	for (int i = 0; i < cubic_equation.number_of_solutions(); ++i) {
+	for (size_t i = 0; i < cubic_equation.number_of_solutions(); ++i) {
 		std::cout << cubic_equation.solutions()[i] << std::endl;
 	}
-	for (int i = 0; i < cubic_equation2.number_of_solutions(); ++i) {
+	for (size_t i = 0; i < cubic_equation2.number_of_solutions(); ++i) {
 		std::cout << cubic_equation2.solutions()[i] << std::endl;
 	}
 
