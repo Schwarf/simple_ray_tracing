@@ -40,6 +40,10 @@ int main()
 		}
 	}
 	ofs.close();
+	Vector3D x{1,0,0};
+	Vector3D y{0,1,0};
+	Vector3D z = cross_product(y, x);
+	std::cout << " z = " << z << std::endl;
 
 
 	N_Tuple<3, double> coeff{1.0, 5.0, -5.0};

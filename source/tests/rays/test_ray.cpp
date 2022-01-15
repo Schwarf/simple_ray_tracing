@@ -28,3 +28,28 @@ TEST_F(SetupRay, test_direction)
 		EXPECT_FLOAT_EQ(direction.normalize()[i], ray.direction_normalized()[i]);
 	}
 }
+
+
+TEST_F(SetupRay, test_set_orgin)
+{
+	auto ray = Ray(origin, direction);
+	for (int i = 0; i < 3; ++i) {
+		EXPECT_FLOAT_EQ(origin[i], ray.origin()[i]);
+	}
+	ray.set_origin(direction);
+	for (int i = 0; i < 3; ++i) {
+		EXPECT_FLOAT_EQ(direction[i], ray.origin()[i]);
+	}
+}
+
+TEST_F(SetupRay, test_set_direction)
+{
+	auto ray = Ray(origin, direction);
+	for (int i = 0; i < 3; ++i) {
+		EXPECT_FLOAT_EQ(direction.normalize()[i], ray.direction_normalized()[i]);
+	}
+	ray.set_direction(origin);
+	for (int i = 0; i < 3; ++i) {
+		EXPECT_FLOAT_EQ(origin.normalize()[i], ray.direction_normalized()[i]);
+	}
+}

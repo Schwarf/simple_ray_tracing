@@ -121,3 +121,15 @@ TEST_F(SetupCVector, test_sign_operator)
 	}
 
 }
+
+TEST_F(SetupCVector, test_cross_product)
+{
+	N_Tuple<3, float> float_vector1{float(x1), float(x2), float(x3)};
+	N_Tuple<3, float> float_vector2{float(y1), float(y2), float(y3)};
+	auto expected_result = N_Tuple<3, float>{-0.97673979, -62.07660823, -40.68713283};
+	auto result = cross_product(float_vector1, float_vector2);
+	for (int i = 0; i < 3; ++i) {
+		EXPECT_FLOAT_EQ(result[i], expected_result[i]);
+	}
+
+}
