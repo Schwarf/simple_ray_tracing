@@ -23,12 +23,12 @@ public:
 	SceneIllumination &operator=(SceneIllumination &&rhs) noexcept;
 	~SceneIllumination() override = default;
 	void add_light_source(const std::shared_ptr<ILightSource> &light_source) final;
-	std::shared_ptr<ILightSource> light_source(size_t index) final;
-	size_t number_of_light_sources() final;
-	Color background_color(float parameter) final;
+	std::shared_ptr<ILightSource> light_source(size_t index) const final;
+	size_t number_of_light_sources() const final;
+	Color background_color(float parameter) const final;
 	void set_background_colors(const Color &color1, const Color &color2) final;
 	void set_ground_sphere(const std::shared_ptr<ISphere> &ground_sphere) final;
-	std::shared_ptr<ISphere> get_ground() override;
+	std::shared_ptr<ISphere> get_ground() const final;
 private:
 	std::vector<std::shared_ptr<ILightSource>> light_source_vector_;
 	std::shared_ptr<ISphere> ground_;

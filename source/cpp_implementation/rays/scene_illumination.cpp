@@ -39,18 +39,18 @@ void SceneIllumination::add_light_source(const std::shared_ptr<ILightSource> &li
 	light_source_vector_.push_back(light_source);
 }
 
-std::shared_ptr<ILightSource> SceneIllumination::light_source(size_t index)
+std::shared_ptr<ILightSource> SceneIllumination::light_source(size_t index) const
 {
 	if (index >= light_source_vector_.size()) {
 		return nullptr;
 	}
 	return light_source_vector_[index];
 }
-size_t SceneIllumination::number_of_light_sources()
+size_t SceneIllumination::number_of_light_sources() const
 {
 	return light_source_vector_.size();
 }
-Color SceneIllumination::background_color(const float parameter)
+Color SceneIllumination::background_color(const float parameter) const
 {
 
 	return (1.f-parameter)*background_color1_ + parameter*background_color2_;
@@ -65,7 +65,7 @@ void SceneIllumination::set_ground_sphere(const std::shared_ptr<ISphere> &ground
 	ground_ = ground_sphere;
 }
 
-std::shared_ptr<ISphere> SceneIllumination::get_ground()
+std::shared_ptr<ISphere> SceneIllumination::get_ground() const
 {
 	return ground_;
 }
