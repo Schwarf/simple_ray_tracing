@@ -39,7 +39,7 @@ SceneIllumination create_scene_illumination()
 	ground_material_builder.set_rgb_color(Color{0.1, 0.5, 0.1});
 	ground_material_builder.set_refraction_index(almost_zero);
 	ground_material_builder.set_transparency(almost_zero);
-	std::shared_ptr<IMaterial> ground_material = std::make_shared<Material>(Material("ground_material", ground_material_builder));
+	IMaterialPtr ground_material = std::make_shared<Material>(Material("ground_material", ground_material_builder));
 
 	auto radius = 50.f;
 	auto center = Point3D {0, radius, -1};

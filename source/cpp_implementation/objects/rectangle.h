@@ -23,9 +23,9 @@ public:
 	~Rectangle() final = default;
 
 
-	void set_material(const std::shared_ptr<IMaterial> &material) final;
+	void set_material(const IMaterialPtr &material) final;
 
-	std::shared_ptr<IMaterial> get_material() const final;
+	IMaterialPtr get_material() const final;
 	bool does_ray_intersect(const std::shared_ptr<IRay> &ray, const std::shared_ptr<IHitRecord> &hit_record) const final;
 
 private:
@@ -35,7 +35,7 @@ private:
 	Vector3D height_vector_;
 	Point3D bottom_left_position_;
 	Vector3D normal_;
-	std::shared_ptr<IMaterial> material_;
+	IMaterialPtr material_;
 	void init() const;
 };
 

@@ -17,7 +17,7 @@ Vector3D HitRecord::hit_normal() const
 {
 	return hit_normal_;
 }
-std::shared_ptr<IMaterial> HitRecord::material() const
+IMaterialPtr HitRecord::material() const
 {
 	return material_;
 }
@@ -29,7 +29,7 @@ void HitRecord::set_hit_normal(const Vector3D &hit_normal)
 {
 	hit_normal_ = hit_normal;
 }
-void HitRecord::set_material(const std::shared_ptr<IMaterial> &material)
+void HitRecord::set_material(const IMaterialPtr &material)
 {
 	material_ = material;
 }

@@ -54,12 +54,12 @@ bool Sphere::does_ray_intersect(const std::shared_ptr<IRay> &ray, const std::sha
 	return true;
 }
 
-void Sphere::set_material(const std::shared_ptr<IMaterial> &material)
+void Sphere::set_material(const IMaterialPtr &material)
 {
 	material_ = material;
 }
 
-std::shared_ptr<IMaterial> Sphere::get_material() const
+IMaterialPtr Sphere::get_material() const
 {
 	return material_;
 }

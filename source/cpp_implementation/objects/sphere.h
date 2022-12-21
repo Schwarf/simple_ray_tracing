@@ -23,15 +23,15 @@ public:
 
 	bool does_ray_intersect(const std::shared_ptr<IRay> &ray, const std::shared_ptr<IHitRecord> &hit_record) const final;
 
-	void set_material(const std::shared_ptr<IMaterial> &material) final;
+	void set_material(const IMaterialPtr &material) final;
 
-	std::shared_ptr<IMaterial> get_material() const final;
+	IMaterialPtr get_material() const final;
 
 private:
 	void init() const;
 	Point3D center_;
 	float radius_;
-	std::shared_ptr<IMaterial> material_;
+	IMaterialPtr material_;
 	Validate<float> validate_;
 };
 
