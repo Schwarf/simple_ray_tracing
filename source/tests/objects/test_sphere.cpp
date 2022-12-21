@@ -38,7 +38,7 @@ protected:
 	}
 	Vector3D ray_direction{100.5, 100.5, -500.0};
 	Point3D ray_origin{-1.1212, 1.313, 2.331};
-	std::shared_ptr<IHitRecord> hit_record = std::make_shared<HitRecord>(HitRecord());
+	IHitRecordPtr hit_record = std::make_shared<HitRecord>(HitRecord());
 };
 
 

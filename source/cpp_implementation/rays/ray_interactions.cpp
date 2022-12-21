@@ -4,7 +4,7 @@
 
 #include "ray_interactions.h"
 
-IRayPtr RayInteractions::reflected_ray(const IRayPtr &ray, const std::shared_ptr<IHitRecord> &hit_record) const
+IRayPtr RayInteractions::reflected_ray(const IRayPtr &ray, const IHitRecordPtr &hit_record) const
 {
 	Vector3D reflected_ray_direction = ray->direction_normalized() - hit_record->hit_normal() * 2.f * (
 		ray->direction_normalized()*hit_record->hit_normal()) + UniformRandomNumberGenerator::random_vector_in_unit_sphere<float>()
@@ -13,7 +13,7 @@ IRayPtr RayInteractions::reflected_ray(const IRayPtr &ray, const std::shared_ptr
 
 }
 IRayPtr  RayInteractions::refracted_ray(const IRayPtr &ray,
-													  const std::shared_ptr<IHitRecord> &hit_record,
+													  const IHitRecordPtr &hit_record,
 													  const float &air_refraction_index) const
 {
 	float cosine = -std::max(-1.f, std::min(1.f, ray->direction_normalized()*hit_record->hit_normal()));

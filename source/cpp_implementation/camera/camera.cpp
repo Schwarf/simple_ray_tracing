@@ -84,7 +84,7 @@ Color Camera::get_pixel_color(const IRayPtr &ray,
 							  const std::shared_ptr<ISceneIllumination> &scene_illumination,
 							  size_t recursion_depth)
 {
-	std::shared_ptr<IHitRecord> hit_record = std::make_shared<HitRecord>(HitRecord()) ;
+	IHitRecordPtr hit_record = std::make_shared<HitRecord>(HitRecord()) ;
 	auto air_refraction_index = 1.f;
 	auto object = objects_in_scene->get_object_hit_by_ray(ray, hit_record);
 	if (object == nullptr || recursion_depth < 1) {
@@ -105,7 +105,7 @@ Color Camera::get_pixel_color(const IRayPtr &ray,
 
 	ILightSourcePtr light_source = nullptr;
 	IRayPtr light_source_ray =std::make_shared<Ray>(Ray());
-	std::shared_ptr<IHitRecord> shadow_hit_record = std::make_shared<HitRecord>(HitRecord());
+	IHitRecordPtr shadow_hit_record = std::make_shared<HitRecord>(HitRecord());
 	for (size_t ls_index = 0; ls_index < scene_illumination->number_of_light_sources(); ++ls_index) {
 		light_source = scene_illumination->light_source(ls_index);
 		auto light_direction = (light_source->position() - hit_record->hit_point()).normalize();

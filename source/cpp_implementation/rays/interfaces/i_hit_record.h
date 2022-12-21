@@ -19,4 +19,5 @@ public:
 	virtual ~IHitRecord() = default;
 };
 
+using IHitRecordPtr = std::shared_ptr<IHitRecord>;
 #endif //I_HIT_RECORD_H
