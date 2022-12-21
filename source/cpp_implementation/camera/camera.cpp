@@ -103,7 +103,7 @@ Color Camera::get_pixel_color(const IRayPtr &ray,
 	auto hit_point = hit_record->hit_point();
 
 
-	std::shared_ptr<ILightSource> light_source = nullptr;
+	ILightSourcePtr light_source = nullptr;
 	IRayPtr light_source_ray =std::make_shared<Ray>(Ray());
 	std::shared_ptr<IHitRecord> shadow_hit_record = std::make_shared<HitRecord>(HitRecord());
 	for (size_t ls_index = 0; ls_index < scene_illumination->number_of_light_sources(); ++ls_index) {

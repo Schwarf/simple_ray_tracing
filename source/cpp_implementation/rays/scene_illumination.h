@@ -16,21 +16,21 @@ class SceneIllumination: public ISceneIllumination
 {
 public:
 	SceneIllumination() = default;
-	explicit SceneIllumination(std::shared_ptr<ILightSource> light_source);
+	explicit SceneIllumination(ILightSourcePtr light_source);
 	SceneIllumination(const SceneIllumination &rhs);
 	SceneIllumination(SceneIllumination &&rhs) noexcept;
 	SceneIllumination &operator=(const SceneIllumination &rhs);
 	SceneIllumination &operator=(SceneIllumination &&rhs) noexcept;
 	~SceneIllumination() override = default;
-	void add_light_source(const std::shared_ptr<ILightSource> &light_source) final;
-	std::shared_ptr<ILightSource> light_source(size_t index) const final;
+	void add_light_source(const ILightSourcePtr &light_source) final;
+	ILightSourcePtr light_source(size_t index) const final;
 	size_t number_of_light_sources() const final;
 	Color background_color(float parameter) const final;
 	void set_background_colors(const Color &color1, const Color &color2) final;
 	void set_ground_sphere(const std::shared_ptr<ISphere> &ground_sphere) final;
 	std::shared_ptr<ISphere> get_ground() const final;
 private:
-	std::vector<std::shared_ptr<ILightSource>> light_source_vector_;
+	std::vector<ILightSourcePtr> light_source_vector_;
 	std::shared_ptr<ISphere> ground_;
 	Color background_color1_;
 	Color background_color2_;
