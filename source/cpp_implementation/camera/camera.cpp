@@ -56,7 +56,7 @@ void Camera::get_pixel_coordinates(const size_t &width_index, const size_t &heig
 	v = float(height_index)  / float(image_height_ - 1);
 }
 
-void Camera::render_image(const std::shared_ptr<IObjectList> &objects_in_scene,
+void Camera::render_image(const IObjectListPtr &objects_in_scene,
 						  const std::shared_ptr<ISceneIllumination> &scene_illumination)
 {
 	float u{};
@@ -80,7 +80,7 @@ void Camera::render_image(const std::shared_ptr<IObjectList> &objects_in_scene,
 
 }
 Color Camera::get_pixel_color(const IRayPtr &ray,
-							  const std::shared_ptr<IObjectList> &objects_in_scene,
+							  const IObjectListPtr &objects_in_scene,
 							  const std::shared_ptr<ISceneIllumination> &scene_illumination,
 							  size_t recursion_depth)
 {

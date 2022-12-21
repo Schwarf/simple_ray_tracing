@@ -13,7 +13,7 @@
 class ICamera
 {
 public:
-	virtual void render_image(const std::shared_ptr<IObjectList> &objects_in_scene,
+	virtual void render_image(const IObjectListPtr &objects_in_scene,
 							  const std::shared_ptr<ISceneIllumination> &scene_illumination) = 0;
 	virtual IRayPtr get_ray(float width_coordinate, float height_coordinate) = 0;
 	virtual int image_width() = 0;
@@ -27,7 +27,7 @@ public:
 
 private:
 	virtual Color get_pixel_color(const IRayPtr &ray,
-								  const std::shared_ptr<IObjectList> &objects_in_scene,
+								  const IObjectListPtr &objects_in_scene,
 								  const std::shared_ptr<ISceneIllumination> &scene_illumination,
 								  size_t recursion_depth) = 0;
 };
