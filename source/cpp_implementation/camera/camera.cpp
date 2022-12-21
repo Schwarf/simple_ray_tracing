@@ -135,7 +135,7 @@ Color Camera::get_pixel_color(const IRayPtr &ray,
 	return diffuse_color + specular_color + ambient_color + refraction_color;
 }
 
-std::shared_ptr<IImageBuffer> Camera::get_image_buffer()
+IImageBufferPtr Camera::get_image_buffer()
 {
 	return image_buffer_;
 }

@@ -16,6 +16,7 @@ public:
 	virtual Color get_rgb_pixel(int index) = 0;
 	virtual Color get_rgb_pixel(int width_index, int height_index) = 0;
 	virtual std::unique_ptr<std::vector<Color>> buffer() = 0;
-
 };
+
+using IImageBufferPtr = std::shared_ptr<IImageBuffer>;
 #endif //SIMPLE_RAY_TRACING_I_IMAGE_BUFFER_H

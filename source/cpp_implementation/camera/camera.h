@@ -24,7 +24,7 @@ public:
 	void render_image(const IObjectListPtr &objects_in_scene,
 					  const ISceneIlluminationPtr &scene_illumination) final;
 	IRayPtr get_ray(float width_coordinate, float height_coordinate) final;
-	std::shared_ptr<IImageBuffer> get_image_buffer() final;
+	IImageBufferPtr get_image_buffer() final;
 	void enable_antialiasing() final;
 	void disable_antialiasing() final;
 	bool antialiasing_enabled() final;
@@ -51,7 +51,7 @@ private:
 	Vector3D horizontal_direction_{0., 0., 0.};
 	Vector3D vertical_direction_{0., 0., 0.};
 	Point3D lower_left_corner_{0., 0., 0.};
-	std::shared_ptr<IImageBuffer> image_buffer_;
+	IImageBufferPtr image_buffer_;
 	bool antialiasing_enabled_{};
 	RayInteractions ray_interaction_;
 };

@@ -20,7 +20,7 @@ public:
 	virtual int image_height() = 0;
 	virtual float aspect_ratio() = 0;
 	virtual float focal_length() = 0;
-	virtual std::shared_ptr<IImageBuffer> get_image_buffer()=0;
+	virtual IImageBufferPtr get_image_buffer()=0;
 	virtual void enable_antialiasing() = 0;
 	virtual void disable_antialiasing() = 0;
 	virtual bool antialiasing_enabled() = 0;
