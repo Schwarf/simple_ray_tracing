@@ -3,7 +3,7 @@
 //
 
 #include "object_list.h"
-void ObjectList::add_object(std::shared_ptr<ITargetObject> target_object)
+void ObjectList::add_object(ITargetObjectPtr target_object)
 {
 	object_vector_.push_back(target_object);
 
@@ -12,7 +12,7 @@ size_t ObjectList::number_of_objects()
 {
 	return object_vector_.size();
 }
-std::shared_ptr<ITargetObject> ObjectList::object(size_t index)
+ITargetObjectPtr ObjectList::object(size_t index)
 {
 	if (index >= object_vector_.size()) {
 		return nullptr;
@@ -20,7 +20,7 @@ std::shared_ptr<ITargetObject> ObjectList::object(size_t index)
 	return object_vector_[index];
 }
 
-std::shared_ptr<ITargetObject> ObjectList::get_object_hit_by_ray(const std::shared_ptr<IRay> &ray, const std::shared_ptr<
+ITargetObjectPtr ObjectList::get_object_hit_by_ray(const std::shared_ptr<IRay> &ray, const std::shared_ptr<
 	IHitRecord> &hit_record)
 {
 	for(const auto & object : object_vector_)

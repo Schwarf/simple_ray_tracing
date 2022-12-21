@@ -16,4 +16,6 @@ public:
 	virtual ~ITargetObject() = default;
 };
 
+using ITargetObjectPtr = std::shared_ptr<ITargetObject>;
+
 #endif //SIMPLE_RAY_TRACING_I_GEOMETRIC_OBJECT_H

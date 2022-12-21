@@ -17,4 +17,6 @@ public:
 	virtual Color rgb_color() const = 0;
 	~IMaterial() = default;
 };
+
+
 #endif //SIMPLE_RAY_TRACING_I_MATERIAL_H

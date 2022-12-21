@@ -76,11 +76,11 @@ ObjectList create_object_list()
 
 
 	auto object_list = ObjectList();
-	std::shared_ptr<ITargetObject> red_sphere = std::make_shared<Sphere>(sphere);
-	std::shared_ptr<ITargetObject> blue_sphere = std::make_shared<Sphere>(sphere2);
-	std::shared_ptr<ITargetObject> green_sphere = std::make_shared<Sphere>(sphere3);
-	std::shared_ptr<ITargetObject> glass_sphere = std::make_shared<Sphere>(sphere4);
-	std::shared_ptr<ITargetObject> mirror_sphere = std::make_shared<Sphere>(sphere5);
+	ITargetObjectPtr red_sphere = std::make_shared<Sphere>(sphere);
+	ITargetObjectPtr blue_sphere = std::make_shared<Sphere>(sphere2);
+	ITargetObjectPtr green_sphere = std::make_shared<Sphere>(sphere3);
+	ITargetObjectPtr glass_sphere = std::make_shared<Sphere>(sphere4);
+	ITargetObjectPtr mirror_sphere = std::make_shared<Sphere>(sphere5);
 	object_list.add_object(red_sphere);
 	object_list.add_object(blue_sphere);
 	object_list.add_object(green_sphere);
