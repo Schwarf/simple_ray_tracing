@@ -18,9 +18,9 @@ public:
 
 	Material &operator=(const Material &rhs) = delete;
 
-	Material(Material && rhs) =default;
+	Material(Material &&rhs) = default;
 
-	Material &operator=(Material &&rhs) =default;
+	Material &operator=(Material &&rhs) = default;
 
 	float specular() const final;
 

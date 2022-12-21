@@ -3,7 +3,7 @@
 //
 
 #include "object_list.h"
-void ObjectList::add_object(ITargetObjectPtr target_object)
+void ObjectList::add_object(const ITargetObjectPtr &target_object)
 {
 	object_vector_.push_back(target_object);
 
@@ -20,12 +20,10 @@ ITargetObjectPtr ObjectList::object(size_t index)
 	return object_vector_[index];
 }
 
-ITargetObjectPtr ObjectList::get_object_hit_by_ray(const IRayPtr &ray, const std::shared_ptr<
-	IHitRecord> &hit_record)
+ITargetObjectPtr ObjectList::get_object_hit_by_ray(const IRayPtr &ray, const std::shared_ptr<IHitRecord> &hit_record)
 {
-	for(const auto & object : object_vector_)
-	{
-		if(object->does_ray_intersect(ray, hit_record))
+	for (const auto &object: object_vector_) {
+		if (object->does_ray_intersect(ray, hit_record))
 			return object;
 	}
 	return nullptr;

@@ -17,7 +17,10 @@ public:
 	int width() const final;
 	int height() const final;
 	std::unique_ptr<std::vector<Color>> buffer() final;
-	void set_pixel_value(int width_index, int height_index, const Color &pixel_color_value, int samples_per_pixel) final;
+	void set_pixel_value(int width_index,
+						 int height_index,
+						 const Color &pixel_color_value,
+						 int samples_per_pixel) final;
 	Color get_rgb_pixel(int index) final;
 	Color get_rgb_pixel(int width_index, int height_index) final;
 

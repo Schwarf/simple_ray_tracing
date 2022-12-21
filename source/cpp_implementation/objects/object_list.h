@@ -12,7 +12,7 @@ class ObjectList: public IObjectList
 {
 public:
 	ObjectList() = default;
-	void add_object(ITargetObjectPtr target_object) final;
+	void add_object(const ITargetObjectPtr &target_object) final;
 	size_t number_of_objects() final;
 	~ObjectList() override = default;
 	ITargetObjectPtr object(size_t index) final;

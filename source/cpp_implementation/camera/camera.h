@@ -38,8 +38,7 @@ private:
 						  const IObjectListPtr &objects_in_scene,
 						  const ISceneIlluminationPtr &scene_illumination,
 						  size_t recursion_depth) final;
-	void get_pixel_coordinates(const size_t & width_index, const size_t & height_index, float & u, float & v) const;
-
+	void get_pixel_coordinates(const size_t &width_index, const size_t &height_index, float &u, float &v) const;
 
 
 private:

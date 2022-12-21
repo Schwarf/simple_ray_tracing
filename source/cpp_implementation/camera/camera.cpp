@@ -15,7 +15,7 @@ Camera::Camera(int image_width, int image_height, float viewport_width, float fo
 	horizontal_direction_[0] = viewport_width;
 	vertical_direction_[1] = viewport_height;
 	lower_left_corner_ =
-		origin_ - horizontal_direction_ / 2.f - vertical_direction_ / 2.f - Point3D {0, 0, focal_length};
+		origin_ - horizontal_direction_ / 2.f - vertical_direction_ / 2.f - Point3D{0, 0, focal_length};
 	image_buffer_ = std::make_shared<ImageBuffer>(ImageBuffer(image_width_, image_height_));
 }
 
@@ -52,8 +52,8 @@ void Camera::get_pixel_coordinates(const size_t &width_index, const size_t &heig
 		v = (float(height_index) + add_v) / float(image_height_ - 1);
 		return;
 	}
-	u = float(width_index)  / float(image_width_ - 1);
-	v = float(height_index)  / float(image_height_ - 1);
+	u = float(width_index) / float(image_width_ - 1);
+	v = float(height_index) / float(image_height_ - 1);
 }
 
 void Camera::render_image(const IObjectListPtr &objects_in_scene,
@@ -63,16 +63,17 @@ void Camera::render_image(const IObjectListPtr &objects_in_scene,
 	float v{};
 	size_t samples_per_pixel = 1;
 	size_t recursion_depth = 2;
-	if(antialiasing_enabled_)
+	if (antialiasing_enabled_)
 		samples_per_pixel = 10;
-	#pragma omp parallel for
+#pragma omp parallel for
 	for (int height_index = 0; height_index < image_height_; height_index++) {
 		for (int width_index = 0; width_index < image_width_; width_index++) {
 			Color color_values{0, 0, 0};
-			for(size_t sample =0; sample < samples_per_pixel; ++sample) {
+			for (size_t sample = 0; sample < samples_per_pixel; ++sample) {
 				get_pixel_coordinates(width_index, height_index, u, v);
 				auto ray = get_ray(u, v);
-				color_values = color_values + get_pixel_color(ray, objects_in_scene, scene_illumination, recursion_depth);
+				color_values =
+					color_values + get_pixel_color(ray, objects_in_scene, scene_illumination, recursion_depth);
 			}
 			image_buffer_->set_pixel_value(width_index, height_index, color_values, samples_per_pixel);
 		}
@@ -84,27 +85,32 @@ Color Camera::get_pixel_color(const IRayPtr &ray,
 							  const ISceneIlluminationPtr &scene_illumination,
 							  size_t recursion_depth)
 {
-	IHitRecordPtr hit_record = std::make_shared<HitRecord>(HitRecord()) ;
+	IHitRecordPtr hit_record = std::make_shared<HitRecord>(HitRecord());
 	auto air_refraction_index = 1.f;
 	auto object = objects_in_scene->get_object_hit_by_ray(ray, hit_record);
 	if (object == nullptr || recursion_depth < 1) {
-		auto mix_parameter = 1.f/2.f*( (ray->direction_normalized()[0]  + ray->direction_normalized()[1])/2.f + 1.f);
+		auto
+			mix_parameter = 1.f / 2.f * ((ray->direction_normalized()[0] + ray->direction_normalized()[1]) / 2.f + 1.f);
 		return scene_illumination->background_color(mix_parameter);
 	}
 	// Start recursion
 	recursion_depth--;
-	auto reflected_color = get_pixel_color(ray_interaction_.reflected_ray(ray, hit_record), objects_in_scene, scene_illumination, recursion_depth);
-	auto refracted_color = get_pixel_color(ray_interaction_.refracted_ray(ray, hit_record, air_refraction_index), objects_in_scene, scene_illumination, recursion_depth);
-
+	auto reflected_color = get_pixel_color(ray_interaction_.reflected_ray(ray, hit_record),
+										   objects_in_scene,
+										   scene_illumination,
+										   recursion_depth);
+	auto refracted_color = get_pixel_color(ray_interaction_.refracted_ray(ray, hit_record, air_refraction_index),
+										   objects_in_scene,
+										   scene_illumination,
+										   recursion_depth);
 
 	float diffuse_intensity = 0.f;
 	float specular_intensity = 0.f;
 	auto hit_normal = hit_record->hit_normal();
 	auto hit_point = hit_record->hit_point();
 
-
 	ILightSourcePtr light_source = nullptr;
-	IRayPtr light_source_ray =std::make_shared<Ray>(Ray());
+	IRayPtr light_source_ray = std::make_shared<Ray>(Ray());
 	IHitRecordPtr shadow_hit_record = std::make_shared<HitRecord>(HitRecord());
 	for (size_t ls_index = 0; ls_index < scene_illumination->number_of_light_sources(); ++ls_index) {
 		light_source = scene_illumination->light_source(ls_index);
@@ -122,7 +128,9 @@ Color Camera::get_pixel_color(const IRayPtr &ray,
 
 		diffuse_intensity += light_source->intensity() * std::max(0.f, light_direction * hit_normal);
 		specular_intensity +=
-			std::pow(std::max(0.f, ray_interaction_.reflected_ray(light_source_ray, hit_record)->direction_normalized() * ray->direction_normalized()),
+			std::pow(std::max(0.f,
+							  ray_interaction_.reflected_ray(light_source_ray, hit_record)->direction_normalized()
+								  * ray->direction_normalized()),
 					 object->get_material()->shininess()) * light_source->intensity();
 	}
 
@@ -130,7 +138,7 @@ Color Camera::get_pixel_color(const IRayPtr &ray,
 		object->get_material()->rgb_color() * diffuse_intensity * object->get_material()->diffuse();
 	Color white = Color{1, 1, 1};
 	Color specular_color = specular_intensity * white * object->get_material()->specular();
-	Color ambient_color =  reflected_color * object->get_material()->ambient();
+	Color ambient_color = reflected_color * object->get_material()->ambient();
 	Color refraction_color = refracted_color * object->get_material()->transparency();
 	return diffuse_color + specular_color + ambient_color + refraction_color;
 }

@@ -27,10 +27,13 @@ ImageBuffer::ImageBuffer(const int width, const int height)
 	buffer_.resize(height_ * width_);
 }
 
-void ImageBuffer::set_pixel_value(int width_index, int height_index, const Color &pixel_color_value, int samples_per_pixel)
+void ImageBuffer::set_pixel_value(int width_index,
+								  int height_index,
+								  const Color &pixel_color_value,
+								  int samples_per_pixel)
 {
-	auto scale = 1.f/float(samples_per_pixel);
-	auto pixel_color_mean_value = pixel_color_value*scale;
+	auto scale = 1.f / float(samples_per_pixel);
+	auto pixel_color_mean_value = pixel_color_value * scale;
 	// Use gamma correction with gamma =2 --> color^(1/gamma) = sqrt
 	// auto pixel_color_mean_value = Color{std::sqrt(pixel_color_value[0]*scale),
 	//										std::sqrt(pixel_color_value[1]*scale),
