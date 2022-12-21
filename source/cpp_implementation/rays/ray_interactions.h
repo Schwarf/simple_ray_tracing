@@ -13,8 +13,8 @@ class RayInteractions final: IRayInteractions
 public:
 	RayInteractions() = default;
 
-	std::shared_ptr<IRay>  reflected_ray(const std::shared_ptr<IRay> &ray, const std::shared_ptr<IHitRecord> &hit_record) const final;
-	std::shared_ptr<IRay>  refracted_ray(const std::shared_ptr<IRay> &ray,
+	IRayPtr  reflected_ray(const IRayPtr &ray, const std::shared_ptr<IHitRecord> &hit_record) const final;
+	IRayPtr  refracted_ray(const IRayPtr &ray,
 										 const std::shared_ptr<IHitRecord> &hit_record,
 										 const float &air_refraction_index) const final;
 

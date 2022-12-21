@@ -23,7 +23,7 @@ public:
 	Camera(int image_width, int image_height, float viewport_width, float focal_length);
 	void render_image(const std::shared_ptr<IObjectList> &objects_in_scene,
 					  const std::shared_ptr<ISceneIllumination> &scene_illumination) final;
-	std::shared_ptr<IRay> get_ray(float width_coordinate, float height_coordinate) final;
+	IRayPtr get_ray(float width_coordinate, float height_coordinate) final;
 	std::shared_ptr<IImageBuffer> get_image_buffer() final;
 	void enable_antialiasing() final;
 	void disable_antialiasing() final;
@@ -34,7 +34,7 @@ public:
 	float focal_length() final;
 
 private:
-	Color get_pixel_color(const std::shared_ptr<IRay> &ray,
+	Color get_pixel_color(const IRayPtr &ray,
 						  const std::shared_ptr<IObjectList> &objects_in_scene,
 						  const std::shared_ptr<ISceneIllumination> &scene_illumination,
 						  size_t recursion_depth) final;

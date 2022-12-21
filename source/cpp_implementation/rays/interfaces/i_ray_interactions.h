@@ -12,8 +12,8 @@
 class IRayInteractions
 {
 public:
-	virtual std::shared_ptr<IRay> reflected_ray(const std::shared_ptr<IRay> &ray, const std::shared_ptr<IHitRecord> & hit_record) const = 0;
-	virtual std::shared_ptr<IRay> refracted_ray(const std::shared_ptr<IRay> &ray, const std::shared_ptr<IHitRecord> & hit_record,
+	virtual IRayPtr reflected_ray(const IRayPtr &ray, const std::shared_ptr<IHitRecord> & hit_record) const = 0;
+	virtual IRayPtr refracted_ray(const IRayPtr &ray, const std::shared_ptr<IHitRecord> & hit_record,
 												const float &air_refraction_index) const = 0;
 };
 

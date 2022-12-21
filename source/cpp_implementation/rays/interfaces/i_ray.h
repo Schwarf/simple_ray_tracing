@@ -4,6 +4,7 @@
 
 #ifndef SIMPLE_RAY_TRACING_I_RAY_H
 #define SIMPLE_RAY_TRACING_I_RAY_H
+#include <memory>
 #include "miscellaneous/templates/n_tuple.h"
 
 class IRay
@@ -15,4 +16,6 @@ public:
 	virtual void set_origin(const Point3D & origin) = 0;
 	virtual ~IRay() = default;
 };
+
+using IRayPtr = std::shared_ptr<IRay>;
 #endif //SIMPLE_RAY_TRACING_I_RAY_H

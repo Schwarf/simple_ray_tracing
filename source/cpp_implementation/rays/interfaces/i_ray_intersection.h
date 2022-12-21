@@ -11,7 +11,7 @@
 class IRayIntersection
 {
 public:
-	virtual bool does_ray_intersect(const std::shared_ptr<IRay> &ray, const std::shared_ptr<IHitRecord> &hit_record) const = 0;
+	virtual bool does_ray_intersect(const IRayPtr &ray, const std::shared_ptr<IHitRecord> &hit_record) const = 0;
 };
 
 #endif //SIMPLE_RAY_TRACING_I_RAY_INTERSECTION_H

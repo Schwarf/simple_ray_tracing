@@ -4,7 +4,7 @@
 
 #include "ray_interactions.h"
 
-std::shared_ptr<IRay> RayInteractions::reflected_ray(const std::shared_ptr<IRay> &ray, const std::shared_ptr<IHitRecord> &hit_record) const
+IRayPtr RayInteractions::reflected_ray(const IRayPtr &ray, const std::shared_ptr<IHitRecord> &hit_record) const
 {
 	Vector3D reflected_ray_direction = ray->direction_normalized() - hit_record->hit_normal() * 2.f * (
 		ray->direction_normalized()*hit_record->hit_normal()) + UniformRandomNumberGenerator::random_vector_in_unit_sphere<float>()
@@ -12,7 +12,7 @@ std::shared_ptr<IRay> RayInteractions::reflected_ray(const std::shared_ptr<IRay>
 	return std::make_shared<Ray>(Ray(hit_record->hit_point(), reflected_ray_direction));
 
 }
-std::shared_ptr<IRay>  RayInteractions::refracted_ray(const std::shared_ptr<IRay> &ray,
+IRayPtr  RayInteractions::refracted_ray(const IRayPtr &ray,
 													  const std::shared_ptr<IHitRecord> &hit_record,
 													  const float &air_refraction_index) const
 {

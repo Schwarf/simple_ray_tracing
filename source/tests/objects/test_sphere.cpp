@@ -60,7 +60,7 @@ TEST_F(SetupSphere, test_ray_intersection_ray_direction_is_called)
 {
 	auto sphere = Sphere(center, radius);
 	MockRay mock_ray;
-	std::shared_ptr<IRay> mock (std::shared_ptr<MockRay>(), &mock_ray);
+	IRayPtr mock (std::shared_ptr<MockRay>(), &mock_ray);
 	using ::testing::Exactly;
 	EXPECT_CALL(mock_ray, direction_normalized()).Times(Exactly(1));
 	sphere.does_ray_intersect(mock, hit_record);
@@ -70,7 +70,7 @@ TEST_F(SetupSphere, test_ray_intersection_ray_origin_is_called)
 {
 	auto sphere = Sphere(center, radius);
 	MockRay mock_ray;
-	std::shared_ptr<IRay> mock (std::shared_ptr<MockRay>(), &mock_ray);
+	IRayPtr mock (std::shared_ptr<MockRay>(), &mock_ray);
 	using ::testing::Exactly;
 	EXPECT_CALL(mock_ray, origin()).Times(Exactly(1));
 	sphere.does_ray_intersect(mock,hit_record);
@@ -80,7 +80,7 @@ TEST_F(SetupSphere, test_ray_intersection_closest_distance)
 {
 	auto sphere = Sphere(center, radius);
 	MockRay mock_ray;
-	std::shared_ptr<IRay> mock (std::shared_ptr<MockRay>(), &mock_ray);
+	IRayPtr mock (std::shared_ptr<MockRay>(), &mock_ray);
 	ray_direction = ray_direction.normalize();
 	EXPECT_CALL(mock_ray, origin()).WillRepeatedly(testing::Return(ray_origin));
 	EXPECT_CALL(mock_ray, direction_normalized()).WillRepeatedly(testing::Return(ray_direction));
@@ -97,7 +97,7 @@ TEST_F(SetupSphere, test_ray_intersection_hit_point)
 {
 	auto sphere = Sphere(center, radius);
 	MockRay mock_ray;
-	std::shared_ptr<IRay> mock (std::shared_ptr<MockRay>(), &mock_ray);
+	IRayPtr mock (std::shared_ptr<MockRay>(), &mock_ray);
 	ray_direction = ray_direction.normalize();
 
 	EXPECT_CALL(mock_ray, origin()).WillRepeatedly(testing::Return(ray_origin));

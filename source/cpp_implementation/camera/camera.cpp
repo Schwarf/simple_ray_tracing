@@ -19,7 +19,7 @@ Camera::Camera(int image_width, int image_height, float viewport_width, float fo
 	image_buffer_ = std::make_shared<ImageBuffer>(ImageBuffer(image_width_, image_height_));
 }
 
-std::shared_ptr<IRay> Camera::get_ray(float width_coordinate, float height_coordinate)
+IRayPtr Camera::get_ray(float width_coordinate, float height_coordinate)
 {
 	auto direction =
 		lower_left_corner_ + width_coordinate * horizontal_direction_ + height_coordinate * vertical_direction_
@@ -79,7 +79,7 @@ void Camera::render_image(const std::shared_ptr<IObjectList> &objects_in_scene,
 	}
 
 }
-Color Camera::get_pixel_color(const std::shared_ptr<IRay> &ray,
+Color Camera::get_pixel_color(const IRayPtr &ray,
 							  const std::shared_ptr<IObjectList> &objects_in_scene,
 							  const std::shared_ptr<ISceneIllumination> &scene_illumination,
 							  size_t recursion_depth)
@@ -104,7 +104,7 @@ Color Camera::get_pixel_color(const std::shared_ptr<IRay> &ray,
 
 
 	std::shared_ptr<ILightSource> light_source = nullptr;
-	std::shared_ptr<IRay> light_source_ray =std::make_shared<Ray>(Ray());
+	IRayPtr light_source_ray =std::make_shared<Ray>(Ray());
 	std::shared_ptr<IHitRecord> shadow_hit_record = std::make_shared<HitRecord>(HitRecord());
 	for (size_t ls_index = 0; ls_index < scene_illumination->number_of_light_sources(); ++ls_index) {
 		light_source = scene_illumination->light_source(ls_index);
