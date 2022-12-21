@@ -15,4 +15,6 @@ public:
 	virtual float radius() const = 0;
 	virtual ~ISphere() = default;
 };
+
+using ISpherePtr = std::shared_ptr<ISphere>;
 #endif //SIMPLE_RAY_TRACING_I_SPHERE_H

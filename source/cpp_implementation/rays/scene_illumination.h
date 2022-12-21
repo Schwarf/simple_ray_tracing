@@ -27,11 +27,11 @@ public:
 	size_t number_of_light_sources() const final;
 	Color background_color(float parameter) const final;
 	void set_background_colors(const Color &color1, const Color &color2) final;
-	void set_ground_sphere(const std::shared_ptr<ISphere> &ground_sphere) final;
-	std::shared_ptr<ISphere> get_ground() const final;
+	void set_ground_sphere(const ISpherePtr &ground_sphere) final;
+	ISpherePtr get_ground() const final;
 private:
 	std::vector<ILightSourcePtr> light_source_vector_;
-	std::shared_ptr<ISphere> ground_;
+	ISpherePtr ground_;
 	Color background_color1_;
 	Color background_color2_;
 

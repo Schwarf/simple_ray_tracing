@@ -35,5 +35,4 @@ private:
 	Validate<float> validate_;
 };
 
-
 #endif //SIMPLE_RAY_TRACING_SPHERE_H
