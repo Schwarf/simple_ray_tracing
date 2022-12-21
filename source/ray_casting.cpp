@@ -19,7 +19,7 @@ int main()
 	auto object_list = create_object_list();
 	//object_list.add_object(scene_illumination.get_ground());
 	IObjectListPtr objects_in_scene(std::shared_ptr<ObjectList>(), &object_list);
-	std::shared_ptr<ISceneIllumination> scene_lights(std::shared_ptr<SceneIllumination>(), &scene_illumination);
+	ISceneIlluminationPtr scene_lights(std::shared_ptr<SceneIllumination>(), &scene_illumination);
 
 	size_t image_width = 1020;
 	size_t image_height = 768;

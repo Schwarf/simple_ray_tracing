@@ -21,4 +21,5 @@ public:
 	virtual ~ISceneIllumination() = default;
 };
 
+using ISceneIlluminationPtr = std::shared_ptr<ISceneIllumination>;
 #endif //I_SCENE_ILLUMINATION_H

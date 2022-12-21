@@ -22,7 +22,7 @@ class Camera final: ICamera
 public:
 	Camera(int image_width, int image_height, float viewport_width, float focal_length);
 	void render_image(const IObjectListPtr &objects_in_scene,
-					  const std::shared_ptr<ISceneIllumination> &scene_illumination) final;
+					  const ISceneIlluminationPtr &scene_illumination) final;
 	IRayPtr get_ray(float width_coordinate, float height_coordinate) final;
 	std::shared_ptr<IImageBuffer> get_image_buffer() final;
 	void enable_antialiasing() final;
@@ -36,7 +36,7 @@ public:
 private:
 	Color get_pixel_color(const IRayPtr &ray,
 						  const IObjectListPtr &objects_in_scene,
-						  const std::shared_ptr<ISceneIllumination> &scene_illumination,
+						  const ISceneIlluminationPtr &scene_illumination,
 						  size_t recursion_depth) final;
 	void get_pixel_coordinates(const size_t & width_index, const size_t & height_index, float & u, float & v) const;
 
