@@ -50,7 +50,7 @@ size_t SceneIllumination::number_of_light_sources() const
 {
 	return light_source_vector_.size();
 }
-Color SceneIllumination::background_color(const float parameter) const
+Color SceneIllumination::background_color(float parameter) const
 {
 
 	return (1.f-parameter)*background_color1_ + parameter*background_color2_;

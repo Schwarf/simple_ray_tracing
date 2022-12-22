@@ -43,35 +43,30 @@ float Camera::focal_length()
 	return focal_length_;
 }
 
-void Camera::get_pixel_coordinates(const size_t &width_index, const size_t &height_index, float &u, float &v) const
+std::pair<float, float> Camera::get_pixel_coordinates(const size_t &width_index, const size_t &height_index) const
 {
-	if (antialiasing_enabled_) {
-		auto add_u = UniformRandomNumberGenerator::get_random<float>(0.f, 1.f);
-		auto add_v = UniformRandomNumberGenerator::get_random<float>(0.f, 1.f);
-		u = (float(width_index) + add_u) / float(image_width_ - 1);
-		v = (float(height_index) + add_v) / float(image_height_ - 1);
-		return;
-	}
-	u = float(width_index) / float(image_width_ - 1);
-	v = float(height_index) / float(image_height_ - 1);
+	float add_u = antialiasing_enabled_ ? UniformRandomNumberGenerator::get_random<float>(0.f, 1.f) : 0.f;
+	float add_v = antialiasing_enabled_ ? UniformRandomNumberGenerator::get_random<float>(0.f, 1.f) : 0.f;
+	auto u = (float(width_index) + add_u) / float(image_width_ - 1);
+	auto v = (float(height_index) + add_v) / float(image_height_ - 1);
+	return {u, v};
 }
 
 void Camera::render_image(const IObjectListPtr &objects_in_scene,
 						  const ISceneIlluminationPtr &scene_illumination)
 {
-	float u{};
-	float v{};
 	size_t samples_per_pixel = 1;
 	size_t recursion_depth = 2;
 	if (antialiasing_enabled_)
-		samples_per_pixel = 10;
-#pragma omp parallel for
+		samples_per_pixel = 4;
+//#pragma omp parallel for
 	for (int height_index = 0; height_index < image_height_; height_index++) {
 		for (int width_index = 0; width_index < image_width_; width_index++) {
 			Color color_values{0, 0, 0};
 			for (size_t sample = 0; sample < samples_per_pixel; ++sample) {
-				get_pixel_coordinates(width_index, height_index, u, v);
-				auto camera_ray = get_camera_ray(u, v);
+
+				auto pixel_coordinates = get_pixel_coordinates(width_index, height_index);
+				auto camera_ray = get_camera_ray(pixel_coordinates.first, pixel_coordinates.second);
 				color_values =
 					color_values + get_pixel_color(camera_ray, objects_in_scene, scene_illumination, recursion_depth);
 			}

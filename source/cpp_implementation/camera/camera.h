@@ -6,16 +6,18 @@
 #define CAMERA_H
 
 #include <memory>
+#include <random>
+#include <utility>
 #include "miscellaneous/interfaces/i_image_buffer.h"
 #include "camera/interfaces/i_camera.h"
 #include "rays/interfaces/i_ray.h"
 #include "rays/interfaces/i_ray_interactions.h"
-#include <random>
 #include "rays/ray.h"
 #include "miscellaneous/image_buffer.h"
 #include "rays/ray_interactions.h"
 #include "miscellaneous/templates/random_number_generator.h"
 #include <rays/hit_record.h>
+
 
 class Camera final: ICamera
 {
@@ -38,7 +40,8 @@ private:
 						  const IObjectListPtr &objects_in_scene,
 						  const ISceneIlluminationPtr &scene_illumination,
 						  size_t recursion_depth) final;
-	void get_pixel_coordinates(const size_t &width_index, const size_t &height_index, float &u, float &v) const;
+
+	std::pair<float, float> get_pixel_coordinates(const size_t &width_index, const size_t &height_index) const;
 
 
 private:
