@@ -6,7 +6,7 @@
 #define QUADRATIC_EQUATION_H
 
 #include "interfaces/i_solve.h"
-#include "templates/n_tuple.h"
+#include "templates/fixed_sized_array.h"
 #include "validate.h"
 #include "stdexcept"
 #include <limits>
@@ -15,17 +15,17 @@ template<typename T>
 class QuadraticEquation: public ISolve<2, T>
 {
 public:
-	QuadraticEquation(const N_Tuple<3, T> & coefficients, const T & epsilon);
-	virtual N_Tuple<2, T> solutions() final;
+	QuadraticEquation(const FixedSizedArray<3, T> & coefficients, const T & epsilon);
+	virtual FixedSizedArray<2, T> solutions() final;
 	virtual size_t number_of_solutions() const final;
 
 private:
-	N_Tuple<2, T> solutions_{std::numeric_limits<T>::quiet_NaN(), std::numeric_limits<T>::quiet_NaN()};
+	FixedSizedArray<2, T> solutions_{std::numeric_limits<T>::quiet_NaN(), std::numeric_limits<T>::quiet_NaN()};
 	size_t number_of_solutions_{};
 };
 
 template<typename T>
-QuadraticEquation<T>::QuadraticEquation(const N_Tuple<3, T> & coefficients, const T & epsilon)
+QuadraticEquation<T>::QuadraticEquation(const FixedSizedArray<3, T> & coefficients, const T & epsilon)
 {
 	T absolute_average{};
 	for(size_t index = 0; index < 3; index++)
@@ -62,7 +62,7 @@ QuadraticEquation<T>::QuadraticEquation(const N_Tuple<3, T> & coefficients, cons
 	number_of_solutions_ = 2;
 }
 template<typename T>
-N_Tuple<2, T> QuadraticEquation<T>::solutions()
+FixedSizedArray<2, T> QuadraticEquation<T>::solutions()
 {
 	return solutions_;
 }

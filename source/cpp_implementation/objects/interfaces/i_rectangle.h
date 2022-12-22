@@ -5,7 +5,7 @@
 #ifndef SIMPLE_RAY_TRACING_I_RECTANGLE_H
 #define SIMPLE_RAY_TRACING_I_RECTANGLE_H
 
-#include "miscellaneous/templates/n_tuple.h"
+#include "miscellaneous/templates/fixed_sized_array.h"
 #include "i_target_object.h"
 
 class IRectangle: public ITargetObject

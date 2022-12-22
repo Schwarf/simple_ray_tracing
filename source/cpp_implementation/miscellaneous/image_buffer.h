@@ -7,7 +7,7 @@
 
 #include <memory>
 #include "miscellaneous/interfaces/i_image_buffer.h"
-#include "miscellaneous/templates/n_tuple.h"
+#include "miscellaneous/templates/fixed_sized_array.h"
 class ImageBuffer final: public IImageBuffer
 {
 

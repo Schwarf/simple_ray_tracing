@@ -5,7 +5,7 @@
 #ifndef I_HIT_RECORD_H
 #define I_HIT_RECORD_H
 #include <memory>
-#include "miscellaneous/templates/n_tuple.h"
+#include "miscellaneous/templates/fixed_sized_array.h"
 #include "materials/interfaces/i_material.h"
 
 class IHitRecord{

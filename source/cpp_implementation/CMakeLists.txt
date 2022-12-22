@@ -4,7 +4,7 @@ add_library(ray_lib STATIC rays/ray_interactions.cpp rays/ray_interactions.h ray
 add_library(ray_interfaces INTERFACE rays/interfaces/i_ray_intersection.h rays/interfaces/i_ray.h rays/interfaces/i_ray_interactions.h
         rays/interfaces/i_scene_illumination.h rays/interfaces/i_light_source.h)
 
-add_library(misc_lib STATIC miscellaneous/validate.h miscellaneous/templates/n_tuple.h
+add_library(misc_lib STATIC miscellaneous/validate.h miscellaneous/templates/fixed_sized_array.h
             miscellaneous/image_buffer.cpp miscellaneous/image_buffer.h miscellaneous/quartic_equation.h miscellaneous/random_number_generator.h miscellaneous/random_number_generator.cpp)
 add_library(misc_interfaces INTERFACE miscellaneous/interfaces/i_image_buffer.h miscellaneous/quadratic_equation.h)
 

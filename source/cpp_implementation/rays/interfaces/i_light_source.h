@@ -5,7 +5,7 @@
 #ifndef SIMPLE_RAY_TRACING_I_LIGHT_SOURCE_H
 #define SIMPLE_RAY_TRACING_I_LIGHT_SOURCE_H
 #include <memory>
-#include "miscellaneous/templates/n_tuple.h"
+#include "miscellaneous/templates/fixed_sized_array.h"
 
 class ILightSource
 {

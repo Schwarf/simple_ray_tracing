@@ -4,7 +4,7 @@
 
 #ifndef SIMPLE_RAY_TRACING_I_IMAGE_BUFFER_H
 #define SIMPLE_RAY_TRACING_I_IMAGE_BUFFER_H
-#include "miscellaneous/templates/n_tuple.h"
+#include "miscellaneous/templates/fixed_sized_array.h"
 #include <vector>
 
 class IImageBuffer

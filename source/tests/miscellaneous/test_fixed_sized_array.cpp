@@ -3,7 +3,7 @@
 //
 
 #include "gtest/gtest.h"
-#include "miscellaneous/templates/n_tuple.h"
+#include "miscellaneous/templates/fixed_sized_array.h"
 #include <regex>
 
 class SetupCVector: public testing::Test
@@ -20,7 +20,7 @@ protected:
 
 TEST_F(SetupCVector, test_index_operator)
 {
-	N_Tuple<2, double> double_vector{x1, x2};
+	FixedSizedArray<2, double> double_vector{x1, x2};
 	EXPECT_DOUBLE_EQ(x1, double_vector[0]);
 	EXPECT_DOUBLE_EQ(x2, double_vector[1]);
 
@@ -29,13 +29,13 @@ TEST_F(SetupCVector, test_index_operator)
 		FAIL() << "Expected std::out_of_range";
 	}
 	catch (std::out_of_range const &err) {
-		EXPECT_TRUE(std::regex_match(err.what(), std::regex("In class N_Tuple 'index (.*)")));
+		EXPECT_TRUE(std::regex_match(err.what(), std::regex("In class FixedSizedArray 'index (.*)")));
 	}
 }
 
 TEST_F(SetupCVector, test_norm)
 {
-	N_Tuple<4, double> double_vector{x1, x2, y1, y2};
+	FixedSizedArray<4, double> double_vector{x1, x2, y1, y2};
 	auto norm = double_vector.norm();
 	auto expected_value = std::sqrt(x1 * x1 + x2 * x2 + y1 * y1 + y2 * y2);
 	EXPECT_DOUBLE_EQ(norm, expected_value);
@@ -43,7 +43,7 @@ TEST_F(SetupCVector, test_norm)
 
 TEST_F(SetupCVector, test_normalize)
 {
-	N_Tuple<4, double> double_vector{x1, x2, y1, y2};
+	FixedSizedArray<4, double> double_vector{x1, x2, y1, y2};
 	auto normalized = double_vector.normalize().norm();
 	auto normalized2 = double_vector.normalize() * double_vector.normalize();
 	auto expected_value = 1.0;
@@ -54,15 +54,15 @@ TEST_F(SetupCVector, test_normalize)
 
 TEST_F(SetupCVector, test_multiplication_operator_for_factor)
 {
-	N_Tuple<3, double> double_vector{x1, x2, y1};
+	FixedSizedArray<3, double> double_vector{x1, x2, y1};
 	auto result = factor * double_vector;
-	auto reference_vector = N_Tuple<3, double>{x1 * factor, x2 * factor, y1 * factor};
+	auto reference_vector = FixedSizedArray<3, double>{x1 * factor, x2 * factor, y1 * factor};
 	for (int i = 0; i < 3; ++i) {
 		EXPECT_DOUBLE_EQ(reference_vector[i], result[i]);
 	}
-	N_Tuple<3, double> double_vector2{x2, x3, y3};
+	FixedSizedArray<3, double> double_vector2{x2, x3, y3};
 	auto result2 = factor * double_vector2;
-	auto reference_vector2 = N_Tuple<3, double>{x2 * factor, x3 * factor, y3 * factor};
+	auto reference_vector2 = FixedSizedArray<3, double>{x2 * factor, x3 * factor, y3 * factor};
 	for (int i = 0; i < 3; ++i) {
 		EXPECT_DOUBLE_EQ(reference_vector2[i], result2[i]);
 	}
@@ -71,9 +71,9 @@ TEST_F(SetupCVector, test_multiplication_operator_for_factor)
 
 TEST_F(SetupCVector, test_division_operator_for_factor)
 {
-	N_Tuple<3, double> double_vector{x1, x2, y1};
+	FixedSizedArray<3, double> double_vector{x1, x2, y1};
 	auto result = double_vector / factor;
-	auto reference_vector = N_Tuple<3, double>{x1 / factor, x2 / factor, y1 / factor};
+	auto reference_vector = FixedSizedArray<3, double>{x1 / factor, x2 / factor, y1 / factor};
 	for (int i = 0; i < 3; ++i) {
 		EXPECT_DOUBLE_EQ(reference_vector[i], result[i]);
 	}
@@ -81,18 +81,18 @@ TEST_F(SetupCVector, test_division_operator_for_factor)
 
 TEST_F(SetupCVector, test_multiplication_operator_dot_product)
 {
-	N_Tuple<2, double> double_vector1{x1, x2};
-	N_Tuple<2, double> double_vector2{y2, y3};
+	FixedSizedArray<2, double> double_vector1{x1, x2};
+	FixedSizedArray<2, double> double_vector2{y2, y3};
 	auto expected_result = x1 * y2 + x2 * y3;
 	EXPECT_DOUBLE_EQ(double_vector1 * double_vector2, expected_result);
 }
 
 TEST_F(SetupCVector, test_addition_operator)
 {
-	N_Tuple<2, double> double_vector1{x1, x2};
-	N_Tuple<2, double> double_vector2{y2, y3};
+	FixedSizedArray<2, double> double_vector1{x1, x2};
+	FixedSizedArray<2, double> double_vector2{y2, y3};
 	auto result = double_vector1 + double_vector2;
-	auto expected_result = N_Tuple<2, double>{x1 + y2, x2 + y3};
+	auto expected_result = FixedSizedArray<2, double>{x1 + y2, x2 + y3};
 	for (int i = 0; i < 2; ++i) {
 		EXPECT_DOUBLE_EQ(result[i], expected_result[i]);
 	}
@@ -101,10 +101,10 @@ TEST_F(SetupCVector, test_addition_operator)
 
 TEST_F(SetupCVector, test_subtraction_operator)
 {
-	N_Tuple<2, double> double_vector1{x1, x2};
-	N_Tuple<2, double> double_vector2{y2, y3};
+	FixedSizedArray<2, double> double_vector1{x1, x2};
+	FixedSizedArray<2, double> double_vector2{y2, y3};
 	auto result = double_vector1 - double_vector2;
-	auto expected_result = N_Tuple<2, double>{x1 - y2, x2 - y3};
+	auto expected_result = FixedSizedArray<2, double>{x1 - y2, x2 - y3};
 	for (int i = 0; i < 2; ++i) {
 		EXPECT_DOUBLE_EQ(result[i], expected_result[i]);
 	}
@@ -113,9 +113,9 @@ TEST_F(SetupCVector, test_subtraction_operator)
 
 TEST_F(SetupCVector, test_sign_operator)
 {
-	N_Tuple<2, double> double_vector1{x1, x2};
+	FixedSizedArray<2, double> double_vector1{x1, x2};
 	auto result = -double_vector1;
-	auto expected_result = N_Tuple<2, double>{-x1, -x2};
+	auto expected_result = FixedSizedArray<2, double>{-x1, -x2};
 	for (int i = 0; i < 2; ++i) {
 		EXPECT_DOUBLE_EQ(result[i], expected_result[i]);
 	}
@@ -124,9 +124,9 @@ TEST_F(SetupCVector, test_sign_operator)
 
 TEST_F(SetupCVector, test_cross_product)
 {
-	N_Tuple<3, float> float_vector1{float(x1), float(x2), float(x3)};
-	N_Tuple<3, float> float_vector2{float(y1), float(y2), float(y3)};
-	auto expected_result = N_Tuple<3, float>{-0.97673979, -62.07660823, -40.68713283};
+	FixedSizedArray<3, float> float_vector1{float(x1), float(x2), float(x3)};
+	FixedSizedArray<3, float> float_vector2{float(y1), float(y2), float(y3)};
+	auto expected_result = FixedSizedArray<3, float>{-0.97673979, -62.07660823, -40.68713283};
 	auto result = cross_product(float_vector1, float_vector2);
 	for (int i = 0; i < 3; ++i) {
 		EXPECT_FLOAT_EQ(result[i], expected_result[i]);

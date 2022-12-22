@@ -16,18 +16,18 @@ template<typename T>
 class CubicEquation: public ISolve<3, T>
 {
 public:
-	CubicEquation(const N_Tuple<4, T> &coefficients, const T &epsilon);
-	virtual N_Tuple<3, T> solutions() final;
+	CubicEquation(const FixedSizedArray<4, T> &coefficients, const T &epsilon);
+	virtual FixedSizedArray<3, T> solutions() final;
 	virtual size_t number_of_solutions() const final;
 
 private:
-	N_Tuple<3, T> solutions_
+	FixedSizedArray<3, T> solutions_
 		{std::numeric_limits<T>::quiet_NaN(), std::numeric_limits<T>::quiet_NaN(), std::numeric_limits<T>::quiet_NaN()};
 	size_t number_of_solutions_{};
 };
 
 template<typename T>
-CubicEquation<T>::CubicEquation(const N_Tuple<4, T> &coefficients, const T &epsilon)
+CubicEquation<T>::CubicEquation(const FixedSizedArray<4, T> &coefficients, const T &epsilon)
 {
 	T absolute_average{};
 	for (size_t index = 0; index < 4; index++) {
@@ -46,7 +46,7 @@ CubicEquation<T>::CubicEquation(const N_Tuple<4, T> &coefficients, const T &epsi
 	if (std::abs(constant) < epsilon) {
 		solutions_[0] = T{};
 		auto quadratic_equation_coefficients =
-			N_Tuple<3, T>{cubic_coefficient, quadratic_coefficient, linear_coefficient};
+			FixedSizedArray<3, T>{cubic_coefficient, quadratic_coefficient, linear_coefficient};
 		auto quadratic_equation = QuadraticEquation<T>(quadratic_equation_coefficients, epsilon);
 		for (int i = 0; i < 2; ++i) {
 			solutions_[i + 1] = quadratic_equation.solutions()[i];
@@ -97,7 +97,7 @@ CubicEquation<T>::CubicEquation(const N_Tuple<4, T> &coefficients, const T &epsi
 
 }
 template<typename T>
-N_Tuple<3, T> CubicEquation<T>::solutions()
+FixedSizedArray<3, T> CubicEquation<T>::solutions()
 {
 	return solutions_;
 }

@@ -10,9 +10,9 @@
 #include <cassert>
 #include <iostream>
 
-// Definition of N_Tuple
+// Definition of FixedSizedArray
 template<size_t dimension, typename T>
-struct N_Tuple
+struct FixedSizedArray
 {
 	T elements[dimension] = {};
 
@@ -20,8 +20,8 @@ struct N_Tuple
 	{
 		if (index >= dimension) {
 			const std::string message_part1 =
-				"In class N_Tuple 'index = " + std::to_string(index) + "' is out of range: T & operator[]";
-			const std::string message_part2 = "Dimension of N_Tuple is: " + std::to_string(dimension);
+				"In class FixedSizedArray 'index = " + std::to_string(index) + "' is out of range: T & operator[]";
+			const std::string message_part2 = "Dimension of FixedSizedArray is: " + std::to_string(dimension);
 			std::string message = message_part1 + message_part2;
 			throw std::out_of_range(message);
 		}
@@ -32,8 +32,8 @@ struct N_Tuple
 	{
 		if (index >= dimension) {
 			const std::string message_part1 =
-				"In class N_Tuple 'index = " + std::to_string(index) + "' is out of range: const T & operator[]";
-			const std::string message_part2 = "Dimension of N_Tuple is: " + std::to_string(dimension);
+				"In class FixedSizedArray 'index = " + std::to_string(index) + "' is out of range: const T & operator[]";
+			const std::string message_part2 = "Dimension of FixedSizedArray is: " + std::to_string(dimension);
 			std::string message = message_part1 + message_part2;
 			throw std::out_of_range(message);
 		}
@@ -46,7 +46,7 @@ struct N_Tuple
 		for (size_t index = dimension; index--; result = *this * (*this));
 		return std::sqrt(result);
 	}
-	N_Tuple<dimension, T> &normalize()
+	FixedSizedArray<dimension, T> &normalize()
 	{
 		T norm = this->norm();
 		*this = (*this) / norm;
@@ -55,32 +55,32 @@ struct N_Tuple
 
 };
 
-// Multiply N_Tuple with number
+// Multiply FixedSizedArray with number
 template<size_t dimension, typename T>
-N_Tuple<dimension, T> operator*(const N_Tuple<dimension, T> &lhs, const T rhs)
+FixedSizedArray<dimension, T> operator*(const FixedSizedArray<dimension, T> &lhs, const T rhs)
 {
-	N_Tuple<dimension, T> result;
+	FixedSizedArray<dimension, T> result;
 	for (size_t index = dimension; index--; result[index] = lhs[index] * rhs);
 	return result;
 }
 
 template<size_t dimension, typename T>
-N_Tuple<dimension, T> operator*(const T lhs, const N_Tuple<dimension, T> &rhs)
+FixedSizedArray<dimension, T> operator*(const T lhs, const FixedSizedArray<dimension, T> &rhs)
 {
 	return rhs * lhs;
 }
 
 template<size_t dimension, typename T>
-N_Tuple<dimension, T> operator/(const N_Tuple<dimension, T> &lhs, const T rhs)
+FixedSizedArray<dimension, T> operator/(const FixedSizedArray<dimension, T> &lhs, const T rhs)
 {
-	N_Tuple<dimension, T> result;
+	FixedSizedArray<dimension, T> result;
 	for (size_t index = dimension; index--; result[index] = lhs[index] / rhs);
 	return result;
 }
 
 // Dot-product
 template<size_t dimension, typename T>
-T operator*(const N_Tuple<dimension, T> &lhs, const N_Tuple<dimension, T> &rhs)
+T operator*(const FixedSizedArray<dimension, T> &lhs, const FixedSizedArray<dimension, T> &rhs)
 {
 	T result{};
 	for (size_t index = dimension; index--; result += lhs[index] * rhs[index]);
@@ -89,7 +89,7 @@ T operator*(const N_Tuple<dimension, T> &lhs, const N_Tuple<dimension, T> &rhs)
 
 // Vector addition
 template<size_t dimension, typename T>
-N_Tuple<dimension, T> operator+(N_Tuple<dimension, T> lhs, const N_Tuple<dimension, T> &rhs)
+FixedSizedArray<dimension, T> operator+(FixedSizedArray<dimension, T> lhs, const FixedSizedArray<dimension, T> &rhs)
 {
 	for (size_t index = dimension; index--; lhs[index] += rhs[index]);
 	return lhs;
@@ -97,7 +97,7 @@ N_Tuple<dimension, T> operator+(N_Tuple<dimension, T> lhs, const N_Tuple<dimensi
 
 // Vector subtraction
 template<size_t dimension, typename T>
-N_Tuple<dimension, T> operator-(N_Tuple<dimension, T> lhs, const N_Tuple<dimension, T> &rhs)
+FixedSizedArray<dimension, T> operator-(FixedSizedArray<dimension, T> lhs, const FixedSizedArray<dimension, T> &rhs)
 {
 	for (size_t index = dimension; index--; lhs[index] -= rhs[index]);
 	return lhs;
@@ -105,15 +105,15 @@ N_Tuple<dimension, T> operator-(N_Tuple<dimension, T> lhs, const N_Tuple<dimensi
 
 // Invert direction_normalized
 template<size_t dimension, typename T>
-N_Tuple<dimension, T> operator-(const N_Tuple<dimension, T> &lhs)
+FixedSizedArray<dimension, T> operator-(const FixedSizedArray<dimension, T> &lhs)
 {
-	N_Tuple<dimension, T> result;
+	FixedSizedArray<dimension, T> result;
 	for (size_t index = dimension; index--; result[index] = -lhs[index]);
 	return result;
 }
 
 template<size_t dimension, typename T>
-std::ostream &operator<<(std::ostream &out, const N_Tuple<dimension, T> &v)
+std::ostream &operator<<(std::ostream &out, const FixedSizedArray<dimension, T> &v)
 {
 	for (size_t index = 0; index < dimension; index++)
 		out << v[index] << " ";
@@ -121,18 +121,18 @@ std::ostream &operator<<(std::ostream &out, const N_Tuple<dimension, T> &v)
 
 }
 template <size_t dimension = 3, typename T>
-N_Tuple<dimension, T> cross_product(const N_Tuple<dimension, T> &first, const N_Tuple<dimension, T> &second)
+FixedSizedArray<dimension, T> cross_product(const FixedSizedArray<dimension, T> &first, const FixedSizedArray<dimension, T> &second)
 {
-	N_Tuple<dimension, T> result;
+	FixedSizedArray<dimension, T> result;
 	result[0] = first[1]*second[2] - first[2]*second[1];
 	result[1] = first[2]*second[0] - first[0]*second[2];
 	result[2] = first[0]*second[1] - first[1]*second[0];
 	return result;
 }
 
-using float_duple = N_Tuple<2, float> ;
-using FloatTriple =  N_Tuple<3, float>;
-using float_quadruple =  N_Tuple<4, float>;
+using float_duple = FixedSizedArray<2, float> ;
+using FloatTriple =  FixedSizedArray<3, float>;
+using float_quadruple =  FixedSizedArray<4, float>;
 
 using Point3D = FloatTriple;
 using Vector3D = FloatTriple;

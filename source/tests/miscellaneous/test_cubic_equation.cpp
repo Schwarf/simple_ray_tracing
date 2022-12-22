@@ -74,7 +74,7 @@ protected:
 
 TEST_F(SetupCubicEquation, cubic_equation_one_solution)
 {
-	N_Tuple<4, float> coefficients{a1_, b1_, c1_, d1_};
+	FixedSizedArray<4, float> coefficients{a1_, b1_, c1_, d1_};
 	auto solver = CubicEquation<float>(coefficients, epsilon_);
 	EXPECT_EQ(solver.number_of_solutions(), 1);
 	EXPECT_TRUE(check_for_solution(solver.solutions()[0], solutions1_));
@@ -82,7 +82,7 @@ TEST_F(SetupCubicEquation, cubic_equation_one_solution)
 
 TEST_F(SetupCubicEquation, cubic_equation_three_solutions)
 {
-	N_Tuple<4, float> coefficients{a2_, b2_, c2_, d2_};
+	FixedSizedArray<4, float> coefficients{a2_, b2_, c2_, d2_};
 	auto solver = CubicEquation<float>(coefficients, epsilon_);
 	EXPECT_EQ(solver.number_of_solutions(), 3);
 	EXPECT_TRUE(check_for_solution(solver.solutions()[0], solutions2_));
@@ -92,7 +92,7 @@ TEST_F(SetupCubicEquation, cubic_equation_three_solutions)
 
 TEST_F(SetupCubicEquation, cubic_equation_three_solutions_constant_is_zero)
 {
-	N_Tuple<4, float> coefficients{a3_, b3_, c3_, d3_};
+	FixedSizedArray<4, float> coefficients{a3_, b3_, c3_, d3_};
 	auto solver = CubicEquation<float>(coefficients, epsilon_);
 	EXPECT_EQ(solver.number_of_solutions(), 3);
 	EXPECT_TRUE(check_for_solution(solver.solutions()[0], solutions3_));
@@ -102,7 +102,7 @@ TEST_F(SetupCubicEquation, cubic_equation_three_solutions_constant_is_zero)
 
 TEST_F(SetupCubicEquation, cubic_equation_one_solutions_constant_is_zero)
 {
-	N_Tuple<4, float> coefficients{a4_, b4_, c4_, d4_};
+	FixedSizedArray<4, float> coefficients{a4_, b4_, c4_, d4_};
 	auto solver = CubicEquation<float>(coefficients, epsilon_);
 	EXPECT_EQ(solver.number_of_solutions(), 1);
 	EXPECT_TRUE(check_for_solution(solver.solutions()[0], solutions4_));
@@ -110,7 +110,7 @@ TEST_F(SetupCubicEquation, cubic_equation_one_solutions_constant_is_zero)
 
 TEST_F(SetupCubicEquation, cubic_equation_three_solutions_linear_coefficient_is_zero)
 {
-	N_Tuple<4, float> coefficients{a5_, b5_, c5_, d5_};
+	FixedSizedArray<4, float> coefficients{a5_, b5_, c5_, d5_};
 	auto solver = CubicEquation<float>(coefficients, epsilon_);
 	EXPECT_EQ(solver.number_of_solutions(), 3);
 	EXPECT_TRUE(check_for_solution(solver.solutions()[0], solutions5_));
@@ -121,7 +121,7 @@ TEST_F(SetupCubicEquation, cubic_equation_three_solutions_linear_coefficient_is_
 
 TEST_F(SetupCubicEquation, cubic_equation_three_solutions_quadratic_coefficient_is_zero)
 {
-	N_Tuple<4, float> coefficients{a6_, b6_, c6_, d6_};
+	FixedSizedArray<4, float> coefficients{a6_, b6_, c6_, d6_};
 	auto solver = CubicEquation<float>(coefficients, epsilon_);
 	EXPECT_EQ(solver.number_of_solutions(), 3);
 	EXPECT_TRUE(check_for_solution(solver.solutions()[0], solutions6_));
@@ -131,7 +131,7 @@ TEST_F(SetupCubicEquation, cubic_equation_three_solutions_quadratic_coefficient_
 
 TEST_F(SetupCubicEquation, cubic_equation_very_small_cubic_coefficient)
 {
-	N_Tuple<4, float> coefficients{a7_, b7_, c7_, d7_};
+	FixedSizedArray<4, float> coefficients{a7_, b7_, c7_, d7_};
 	auto value = a7_ / (a7_ + b7_ + c7_ + d7_) / 4.;
 	std::string message =
 		"In class CubicEquation cubic_coefficient=" + std::to_string(value) + " is zero (within epsilon) "

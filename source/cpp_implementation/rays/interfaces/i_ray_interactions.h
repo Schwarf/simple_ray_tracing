@@ -5,7 +5,7 @@
 #ifndef SIMPLE_RAY_TRACING_I_RAY_REFLECTION_H
 #define SIMPLE_RAY_TRACING_I_RAY_REFLECTION_H
 #include "i_ray.h"
-#include "miscellaneous/templates/n_tuple.h"
+#include "miscellaneous/templates/fixed_sized_array.h"
 #include "objects/interfaces/i_target_object.h"
 #include "i_light_source.h"
 

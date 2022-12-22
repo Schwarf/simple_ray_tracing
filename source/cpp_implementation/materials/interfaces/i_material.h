@@ -5,7 +5,7 @@
 #ifndef SIMPLE_RAY_TRACING_I_MATERIAL_H
 #define SIMPLE_RAY_TRACING_I_MATERIAL_H
 #include "i_phong_reflection_coefficients.h"
-#include "miscellaneous/templates/n_tuple.h"
+#include "miscellaneous/templates/fixed_sized_array.h"
 #include "i_refraction_coefficients.h"
 #include <memory>
 #include <string>
