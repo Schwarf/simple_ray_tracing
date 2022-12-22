@@ -6,7 +6,7 @@
 #define RANDOM_NUMBER_GENERATOR_H
 #include <type_traits>
 #include <random>
-#include "n_tuple.h"
+#include "./templates/n_tuple.h"
 
 class UniformRandomNumberGenerator
 {

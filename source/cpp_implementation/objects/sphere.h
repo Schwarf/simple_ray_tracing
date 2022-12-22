@@ -27,12 +27,15 @@ public:
 
 	IMaterialPtr get_material() const final;
 
+	size_t object_id() const final;
+
 private:
-	void init() const;
+	void init();
 	Point3D center_;
 	float radius_;
 	IMaterialPtr material_;
 	Validate<float> validate_;
+	size_t object_id_;
 };
 
 #endif //SIMPLE_RAY_TRACING_SPHERE_H

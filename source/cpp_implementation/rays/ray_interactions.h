@@ -4,7 +4,7 @@
 
 #ifndef SIMPLE_RAY_TRACING_RAY_INTERACTIONS_H
 #define SIMPLE_RAY_TRACING_RAY_INTERACTIONS_H
-#include "miscellaneous/templates/random_number_generator.h"
+#include "miscellaneous/random_number_generator.h"
 #include "rays/interfaces/i_ray_interactions.h"
 #include "ray.h"
 

@@ -15,7 +15,7 @@
 #include "rays/ray.h"
 #include "miscellaneous/image_buffer.h"
 #include "rays/ray_interactions.h"
-#include "miscellaneous/templates/random_number_generator.h"
+#include "miscellaneous/random_number_generator.h"
 #include <rays/hit_record.h>
 
 

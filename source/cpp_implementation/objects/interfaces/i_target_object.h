@@ -14,6 +14,7 @@ public:
 	virtual void set_material(const IMaterialPtr &material) = 0;
 	virtual IMaterialPtr get_material() const = 0;
 	virtual ~ITargetObject() = default;
+	virtual size_t object_id() const = 0;
 };
 
 using ITargetObjectPtr = std::shared_ptr<ITargetObject>;
