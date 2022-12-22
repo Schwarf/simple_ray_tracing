@@ -15,7 +15,7 @@ class ICamera
 public:
 	virtual void render_image(const IObjectListPtr &objects_in_scene,
 							  const ISceneIlluminationPtr &scene_illumination) = 0;
-	virtual IRayPtr get_ray(float width_coordinate, float height_coordinate) = 0;
+	virtual IRayPtr get_camera_ray(float width_coordinate, float height_coordinate) = 0;
 	virtual int image_width() = 0;
 	virtual int image_height() = 0;
 	virtual float aspect_ratio() = 0;
@@ -26,7 +26,7 @@ public:
 	virtual bool antialiasing_enabled() = 0;
 
 private:
-	virtual Color get_pixel_color(const IRayPtr &ray,
+	virtual Color get_pixel_color(const IRayPtr &camera_ray,
 								  const IObjectListPtr &objects_in_scene,
 								  const ISceneIlluminationPtr &scene_illumination,
 								  size_t recursion_depth) = 0;

@@ -19,9 +19,10 @@ Point3D Ray::origin() const
 {
 	return origin_;
 }
-void Ray::set_direction(Vector3D direction)
+void Ray::set_direction(const Vector3D & direction)
 {
-	direction_normalized_ = direction.normalize();
+	direction_normalized_ = direction;
+	direction_normalized_ = direction_normalized_.normalize();
 }
 void Ray::set_origin(const Point3D &origin)
 {

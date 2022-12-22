@@ -11,14 +11,14 @@ class HitRecord final: public IHitRecord
 {
 public:
 	HitRecord() = default;
-	HitRecord(const Point3D & hit_point, const Vector3D & hit_normal);
+	HitRecord(const Point3D &hit_point, const Vector3D &hit_normal);
 	Point3D hit_point() const final;
 	Vector3D hit_normal() const final;
 	IMaterialPtr material() const final;
 	void set_hit_point(const Point3D &hit_point) final;
 	void set_hit_normal(const Vector3D &hit_normal) final;
 	void set_material(const IMaterialPtr &material) final;
-	virtual ~HitRecord() final = default;
+	~HitRecord() final = default;
 private:
 	Point3D hit_point_;
 	Vector3D hit_normal_;

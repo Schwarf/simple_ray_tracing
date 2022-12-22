@@ -17,7 +17,7 @@ public:
 	Point3D origin() const final;
 
 	~Ray() final = default;
-	void set_direction(Vector3D direction) final;
+	void set_direction(const Vector3D & direction) final;
 	void set_origin(const Point3D &origin) final;
 private:
 	Vector3D direction_normalized_;

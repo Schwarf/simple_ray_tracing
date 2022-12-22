@@ -11,11 +11,8 @@ class LightSource final: public ILightSource
 {
 public:
 	LightSource(const Point3D &position, float intensity);
-
 	Point3D position() const final;
-
 	float intensity() const final;
-
 private:
 	Point3D position_;
 	float intensity_;
