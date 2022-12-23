@@ -1,6 +1,7 @@
 .idea/
 profiling/
 cmake-build-debug/
+cmake-build-*/
 # Prerequisites
 *.d
 
