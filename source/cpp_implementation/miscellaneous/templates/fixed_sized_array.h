@@ -9,6 +9,7 @@
 #include <cmath>
 #include <cassert>
 #include <iostream>
+#include <initializer_list>
 
 // Definition of FixedSizedArray
 template<size_t dimension, typename T>
@@ -27,7 +28,16 @@ struct FixedSizedArray
 		}
 		return elements[index];
 	}
-
+	T squared() const
+	{
+		T square_norm{};
+		for (size_t index = dimension; index--; square_norm += elements[index]*elements[index]);
+		return square_norm;
+	}
+	T norm() const
+	{
+		return std::sqrt(this->squared());
+	}
 	const T &operator[](const size_t index) const
 	{
 		if (index >= dimension) {
@@ -40,16 +50,9 @@ struct FixedSizedArray
 		return elements[index];
 	}
 
-	T norm()
-	{
-		T result{};
-		for (size_t index = dimension; index--; result = *this * (*this));
-		return std::sqrt(result);
-	}
 	FixedSizedArray<dimension, T> &normalize()
 	{
-		T norm = this->norm();
-		*this = (*this) / norm;
+		*this /= this->norm();
 		return *this;
 	}
 	FixedSizedArray<dimension, T> & operator*=(const T rhs)
@@ -104,7 +107,7 @@ FixedSizedArray<dimension, T> operator/(FixedSizedArray<dimension, T> lhs, const
 
 // Dot-product
 template<size_t dimension, typename T>
-T operator*(const FixedSizedArray<dimension, T> &lhs, const FixedSizedArray<dimension, T> &rhs)
+inline T operator*(const FixedSizedArray<dimension, T> &lhs, const FixedSizedArray<dimension, T> &rhs)
 {
 	T result{};
 	for (size_t index = dimension; index--; result += lhs[index] * rhs[index]);
@@ -136,6 +139,8 @@ std::ostream &operator<<(std::ostream &out, const FixedSizedArray<dimension, T> 
 	return out;
 
 }
+
+
 template <size_t dimension = 3, typename T>
 FixedSizedArray<dimension, T> cross_product(const FixedSizedArray<dimension, T> &first, const FixedSizedArray<dimension, T> &second)
 {

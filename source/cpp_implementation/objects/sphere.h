@@ -27,6 +27,7 @@ private:
 	void init();
 	Point3D center_;
 	float radius_;
+	float radius_squared_;
 	IMaterialPtr material_;
 	Validate<float> validate_;
 	size_t object_id_;
