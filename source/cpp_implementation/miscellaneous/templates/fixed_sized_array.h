@@ -52,22 +52,28 @@ struct FixedSizedArray
 		*this = (*this) / norm;
 		return *this;
 	}
+	FixedSizedArray<dimension, T> & operator*=(const T rhs)
+	{
+		for (size_t index = dimension; index--; elements[index] *= rhs);
+		return *this;
+	}
 
 };
 
+
 // Multiply FixedSizedArray with number
 template<size_t dimension, typename T>
-FixedSizedArray<dimension, T> operator*(const FixedSizedArray<dimension, T> &lhs, const T rhs)
+FixedSizedArray<dimension, T> operator*(FixedSizedArray<dimension, T> lhs, const T rhs)
 {
-	FixedSizedArray<dimension, T> result;
-	for (size_t index = dimension; index--; result[index] = lhs[index] * rhs);
-	return result;
+	lhs*=rhs;
+	return lhs;
 }
 
 template<size_t dimension, typename T>
-FixedSizedArray<dimension, T> operator*(const T lhs, const FixedSizedArray<dimension, T> &rhs)
+FixedSizedArray<dimension, T> operator*(const T lhs, FixedSizedArray<dimension, T> rhs)
 {
-	return rhs * lhs;
+	rhs*=lhs;
+	return rhs;
 }
 
 template<size_t dimension, typename T>
