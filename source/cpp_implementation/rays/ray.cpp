@@ -4,9 +4,10 @@
 
 #include "ray.h"
 
-Ray::Ray(const Point3D &origin, Vector3D &direction)
+Ray::Ray(const Point3D &origin, const Vector3D &direction)
 {
-	direction_normalized_ = direction.normalize();
+	direction_normalized_ = direction;
+	direction_normalized_ = direction_normalized_.normalize();
 	origin_ = origin;
 }
 

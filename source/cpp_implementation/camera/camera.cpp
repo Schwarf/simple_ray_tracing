@@ -102,32 +102,28 @@ Color Camera::get_pixel_color(const IRayPtr &camera_ray,
 
 	float diffuse_intensity = 0.f;
 	float specular_intensity = 0.f;
-	auto hit_normal = hit_record->hit_normal();
-	auto hit_point = hit_record->hit_point();
+	const auto hit_normal = hit_record->hit_normal();
+	const auto hit_point = hit_record->hit_point();
 
-	ILightSourcePtr light_source = nullptr;
-	IRayPtr light_source_ray = std::make_shared<Ray>(Ray());
 	IHitRecordPtr shadow_hit_record = std::make_shared<HitRecord>(HitRecord());
 	for (size_t ls_index = 0; ls_index < scene_illumination->number_of_light_sources(); ++ls_index) {
-		light_source = scene_illumination->light_source(ls_index);
-		auto light_direction = (light_source->position() - hit_record->hit_point()).normalize();
-		light_source_ray->set_direction(light_direction);
-		light_source_ray->set_origin(hit_point);
+		const ILightSourcePtr light_source = scene_illumination->light_source(ls_index);
+		const auto light_direction = (light_source->position() - hit_record->hit_point()).normalize();
+		const IRayPtr light_source_ray = std::make_shared<Ray>(Ray(hit_point, light_direction));
 
-		auto object_in_shadow = objects_in_scene->get_object_hit_by_ray(light_source_ray, shadow_hit_record);
-		auto shadow_point = shadow_hit_record->hit_point();
-		auto distance_shadow_point_to_point = (shadow_point - hit_point).norm();
-		auto distance_light_source_to_point = (light_source->position() - hit_point).norm();
-		if (object_in_shadow != nullptr && distance_shadow_point_to_point < distance_light_source_to_point) {
+		const auto object_in_shadow = objects_in_scene->get_object_hit_by_ray(light_source_ray, shadow_hit_record);
+		const auto shadow_point = shadow_hit_record->hit_point();
+		const auto distance_shadow_point_to_point = (shadow_point - hit_point).norm();
+		const auto distance_light_source_to_point = (light_source->position() - hit_point).norm();
+		if (object_in_shadow && distance_shadow_point_to_point < distance_light_source_to_point) {
 			continue;
 		}
 
 		diffuse_intensity += light_source->intensity() * std::max(0.f, light_direction * hit_normal);
+		const auto scalar_product = ray_interaction_.reflected_ray(light_source_ray, hit_record)->direction_normalized()
+			* camera_ray->direction_normalized();
 		specular_intensity +=
-			std::pow(std::max(0.f,
-							  ray_interaction_.reflected_ray(light_source_ray, hit_record)->direction_normalized()
-								  * camera_ray->direction_normalized()),
-					 object->get_material()->shininess()) * light_source->intensity();
+			std::pow(std::max(0.f, scalar_product),object->get_material()->shininess()) * light_source->intensity();
 	}
 
 	Color diffuse_color =

@@ -35,7 +35,7 @@ void Sphere::init()
 	object_id_ = x_hash ^ (y_hash << 1) ^ (z_hash) ^ (r_hash << 1);
 }
 
-bool Sphere::does_ray_intersect(const IRayPtr &ray, const IHitRecordPtr &hit_record) const
+bool Sphere::	does_ray_intersect(const IRayPtr &ray, const IHitRecordPtr &hit_record) const
 {
 	const Vector3D origin_to_center = (center_ - ray->origin());
 	const float origin_to_center_dot_direction = origin_to_center * ray->direction_normalized();
