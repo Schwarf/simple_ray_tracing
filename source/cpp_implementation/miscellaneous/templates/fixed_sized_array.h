@@ -105,6 +105,7 @@ FixedSizedArray<dimension, T> operator/(FixedSizedArray<dimension, T> lhs, const
 	return lhs;
 }
 
+
 // Dot-product
 template<size_t dimension, typename T>
 inline T operator*(const FixedSizedArray<dimension, T> &lhs, const FixedSizedArray<dimension, T> &rhs)
@@ -158,5 +159,12 @@ using float_quadruple =  FixedSizedArray<4, float>;
 using Point3D = FloatTriple;
 using Vector3D = FloatTriple;
 using Color = FloatTriple;
+
+inline float operator*(const Vector3D & vector1, const Vector3D & vector2)
+{
+	return vector1[0]*vector2[0] + vector1[1]*vector2[1] + vector1[2]*vector2[2];
+}
+
+
 
 #endif //SOURCE_C_VECTOR_H
