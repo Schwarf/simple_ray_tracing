@@ -36,22 +36,20 @@ void Sphere::init()
 
 bool Sphere::does_ray_intersect(const IRayPtr &ray, const IHitRecordPtr &hit_record) const
 {
-	float closest_hit_distance = -1.0;
 	Vector3D origin_to_center = (center_ - ray->origin());
 	float origin_to_center_dot_direction = origin_to_center * ray->direction_normalized();
-	float epsilon = 1e-3;
 	float discriminant = origin_to_center_dot_direction * origin_to_center_dot_direction -
 		((origin_to_center * origin_to_center) - radius_ * radius_);
 	if (discriminant < 0.0) {
 		return false;
 	}
 
-	closest_hit_distance = origin_to_center_dot_direction - std::sqrt(discriminant);
+	auto closest_hit_distance = origin_to_center_dot_direction - std::sqrt(discriminant);
 	float hit_distance = origin_to_center_dot_direction + std::sqrt(discriminant);
-	if (closest_hit_distance < epsilon) {
+	if (closest_hit_distance < epsilon_) {
 		closest_hit_distance = hit_distance;
 	}
-	if (closest_hit_distance < epsilon) {
+	if (closest_hit_distance < epsilon_) {
 		return false;
 	}
 	hit_record->set_hit_point(ray->origin() + ray->direction_normalized() * closest_hit_distance);
