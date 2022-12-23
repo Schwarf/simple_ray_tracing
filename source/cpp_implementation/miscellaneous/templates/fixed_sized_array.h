@@ -57,7 +57,26 @@ struct FixedSizedArray
 		for (size_t index = dimension; index--; elements[index] *= rhs);
 		return *this;
 	}
-
+	FixedSizedArray<dimension, T> & operator/=(const T rhs)
+	{
+		for (size_t index = dimension; index--; elements[index] /= rhs);
+		return *this;
+	}
+	FixedSizedArray<dimension, T> & operator+=(const FixedSizedArray<dimension, T> & rhs)
+	{
+		for (size_t index = dimension; index--; elements[index] += rhs[index]);
+		return *this;
+	}
+	FixedSizedArray<dimension, T> & operator-=(const FixedSizedArray<dimension, T> & rhs)
+	{
+		for (size_t index = dimension; index--; elements[index] -= rhs[index]);
+		return *this;
+	}
+	FixedSizedArray<dimension, T> & operator-()
+	{
+		for (size_t index = dimension; index--; elements[index] = -elements[index]);
+		return *this;
+	}
 };
 
 
@@ -77,11 +96,10 @@ FixedSizedArray<dimension, T> operator*(const T lhs, FixedSizedArray<dimension, 
 }
 
 template<size_t dimension, typename T>
-FixedSizedArray<dimension, T> operator/(const FixedSizedArray<dimension, T> &lhs, const T rhs)
+FixedSizedArray<dimension, T> operator/(FixedSizedArray<dimension, T> lhs, const T rhs)
 {
-	FixedSizedArray<dimension, T> result;
-	for (size_t index = dimension; index--; result[index] = lhs[index] / rhs);
-	return result;
+	lhs /=rhs;
+	return lhs;
 }
 
 // Dot-product
@@ -97,7 +115,7 @@ T operator*(const FixedSizedArray<dimension, T> &lhs, const FixedSizedArray<dime
 template<size_t dimension, typename T>
 FixedSizedArray<dimension, T> operator+(FixedSizedArray<dimension, T> lhs, const FixedSizedArray<dimension, T> &rhs)
 {
-	for (size_t index = dimension; index--; lhs[index] += rhs[index]);
+	lhs += rhs;
 	return lhs;
 }
 
@@ -105,18 +123,10 @@ FixedSizedArray<dimension, T> operator+(FixedSizedArray<dimension, T> lhs, const
 template<size_t dimension, typename T>
 FixedSizedArray<dimension, T> operator-(FixedSizedArray<dimension, T> lhs, const FixedSizedArray<dimension, T> &rhs)
 {
-	for (size_t index = dimension; index--; lhs[index] -= rhs[index]);
+	lhs -= rhs;
 	return lhs;
 }
 
-// Invert direction_normalized
-template<size_t dimension, typename T>
-FixedSizedArray<dimension, T> operator-(const FixedSizedArray<dimension, T> &lhs)
-{
-	FixedSizedArray<dimension, T> result;
-	for (size_t index = dimension; index--; result[index] = -lhs[index]);
-	return result;
-}
 
 template<size_t dimension, typename T>
 std::ostream &operator<<(std::ostream &out, const FixedSizedArray<dimension, T> &v)

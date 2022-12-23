@@ -3,18 +3,17 @@
 //
 #include <memory>
 #include <fstream>
-#include <cmath>
 #include "miscellaneous/templates/fixed_sized_array.h"
 #include "miscellaneous/quadratic_equation.h"
 #include "miscellaneous/cubic_equation.h"
 #include "create_scenes/create_object_list.h"
 #include "create_scenes/create_scene_illumination.h"
 #include "camera/camera.h"
-
+#include <chrono>
 int main()
 {
 
-
+	auto start = std::chrono::high_resolution_clock::now();
 	auto scene_illumination = create_scene_illumination();
 	auto object_list = create_object_list();
 	//object_list.add_object(scene_illumination.get_ground());
@@ -40,6 +39,11 @@ int main()
 		}
 	}
 	ofs.close();
+	auto stop = std::chrono::high_resolution_clock::now();
+	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop -start);
+	std::cout << "------------------------------------------" << std::endl;
+	std::cout << "Measured time: "<< duration.count() << std::endl;
+	std::cout << "------------------------------------------"<< std::endl;
 	Vector3D x{1,0,0};
 	Vector3D y{0,1,0};
 	Vector3D z = cross_product(y, x);
