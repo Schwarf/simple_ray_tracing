@@ -36,7 +36,7 @@ public:
 	float focal_length() final;
 
 private:
-	Color get_pixel_color(const IRayPtr &camera_ray,
+	Color get_pixel_color(IRay & camera_ray,
 						  const IObjectListPtr &objects_in_scene,
 						  const ISceneIlluminationPtr &scene_illumination,
 						  size_t recursion_depth) final;

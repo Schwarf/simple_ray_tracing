@@ -11,7 +11,7 @@
 class IRayIntersection
 {
 public:
-	virtual bool does_ray_intersect(const IRayPtr &ray, const IHitRecordPtr &hit_record) const = 0;
+	virtual bool does_ray_intersect(IRay &ray, IHitRecord &hit_record) const = 0;
 };
 
 #endif //SIMPLE_RAY_TRACING_I_RAY_INTERSECTION_H

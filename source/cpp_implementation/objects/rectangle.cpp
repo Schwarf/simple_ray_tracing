@@ -19,14 +19,14 @@ Point3D Rectangle::bottom_left_position() const
 	return bottom_left_position_;
 }
 
-bool Rectangle::does_ray_intersect(const IRayPtr &ray, const IHitRecordPtr &hit_record) const
+bool Rectangle::does_ray_intersect(IRay &ray, IHitRecord &hit_record) const
 {
-	auto denominator_dot_product = this->bottom_left_position() * ray->direction_normalized();
+	auto denominator_dot_product = this->bottom_left_position() * ray.direction_normalized();
 	auto epsilon = 1.e-5;
 	if (std::abs(denominator_dot_product) < epsilon) {
 		return false;
 	}
-	auto numerator_dot_product = (this->bottom_left_position() - ray->origin()) * this->normal_;
+	auto numerator_dot_product = (this->bottom_left_position() - ray.origin()) * this->normal_;
 	if (std::abs(numerator_dot_product) < epsilon) {
 		return false;
 	}
@@ -34,7 +34,7 @@ bool Rectangle::does_ray_intersect(const IRayPtr &ray, const IHitRecordPtr &hit_
 	if (d < 0) {
 		return false;
 	}
-	auto point = ray->origin() + d * ray->direction_normalized();
+	auto point = ray.origin() + d * ray.direction_normalized();
 	auto check_width = (point - bottom_left_position()) * width_vector_;
 	auto check_height = (point - bottom_left_position()) * height_vector_;
 	if (check_width > width_ || check_width < 0.f) {
@@ -43,7 +43,7 @@ bool Rectangle::does_ray_intersect(const IRayPtr &ray, const IHitRecordPtr &hit_
 	if (check_height > height_ || check_height < 0.f) {
 		return false;
 	}
-	hit_record->set_hit_point(point);
+	hit_record.set_hit_point(point);
 	return true;
 }
 

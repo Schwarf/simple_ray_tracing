@@ -19,7 +19,7 @@ ITargetObjectPtr ObjectList::object(size_t id)
 	return id_to_object_map_[id];
 }
 
-ITargetObjectPtr ObjectList::get_object_hit_by_ray(const IRayPtr &ray, const IHitRecordPtr &hit_record)
+ITargetObjectPtr ObjectList::get_object_hit_by_ray(IRay &ray, IHitRecord &hit_record)
 {
 	if(most_recently_hit_object_  && most_recently_hit_object_->does_ray_intersect(ray, hit_record))
 		return most_recently_hit_object_;

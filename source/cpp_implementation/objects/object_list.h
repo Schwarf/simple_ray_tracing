@@ -18,7 +18,7 @@ public:
 	size_t number_of_objects() final;
 	~ObjectList() override = default;
 	ITargetObjectPtr object(size_t id) final;
-	ITargetObjectPtr get_object_hit_by_ray(const IRayPtr &ray, const IHitRecordPtr &hit_record) final;
+	ITargetObjectPtr get_object_hit_by_ray(IRay &ray, IHitRecord &hit_record) final;
 private:
 	std::unordered_map<size_t, ITargetObjectPtr> id_to_object_map_;
 	ITargetObjectPtr most_recently_hit_object_ = nullptr;

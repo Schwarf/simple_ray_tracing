@@ -12,9 +12,9 @@
 class IRayInteractions
 {
 public:
-	virtual IRayPtr reflected_ray(const IRayPtr &ray, const IHitRecordPtr & hit_record) const = 0;
-	virtual IRayPtr refracted_ray(const IRayPtr &ray, const IHitRecordPtr & hit_record,
-												const float &air_refraction_index) const = 0;
+	virtual IRayPtr reflected_ray(IRay &ray, IHitRecord &hit_record) const = 0;
+	virtual IRayPtr refracted_ray(IRay &ray, IHitRecord &hit_record,
+								  const float &air_refraction_index) const = 0;
 };
 
 #endif //SIMPLE_RAY_TRACING_I_RAY_REFLECTION_H

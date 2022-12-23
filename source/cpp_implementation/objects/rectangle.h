@@ -26,7 +26,7 @@ public:
 	void set_material(const IMaterialPtr &material) final;
 
 	IMaterialPtr get_material() const final;
-	bool does_ray_intersect(const IRayPtr &ray, const IHitRecordPtr &hit_record) const final;
+	bool does_ray_intersect(IRay &ray, IHitRecord &hit_record) const final;
 
 private:
 	float width_;

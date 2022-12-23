@@ -17,5 +17,5 @@ public:
 	virtual ~IRay() = default;
 };
 
-using IRayPtr = std::shared_ptr<IRay>;
+using IRayPtr = std::unique_ptr<IRay>;
 #endif //SIMPLE_RAY_TRACING_I_RAY_H

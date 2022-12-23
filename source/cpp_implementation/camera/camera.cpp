@@ -24,7 +24,7 @@ IRayPtr Camera::get_camera_ray(float width_coordinate, float height_coordinate)
 	auto direction =
 		lower_left_corner_ + width_coordinate * horizontal_direction_ + height_coordinate * vertical_direction_
 			- origin_;
-	return std::make_shared<Ray>(Ray(origin_, direction));
+	return std::make_unique<Ray>(Ray(origin_, direction));
 }
 int Camera::image_width()
 {
@@ -68,51 +68,51 @@ void Camera::render_image(const IObjectListPtr &objects_in_scene,
 				auto pixel_coordinates = get_pixel_coordinates(width_index, height_index);
 				auto camera_ray = get_camera_ray(pixel_coordinates.first, pixel_coordinates.second);
 				color_values =
-					color_values + get_pixel_color(camera_ray, objects_in_scene, scene_illumination, recursion_depth);
+					color_values + get_pixel_color(*camera_ray.get(), objects_in_scene, scene_illumination, recursion_depth);
 			}
 			image_buffer_->set_pixel_value(width_index, height_index, color_values, samples_per_pixel);
 		}
 	}
 
 }
-Color Camera::get_pixel_color(const IRayPtr &camera_ray,
+Color Camera::get_pixel_color(IRay & camera_ray,
 							  const IObjectListPtr &objects_in_scene,
 							  const ISceneIlluminationPtr &scene_illumination,
 							  size_t recursion_depth)
 {
-	IHitRecordPtr hit_record = std::make_shared<HitRecord>(HitRecord());
+	auto hit_record =HitRecord();
 	auto air_refraction_index = 1.f;
 	auto object = objects_in_scene->get_object_hit_by_ray(camera_ray, hit_record);
 	if (object == nullptr || recursion_depth < 1) {
 		auto
 			mix_parameter =
-			1.f / 2.f * ((camera_ray->direction_normalized()[0] + camera_ray->direction_normalized()[1]) / 2.f + 1.f);
+			1.f / 2.f * ((camera_ray.direction_normalized()[0] + camera_ray.direction_normalized()[1]) / 2.f + 1.f);
 		return scene_illumination->background_color(mix_parameter);
 	}
 	// Start recursion
 	recursion_depth--;
-	auto reflected_color = get_pixel_color(ray_interaction_.reflected_ray(camera_ray, hit_record),
+	auto reflected_color = get_pixel_color(*ray_interaction_.reflected_ray(camera_ray, hit_record).get(),
 										   objects_in_scene,
 										   scene_illumination,
 										   recursion_depth);
-	auto refracted_color = get_pixel_color(ray_interaction_.refracted_ray(camera_ray, hit_record, air_refraction_index),
+	auto refracted_color = get_pixel_color(*ray_interaction_.refracted_ray(camera_ray, hit_record, air_refraction_index).get(),
 										   objects_in_scene,
 										   scene_illumination,
 										   recursion_depth);
 
 	float diffuse_intensity = 0.f;
 	float specular_intensity = 0.f;
-	const auto hit_normal = hit_record->hit_normal();
-	const auto hit_point = hit_record->hit_point();
+	const auto hit_normal = hit_record.hit_normal();
+	const auto hit_point = hit_record.hit_point();
 
-	IHitRecordPtr shadow_hit_record = std::make_shared<HitRecord>(HitRecord());
+	auto shadow_hit_record = HitRecord();
 	for (size_t ls_index = 0; ls_index < scene_illumination->number_of_light_sources(); ++ls_index) {
 		const ILightSourcePtr light_source = scene_illumination->light_source(ls_index);
-		const auto light_direction = (light_source->position() - hit_record->hit_point()).normalize();
-		const IRayPtr light_source_ray = std::make_shared<Ray>(Ray(hit_point, light_direction));
+		const auto light_direction = (light_source->position() - hit_record.hit_point()).normalize();
+		auto light_source_ray = std::make_unique<Ray>(Ray(hit_point, light_direction));
 
-		const auto object_in_shadow = objects_in_scene->get_object_hit_by_ray(light_source_ray, shadow_hit_record);
-		const auto shadow_point = shadow_hit_record->hit_point();
+		const auto object_in_shadow = objects_in_scene->get_object_hit_by_ray(*light_source_ray.get(), shadow_hit_record);
+		const auto shadow_point = shadow_hit_record.hit_point();
 		const auto distance_shadow_point_to_point = (shadow_point - hit_point).norm();
 		const auto distance_light_source_to_point = (light_source->position() - hit_point).norm();
 		if (object_in_shadow && distance_shadow_point_to_point < distance_light_source_to_point) {
@@ -120,8 +120,8 @@ Color Camera::get_pixel_color(const IRayPtr &camera_ray,
 		}
 
 		diffuse_intensity += light_source->intensity() * std::max(0.f, light_direction * hit_normal);
-		const auto scalar_product = ray_interaction_.reflected_ray(light_source_ray, hit_record)->direction_normalized()
-			* camera_ray->direction_normalized();
+		const auto scalar_product = ray_interaction_.reflected_ray(*light_source_ray.get(), hit_record)->direction_normalized()
+			* camera_ray.direction_normalized();
 		specular_intensity +=
 			std::pow(std::max(0.f, scalar_product),object->get_material()->shininess()) * light_source->intensity();
 	}

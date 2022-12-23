@@ -26,7 +26,7 @@ public:
 	virtual bool antialiasing_enabled() = 0;
 
 private:
-	virtual Color get_pixel_color(const IRayPtr &camera_ray,
+	virtual Color get_pixel_color(IRay & camera_ray,
 								  const IObjectListPtr &objects_in_scene,
 								  const ISceneIlluminationPtr &scene_illumination,
 								  size_t recursion_depth) = 0;
