@@ -59,7 +59,7 @@ void Camera::render_image(const IObjectListPtr &objects_in_scene,
 	size_t recursion_depth = 2;
 	if (antialiasing_enabled_)
 		samples_per_pixel = 4;
-//#pragma omp parallel for
+#pragma omp parallel for
 	for (int height_index = 0; height_index < image_height_; height_index++) {
 		for (int width_index = 0; width_index < image_width_; width_index++) {
 			Color color_values{0, 0, 0};
