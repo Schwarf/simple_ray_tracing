@@ -16,8 +16,6 @@ public:
 	virtual void render_image(const IObjectListPtr &objects_in_scene,
 							  const ISceneIlluminationPtr &scene_illumination) = 0;
 	virtual IRayPtr get_camera_ray(float width_coordinate, float height_coordinate) = 0;
-	virtual int image_width() = 0;
-	virtual int image_height() = 0;
 	virtual float aspect_ratio() = 0;
 	virtual float focal_length() = 0;
 	virtual IImageBufferPtr get_image_buffer()=0;

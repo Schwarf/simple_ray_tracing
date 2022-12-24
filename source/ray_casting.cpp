@@ -20,12 +20,12 @@ int main()
 	IObjectListPtr objects_in_scene(std::shared_ptr<ObjectList>(), &object_list);
 	ISceneIlluminationPtr scene_lights(std::shared_ptr<SceneIllumination>(), &scene_illumination);
 
-	size_t image_width = 1020;
-	size_t image_height = 768;
+	constexpr size_t image_width = 1020;
+	constexpr size_t image_height = 768;
 	auto focal_length = 1.f;
 	auto viewport_width = 2.f;
 
-	auto camera = Camera(image_width, image_height, viewport_width, focal_length);
+	auto camera = Camera<image_width, image_height>( viewport_width, focal_length);
 	camera.enable_antialiasing();
 	camera.render_image(objects_in_scene, scene_lights);
 	auto image_buffer = camera.get_image_buffer();

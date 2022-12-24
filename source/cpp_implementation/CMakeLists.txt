@@ -22,7 +22,7 @@ add_library(materials_interfaces INTERFACE materials/interfaces/i_phong_reflecti
 add_library(scenes_lib STATIC create_scenes/create_object_list.cpp create_scenes/create_object_list.h create_scenes/create_scene_illumination.cpp create_scenes/create_scene_illumination.h)
 
 add_library(camera_interfaces INTERFACE camera/interfaces/i_camera.h rays/interfaces/i_hit_record.h)
-add_library(camera_lib STATIC camera/camera.cpp camera/camera.h)
+add_library(camera_lib STATIC camera/camera.h)
 
 target_link_libraries(scenes_lib objects_lib materials_lib ray_lib)
 target_link_libraries(camera_lib scenes_lib ray_lib objects_lib misc_lib)
