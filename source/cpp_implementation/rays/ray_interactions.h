@@ -12,10 +12,11 @@ class RayInteractions final: IRayInteractions
 {
 public:
 	RayInteractions() = default;
-	IRayPtr reflected_ray(IRay &ray, IHitRecord &hit_record) const final;
-	IRayPtr refracted_ray(IRay &ray,
-						  IHitRecord &hit_record,
-						  const float &air_refraction_index) const final;
+	void compute_reflected_ray(const IRay &ray, const IHitRecord &hit_record, IRay &reflected_ray) const final;
+	void compute_refracted_ray(const IRay &ray,
+							   const IHitRecord &hit_record,
+							   IRay &refracted_ray,
+							   float air_refraction_index) const final;
 };
 
 
