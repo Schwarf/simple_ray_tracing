@@ -16,7 +16,7 @@ class SceneIllumination: public ISceneIllumination
 {
 public:
 	SceneIllumination() = default;
-	explicit SceneIllumination(ILightSourcePtr light_source);
+	explicit SceneIllumination(const ILightSourcePtr &light_source);
 	SceneIllumination(const SceneIllumination &rhs);
 	SceneIllumination(SceneIllumination &&rhs) noexcept;
 	SceneIllumination &operator=(const SceneIllumination &rhs);

@@ -4,7 +4,7 @@
 
 #include "scene_illumination.h"
 
-SceneIllumination::SceneIllumination(ILightSourcePtr light_source)
+SceneIllumination::SceneIllumination(const ILightSourcePtr &light_source)
 {
 	background_color1_ = Color{1, 1, 1};
 	background_color1_ = Color{1, 1, 1};

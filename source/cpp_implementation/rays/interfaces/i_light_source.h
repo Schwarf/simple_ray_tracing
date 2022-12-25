@@ -15,5 +15,5 @@ public:
 	virtual ~ILightSource() = default;
 };
 
-using ILightSourcePtr = std::shared_ptr<ILightSource>;
+using ILightSourcePtr = std::shared_ptr<const ILightSource>;
 #endif //SIMPLE_RAY_TRACING_I_LIGHT_SOURCE_H
