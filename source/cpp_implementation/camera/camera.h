@@ -145,7 +145,7 @@ private:
 		// Start recursion
 		recursion_depth--;
 		ray_interaction_.compute_reflected_ray(camera_ray, hit_record, reflected_ray);
-		ray_interaction_.compute_refracted_ray(camera_ray, hit_record, refracted_ray, air_refraction_index);
+		ray_interaction_.compute_refracted_ray(camera_ray, hit_record, refracted_ray);
 		auto reflected_color = get_pixel_color(reflected_ray,
 											   objects_in_scene,
 											   scene_illumination,

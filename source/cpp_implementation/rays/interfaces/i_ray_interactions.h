@@ -15,8 +15,7 @@ public:
 	virtual void compute_reflected_ray(const IRay &ray, const IHitRecord &hit_record, IRay &reflected_ray) const = 0;
 	virtual void compute_refracted_ray(const IRay &ray,
 									   const IHitRecord &hit_record,
-									   IRay &refracted_ray,
-									   float air_refraction_index) const = 0;
+									   IRay &refracted_ray) const = 0;
 	virtual void set_air_refraction_index(float air_refraction_index) = 0;
 
 };

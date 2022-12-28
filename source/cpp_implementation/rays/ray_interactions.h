@@ -15,13 +15,11 @@ public:
 	void compute_reflected_ray(const IRay &ray, const IHitRecord &hit_record, IRay &reflected_ray) const final;
 	void compute_refracted_ray(const IRay &ray,
 							   const IHitRecord &hit_record,
-							   IRay &refracted_ray,
-							   float air_refraction_index) const final;
+							   IRay &refracted_ray) const final;
 	void set_air_refraction_index(float air_refraction_index) final;
 private:
 	float air_refraction_index_{1.f};
 
 };
-
 
 #endif //SIMPLE_RAY_TRACING_RAY_INTERACTIONS_H

@@ -15,18 +15,17 @@ void RayInteractions::compute_reflected_ray(const IRay &ray, const IHitRecord &h
 }
 void RayInteractions::compute_refracted_ray(const IRay &ray,
 											const IHitRecord &hit_record,
-											IRay &refracted_ray,
-											float air_refraction_index) const
+											IRay &refracted_ray) const
 {
 	float cosine = -std::max(-1.f, std::min(1.f, ray.direction_normalized() * hit_record.hit_normal()));
 	auto hit_normal = hit_record.hit_normal();
 	auto material_refraction_index = hit_record.material()->refraction_index();
-	auto air_index = air_refraction_index;
+	auto air_index = air_refraction_index_;
 	if (cosine < 0) {
 		// ray is inside sphere, switch refraction_indices and normal
 		hit_normal = -1.f * hit_normal;
 		auto help = material_refraction_index;
-		material_refraction_index = air_refraction_index;
+		material_refraction_index = air_index;
 		air_index = help;
 	}
 	float ratio = air_index / material_refraction_index;
