@@ -39,3 +39,7 @@ void RayInteractions::compute_refracted_ray(const IRay &ray,
 	refracted_ray.set_origin(hit_record.hit_point());
 	refracted_ray.set_direction(refracted_ray_direction);
 }
+void RayInteractions::set_air_refraction_index(float air_refraction_index)
+{
+	air_refraction_index_ = air_refraction_index;
+}

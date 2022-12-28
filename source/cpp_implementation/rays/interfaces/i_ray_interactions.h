@@ -17,6 +17,8 @@ public:
 									   const IHitRecord &hit_record,
 									   IRay &refracted_ray,
 									   float air_refraction_index) const = 0;
+	virtual void set_air_refraction_index(float air_refraction_index) = 0;
+
 };
 
 #endif //SIMPLE_RAY_TRACING_I_RAY_REFLECTION_H
