@@ -20,7 +20,7 @@ public:
 	virtual int image_height() = 0;
 	virtual float aspect_ratio() = 0;
 	virtual float focal_length() = 0;
-	virtual IImageBufferPtr get_image_buffer()=0;
+	virtual IImageBufferPtr get_image_buffer() = 0;
 	virtual void enable_antialiasing() = 0;
 	virtual void disable_antialiasing() = 0;
 	virtual bool antialiasing_enabled() = 0;
@@ -31,9 +31,9 @@ private:
 								  const ISceneIlluminationPtr &scene_illumination,
 								  size_t recursion_depth) = 0;
 	virtual Color compute_one_pixel(const size_t &width_index, const size_t &height_index,
-							const IObjectListPtr &objects_in_scene,
-							const ISceneIlluminationPtr &scene_illumination,
-							size_t recursion_depth) =0;
+									const IObjectListPtr &objects_in_scene,
+									const ISceneIlluminationPtr &scene_illumination,
+									size_t recursion_depth) = 0;
 
 };
 
