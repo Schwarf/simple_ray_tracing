@@ -30,6 +30,11 @@ private:
 								  const IObjectListPtr &objects_in_scene,
 								  const ISceneIlluminationPtr &scene_illumination,
 								  size_t recursion_depth) = 0;
+	virtual Color compute_one_pixel(const size_t &width_index, const size_t &height_index,
+							const IObjectListPtr &objects_in_scene,
+							const ISceneIlluminationPtr &scene_illumination,
+							size_t recursion_depth) =0;
+
 };
 
 #endif //I_CAMERA_H

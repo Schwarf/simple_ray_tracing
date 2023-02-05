@@ -52,6 +52,8 @@ std::pair<float, float> Camera::get_pixel_coordinates(const size_t &width_index,
 	return {u, v};
 }
 
+
+
 void Camera::render_image(const IObjectListPtr &objects_in_scene,
 						  const ISceneIlluminationPtr &scene_illumination)
 {
@@ -64,11 +66,7 @@ void Camera::render_image(const IObjectListPtr &objects_in_scene,
 		for (int width_index = 0; width_index < image_width_; width_index++) {
 			Color color_values{0, 0, 0};
 			for (size_t sample = 0; sample < samples_per_pixel; ++sample) {
-
-				auto pixel_coordinates = get_pixel_coordinates(width_index, height_index);
-				auto camera_ray = get_camera_ray(pixel_coordinates.first, pixel_coordinates.second);
-				color_values =
-					color_values + get_pixel_color(camera_ray, objects_in_scene, scene_illumination, recursion_depth);
+				color_values += compute_one_pixel(width_index, height_index, objects_in_scene, scene_illumination, recursion_depth);
 			}
 			image_buffer_->set_pixel_value(width_index, height_index, color_values, samples_per_pixel);
 		}
@@ -151,4 +149,14 @@ void Camera::disable_antialiasing()
 bool Camera::antialiasing_enabled()
 {
 	return antialiasing_enabled_;
+}
+
+Color Camera::compute_one_pixel(const size_t &width_index, const size_t &height_index,
+						const IObjectListPtr &objects_in_scene,
+						const ISceneIlluminationPtr &scene_illumination,
+						size_t recursion_depth)
+{
+	auto pixel_coordinates = get_pixel_coordinates(width_index, height_index);
+	auto camera_ray = get_camera_ray(pixel_coordinates.first, pixel_coordinates.second);
+	return get_pixel_color(camera_ray, objects_in_scene, scene_illumination, recursion_depth);
 }

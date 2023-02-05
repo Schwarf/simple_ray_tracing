@@ -43,6 +43,10 @@ private:
 
 	std::pair<float, float> get_pixel_coordinates(const size_t &width_index, const size_t &height_index) const;
 
+	Color compute_one_pixel(const size_t &width_index, const size_t &height_index,
+							const IObjectListPtr &objects_in_scene,
+							const ISceneIlluminationPtr &scene_illumination,
+							size_t recursion_depth);
 
 private:
 	int image_width_{};
