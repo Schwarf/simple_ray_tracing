@@ -89,6 +89,7 @@ TEST_F(SetupSphere, test_ray_intersection_closest_distance)
 	ray_intersection(mock_ray, expected_hit_record);
 	sphere.does_ray_intersect(mock, hit_record);
 	for (int i = 0; i < 3; ++i) {
+		std::cout << expected_hit_record.hit_normal()[i] << "  " <<  hit_record->hit_normal()[i] <<std::endl;
 		EXPECT_FLOAT_EQ(expected_hit_record.hit_normal()[i], hit_record->hit_normal()[i]);
 	}
 }

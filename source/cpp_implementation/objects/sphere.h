@@ -21,7 +21,7 @@ public:
 	bool does_ray_intersect(const IRayPtr &ray, const IHitRecordPtr &hit_record) const final;
 	void set_material(const IMaterialPtr &material) final;
 	IMaterialPtr get_material() const final;
-	size_t object_id() const final;
+	size_t 	object_id() const final;
 
 private:
 	void init();
@@ -29,9 +29,7 @@ private:
 	float radius_;
 	float radius_squared_;
 	IMaterialPtr material_;
-	Validate<float> validate_;
 	size_t object_id_;
-	float epsilon_{1e-3};
 };
 
 #endif //SIMPLE_RAY_TRACING_SPHERE_H

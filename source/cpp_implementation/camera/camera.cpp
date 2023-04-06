@@ -52,8 +52,6 @@ std::pair<float, float> Camera::get_pixel_coordinates(const size_t &width_index,
 	return {u, v};
 }
 
-
-
 void Camera::render_image(const IObjectListPtr &objects_in_scene,
 						  const ISceneIlluminationPtr &scene_illumination)
 {
@@ -61,12 +59,13 @@ void Camera::render_image(const IObjectListPtr &objects_in_scene,
 	size_t recursion_depth = 2;
 	if (antialiasing_enabled_)
 		samples_per_pixel = 4;
-#pragma omp parallel for
+//#pragma omp parallel for
 	for (int height_index = 0; height_index < image_height_; height_index++) {
 		for (int width_index = 0; width_index < image_width_; width_index++) {
 			Color color_values{0, 0, 0};
 			for (size_t sample = 0; sample < samples_per_pixel; ++sample) {
-				color_values += compute_one_pixel(width_index, height_index, objects_in_scene, scene_illumination, recursion_depth);
+				color_values +=
+					compute_one_pixel(width_index, height_index, objects_in_scene, scene_illumination, recursion_depth);
 			}
 			image_buffer_->set_pixel_value(width_index, height_index, color_values, samples_per_pixel);
 		}
@@ -82,8 +81,7 @@ Color Camera::get_pixel_color(const IRayPtr &camera_ray,
 	auto air_refraction_index = 1.f;
 	auto object = objects_in_scene->get_object_hit_by_ray(camera_ray, hit_record);
 	if (object == nullptr || recursion_depth < 1) {
-		auto
-			mix_parameter =
+		auto mix_parameter =
 			1.f / 2.f * ((camera_ray->direction_normalized()[0] + camera_ray->direction_normalized()[1]) / 2.f + 1.f);
 		return scene_illumination->background_color(mix_parameter);
 	}
@@ -121,15 +119,15 @@ Color Camera::get_pixel_color(const IRayPtr &camera_ray,
 		const auto scalar_product = ray_interaction_.reflected_ray(light_source_ray, hit_record)->direction_normalized()
 			* camera_ray->direction_normalized();
 		specular_intensity +=
-			std::pow(std::max(0.f, scalar_product),object->get_material()->shininess()) * light_source->intensity();
+			std::pow(std::max(0.f, scalar_product), object->get_material()->shininess()) * light_source->intensity();
 	}
 
-	Color diffuse_color =
-		object->get_material()->rgb_color() * diffuse_intensity * object->get_material()->diffuse();
-	Color white = Color{1, 1, 1};
-	Color specular_color = specular_intensity * white * object->get_material()->specular();
-	Color ambient_color = reflected_color * object->get_material()->ambient();
-	Color refraction_color = refracted_color * object->get_material()->transparency();
+	const Color diffuse_color
+		{object->get_material()->rgb_color() * diffuse_intensity * object->get_material()->diffuse()};
+	const Color white{Color{1, 1, 1}};
+	const Color specular_color{specular_intensity * white * object->get_material()->specular()};
+	const Color ambient_color{reflected_color * object->get_material()->ambient()};
+	const Color refraction_color{refracted_color * object->get_material()->transparency()};
 	return diffuse_color + specular_color + ambient_color + refraction_color;
 }
 
@@ -152,9 +150,9 @@ bool Camera::antialiasing_enabled()
 }
 
 Color Camera::compute_one_pixel(const size_t &width_index, const size_t &height_index,
-						const IObjectListPtr &objects_in_scene,
-						const ISceneIlluminationPtr &scene_illumination,
-						size_t recursion_depth)
+								const IObjectListPtr &objects_in_scene,
+								const ISceneIlluminationPtr &scene_illumination,
+								size_t recursion_depth)
 {
 	auto pixel_coordinates = get_pixel_coordinates(width_index, height_index);
 	auto camera_ray = get_camera_ray(pixel_coordinates.first, pixel_coordinates.second);
