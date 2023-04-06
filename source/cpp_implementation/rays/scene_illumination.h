@@ -21,7 +21,7 @@ public:
 	SceneIllumination(SceneIllumination &&rhs) noexcept;
 	SceneIllumination &operator=(const SceneIllumination &rhs);
 	SceneIllumination &operator=(SceneIllumination &&rhs) noexcept;
-	~SceneIllumination() override = default;
+
 	void add_light_source(const ILightSourcePtr &light_source) final;
 	ILightSourcePtr light_source(size_t index) const final;
 	size_t number_of_light_sources() const final;

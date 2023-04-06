@@ -20,7 +20,7 @@ public:
 
 	Point3D bottom_left_position() const final;
 
-	~Rectangle() final = default;
+
 
 
 	void set_material(const IMaterialPtr &material) final;

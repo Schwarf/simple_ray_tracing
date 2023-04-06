@@ -30,7 +30,7 @@ public:
 
 	float shininess() const final;
 
-	~Material() final = default;
+
 
 	std::string name() const final;
 

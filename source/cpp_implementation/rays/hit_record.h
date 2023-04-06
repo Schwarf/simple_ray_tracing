@@ -18,7 +18,7 @@ public:
 	void set_hit_point(const Point3D &hit_point) final;
 	void set_hit_normal(const Vector3D &hit_normal) final;
 	void set_material(const IMaterialPtr &material) final;
-	~HitRecord() final = default;
+
 private:
 	Point3D hit_point_;
 	Vector3D hit_normal_;

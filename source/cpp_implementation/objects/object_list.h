@@ -14,10 +14,8 @@ public:
 	ObjectList() = default;
 	void add_object(const ITargetObjectPtr &target_object) final;
 	size_t number_of_objects() final;
-	~ObjectList() override = default;
 	ITargetObjectPtr object(size_t index) final;
-	ITargetObjectPtr get_object_hit_by_ray(const IRayPtr &ray, const std::shared_ptr<
-		IHitRecord> &hit_record) final;
+	ITargetObjectPtr get_object_hit_by_ray(const IRayPtr &ray, const std::shared_ptr<IHitRecord> &hit_record) final;
 private:
 	std::vector<ITargetObjectPtr> object_vector_;
 };

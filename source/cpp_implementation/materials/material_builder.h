@@ -31,8 +31,6 @@ public:
 
 	void set_name(const std::string &name) final;
 
-	~MaterialBuilder() override = default;
-
 	float specular() const final;
 
 	float diffuse() const final;

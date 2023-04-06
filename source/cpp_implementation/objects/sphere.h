@@ -17,7 +17,7 @@ public:
 	Sphere(Sphere &&) = default;
 	Point3D center() const final;
 	float radius() const final;
-	~Sphere() override = default;
+
 	bool does_ray_intersect(const IRayPtr &ray, const IHitRecordPtr &hit_record) const final;
 	void set_material(const IMaterialPtr &material) final;
 	IMaterialPtr get_material() const final;
