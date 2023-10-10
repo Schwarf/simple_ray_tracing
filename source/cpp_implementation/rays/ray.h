@@ -5,20 +5,20 @@
 #ifndef SIMPLE_RAY_TRACING_RAY_H
 #define SIMPLE_RAY_TRACING_RAY_H
 
-#include "rays/interfaces/i_ray.h"
+#include "miscellaneous/templates/fixed_sized_array.h"
 
-class Ray final: public IRay
+class Ray final
 {
 public:
 	Ray() = default;
 	Ray(const Point3D &origin, const Vector3D &direction);
-	Vector3D direction_normalized() const final;
+	Vector3D direction_normalized() const ;
 
-	Point3D origin() const final;
+	Point3D origin() const ;
 
-	~Ray() final = default;
-	void set_direction(const Vector3D & direction) final;
-	void set_origin(const Point3D &origin) final;
+	~Ray()  = default;
+	void set_direction(const Vector3D & direction) ;
+	void set_origin(const Point3D &origin) ;
 private:
 	Vector3D direction_normalized_;
 	Point3D origin_;

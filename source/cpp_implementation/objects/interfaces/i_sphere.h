@@ -5,7 +5,7 @@
 #ifndef SIMPLE_RAY_TRACING_I_SPHERE_H
 #define SIMPLE_RAY_TRACING_I_SPHERE_H
 #include "miscellaneous/templates/fixed_sized_array.h"
-#include "rays/interfaces/i_ray_intersection.h"
+#include "rays/ray.h"
 #include "i_target_object.h"
 
 class ISphere: public ITargetObject

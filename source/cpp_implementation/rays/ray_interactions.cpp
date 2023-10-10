@@ -4,7 +4,7 @@
 
 #include "ray_interactions.h"
 
-void RayInteractions::compute_reflected_ray(const IRay &ray, const IHitRecord &hit_record, IRay &reflected_ray) const
+void RayInteractions::compute_reflected_ray(const Ray &ray, const HitRecord &hit_record, Ray &reflected_ray) const
 {
 	Vector3D reflected_ray_direction = ray.direction_normalized() - hit_record.hit_normal() * 2.f * (
 		ray.direction_normalized() * hit_record.hit_normal())
@@ -13,9 +13,9 @@ void RayInteractions::compute_reflected_ray(const IRay &ray, const IHitRecord &h
 	reflected_ray.set_origin(hit_record.hit_point());
 	reflected_ray.set_direction(reflected_ray_direction);
 }
-void RayInteractions::compute_refracted_ray(const IRay &ray,
-											const IHitRecord &hit_record,
-											IRay &refracted_ray) const
+void RayInteractions::compute_refracted_ray(const Ray &ray,
+											const HitRecord &hit_record,
+											Ray &refracted_ray) const
 {
 	float cosine = -std::max(-1.f, std::min(1.f, ray.direction_normalized() * hit_record.hit_normal()));
 	auto hit_normal = hit_record.hit_normal();

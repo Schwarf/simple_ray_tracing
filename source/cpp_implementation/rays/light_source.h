@@ -5,14 +5,14 @@
 #ifndef SIMPLE_RAY_TRACING_LIGHT_SOURCE_H
 #define SIMPLE_RAY_TRACING_LIGHT_SOURCE_H
 
-#include "rays/interfaces/i_light_source.h"
+#include "miscellaneous/templates/fixed_sized_array.h"
 
-class LightSource final: public ILightSource
+class LightSource final
 {
 public:
 	LightSource(const Point3D &position, float intensity);
-	Point3D position() const final;
-	float intensity() const final;
+	Point3D position() const;
+	float intensity() const;
 private:
 	Point3D position_;
 	float intensity_;

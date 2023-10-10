@@ -6,19 +6,20 @@
 #define HIT_RECORD_H
 
 #include <memory>
-#include "interfaces/i_hit_record.h"
-class HitRecord final: public IHitRecord
+#include "miscellaneous/templates/fixed_sized_array.h"
+#include "materials/interfaces/i_material.h"
+class HitRecord final
 {
 public:
 	HitRecord() = default;
 	HitRecord(const Point3D &hit_point, const Vector3D &hit_normal);
-	Point3D hit_point() const final;
-	Vector3D hit_normal() const final;
-	IMaterialPtr material() const final;
-	void set_hit_point(const Point3D &hit_point) final;
-	void set_hit_normal(const Vector3D &hit_normal) final;
-	void set_material(const IMaterialPtr &material) final;
-	~HitRecord() final = default;
+	Point3D hit_point() const;
+	Vector3D hit_normal() const;
+	IMaterialPtr material() const;
+	void set_hit_point(const Point3D &hit_point);
+	void set_hit_normal(const Vector3D &hit_normal);
+	void set_material(const IMaterialPtr &material);
+	~HitRecord() = default;
 private:
 	Point3D hit_point_;
 	Vector3D hit_normal_;

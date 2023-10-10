@@ -4,11 +4,11 @@
 
 #include "scene_illumination.h"
 
-SceneIllumination::SceneIllumination(const ILightSourcePtr &light_source)
+SceneIllumination::SceneIllumination(const LightSource &light_source)
 {
 	background_color1_ = Color{1, 1, 1};
 	background_color1_ = Color{1, 1, 1};
-	light_source_vector_.push_back(light_source);
+	light_source_vector_.emplace_back(light_source);
 }
 
 SceneIllumination::SceneIllumination(const SceneIllumination &rhs)
@@ -34,12 +34,12 @@ SceneIllumination &SceneIllumination::operator=(SceneIllumination &&rhs) noexcep
 	return *this;
 }
 
-void SceneIllumination::add_light_source(const ILightSourcePtr &light_source)
+void SceneIllumination::add_light_source(const LightSource &light_source)
 {
 	light_source_vector_.push_back(light_source);
 }
 
-ILightSourcePtr SceneIllumination::light_source(size_t index) const
+LightSource SceneIllumination::light_source(size_t index) const
 {
 	if (index >= light_source_vector_.size()) {
 		return nullptr;
