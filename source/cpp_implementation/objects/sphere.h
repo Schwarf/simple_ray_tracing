@@ -12,13 +12,13 @@
 class Sphere final: public ISphere
 {
 public:
-	Sphere(Point3D &center, float radius);
+	Sphere(const Point3D &center, float radius);
 	Sphere(const Sphere &) = default;
 	Sphere(Sphere &&) = default;
 	Point3D center() const final;
 	float radius() const final;
 	~Sphere() override = default;
-	bool does_ray_intersect(IRay &ray, IHitRecord &hit_record) const final;
+	bool does_ray_intersect(Ray &ray, HitRecord &hit_record) const final;
 	void set_material(const IMaterialPtr &material) final;
 	IMaterialPtr get_material() const final;
 	size_t object_id() const final;

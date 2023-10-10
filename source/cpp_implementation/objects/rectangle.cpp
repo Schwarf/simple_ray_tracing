@@ -19,7 +19,7 @@ Point3D Rectangle::bottom_left_position() const
 	return bottom_left_position_;
 }
 
-bool Rectangle::does_ray_intersect(IRay &ray, IHitRecord &hit_record) const
+bool Rectangle::does_ray_intersect(Ray &ray, HitRecord &hit_record) const
 {
 	auto denominator_dot_product = this->bottom_left_position() * ray.direction_normalized();
 	auto epsilon = 1.e-5;

@@ -20,7 +20,7 @@ ITargetObjectPtr ObjectList::object(size_t index)
 	return object_vector_[index];
 }
 
-ITargetObjectPtr ObjectList::get_object_hit_by_ray(IRay &ray, IHitRecord &hit_record)
+ITargetObjectPtr ObjectList::get_object_hit_by_ray(Ray &ray, HitRecord &hit_record)
 {
 	for (const auto &object: object_vector_) {
 		if (object->does_ray_intersect(ray, hit_record))

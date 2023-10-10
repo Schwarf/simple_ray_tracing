@@ -15,7 +15,7 @@ public:
 	void add_object(const ITargetObjectPtr &target_object) final;
 	size_t number_of_objects() final;
 	~ObjectList() override = default;
-	ITargetObjectPtr get_object_hit_by_ray(IRay &ray, IHitRecord &hit_record) final;
+	ITargetObjectPtr get_object_hit_by_ray(Ray &ray, HitRecord &hit_record) final;
 	ITargetObjectPtr object(size_t index) final;
 private:
 	std::vector<ITargetObjectPtr> object_vector_;

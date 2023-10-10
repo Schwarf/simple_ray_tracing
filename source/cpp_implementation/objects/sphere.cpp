@@ -4,7 +4,7 @@
 
 #include "sphere.h"
 
-Sphere::Sphere(Point3D &center, float radius)
+Sphere::Sphere(const Point3D &center, float radius)
 	:
 	material_(nullptr),
 	object_id_{}
@@ -35,7 +35,7 @@ void Sphere::init()
 	object_id_ = x_hash ^ (y_hash << 1) ^ (z_hash) ^ (r_hash << 1);
 }
 
-inline bool Sphere::does_ray_intersect(IRay &ray, IHitRecord &hit_record) const
+inline bool Sphere::does_ray_intersect(Ray &ray, HitRecord &hit_record) const
 {
 	const Vector3D origin_to_center = (center_ - ray.origin());
 	const float origin_to_center_dot_direction = origin_to_center * ray.direction_normalized();

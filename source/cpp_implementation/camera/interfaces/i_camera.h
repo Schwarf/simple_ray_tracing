@@ -4,8 +4,6 @@
 
 #ifndef I_CAMERA_H
 #define I_CAMERA_H
-#include "rays/interfaces/i_ray.h"
-#include "rays/interfaces/i_scene_illumination.h"
 #include "objects/interfaces/i_object_list.h"
 
 #include <memory>
@@ -14,8 +12,8 @@ class ICamera
 {
 public:
 	virtual void render_image(const IObjectListPtr &objects_in_scene,
-							  const ISceneIlluminationPtr &scene_illumination) = 0;
-	virtual IRayPtr get_camera_ray(float width_coordinate, float height_coordinate) = 0;
+							  const SceneIllumination &scene_illumination) = 0;
+	virtual Ray get_camera_ray(float width_coordinate, float height_coordinate) = 0;
 	virtual float aspect_ratio() = 0;
 	virtual float focal_length() = 0;
 	virtual IImageBufferPtr get_image_buffer()=0;
@@ -24,9 +22,9 @@ public:
 	virtual bool antialiasing_enabled() = 0;
 
 private:
-	virtual Color get_pixel_color(IRay & camera_ray,
+	virtual Color get_pixel_color(Ray & camera_ray,
 								  const IObjectListPtr &objects_in_scene,
-								  const ISceneIlluminationPtr &scene_illumination,
+								  const SceneIllumination &scene_illumination,
 								  size_t recursion_depth) = 0;
 };
 

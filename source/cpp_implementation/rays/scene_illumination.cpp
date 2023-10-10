@@ -39,12 +39,12 @@ void SceneIllumination::add_light_source(const LightSource &light_source)
 	light_source_vector_.push_back(light_source);
 }
 
-LightSource SceneIllumination::light_source(size_t index) const
+void SceneIllumination::light_source(size_t index, LightSource & light_source) const
 {
 	if (index >= light_source_vector_.size()) {
-		return nullptr;
+		return;
 	}
-	return light_source_vector_[index];
+	light_source = light_source_vector_[index];
 }
 size_t SceneIllumination::number_of_light_sources() const
 {

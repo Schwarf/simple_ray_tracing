@@ -10,8 +10,6 @@
 #include <utility>
 #include "miscellaneous/interfaces/i_image_buffer.h"
 #include "camera/interfaces/i_camera.h"
-#include "rays/interfaces/i_ray.h"
-#include "rays/interfaces/i_ray_interactions.h"
 #include "rays/ray.h"
 #include "miscellaneous/image_buffer.h"
 #include "rays/ray_interactions.h"
@@ -56,7 +54,7 @@ public:
 	}
 
 	void render_image(const IObjectListPtr &objects_in_scene,
-					  const ISceneIlluminationPtr &scene_illumination) final
+					  const SceneIllumination &scene_illumination) final
 	{
 		size_t samples_per_pixel = 1;
 		size_t recursion_depth = 2;
@@ -72,7 +70,7 @@ public:
 					auto camera_ray = get_camera_ray(pixel_coordinates.first, pixel_coordinates.second);
 					color_values =
 						color_values
-							+ get_pixel_color(*camera_ray.get(), objects_in_scene, scene_illumination, recursion_depth);
+							+ get_pixel_color(camera_ray, objects_in_scene, scene_illumination, recursion_depth);
 				}
 				image_buffer_->set_pixel_value(width_index, height_index, color_values, samples_per_pixel);
 			}
@@ -80,12 +78,12 @@ public:
 
 	}
 
-	IRayPtr get_camera_ray(float width_coordinate, float height_coordinate) final
+	Ray get_camera_ray(float width_coordinate, float height_coordinate)
 	{
 		auto direction =
 			lower_left_corner_ + width_coordinate * horizontal_direction_ + height_coordinate * vertical_direction_
 				- origin_;
-		return std::make_unique<Ray>(Ray(origin_, direction));
+		return Ray(origin_, direction);
 	}
 
 	IImageBufferPtr get_image_buffer() final
@@ -125,9 +123,9 @@ public:
 	}
 
 private:
-	Color get_pixel_color(IRay &camera_ray,
+	Color get_pixel_color(Ray &camera_ray,
 						  const IObjectListPtr &objects_in_scene,
-						  const ISceneIlluminationPtr &scene_illumination,
+						  const SceneIllumination &scene_illumination,
 						  size_t recursion_depth)
 	{
 		auto hit_record = HitRecord();
@@ -140,7 +138,7 @@ private:
 			auto
 				mix_parameter =
 				1.f / 2.f * ((camera_ray.direction_normalized()[0] + camera_ray.direction_normalized()[1]) / 2.f + 1.f);
-			return scene_illumination->background_color(mix_parameter);
+			return scene_illumination.background_color(mix_parameter);
 		}
 		// Start recursion
 		recursion_depth--;
@@ -161,26 +159,27 @@ private:
 		const auto hit_point = hit_record.hit_point();
 
 		auto shadow_hit_record = HitRecord();
-		for (size_t ls_index = 0; ls_index < scene_illumination->number_of_light_sources(); ++ls_index) {
-			const ILightSourcePtr light_source = scene_illumination->light_source(ls_index);
-			const auto light_direction = (light_source->position() - hit_record.hit_point()).normalize();
+		for (size_t ls_index = 0; ls_index < scene_illumination.number_of_light_sources(); ++ls_index) {
+			auto light_source = LightSource({}, {});
+			scene_illumination.light_source(ls_index, light_source);
+			const auto light_direction = (light_source.position() - hit_record.hit_point()).normalize();
 			auto light_source_ray = std::make_unique<Ray>(Ray(hit_point, light_direction));
 
 			const auto
 				object_in_shadow = objects_in_scene->get_object_hit_by_ray(*light_source_ray.get(), shadow_hit_record);
 			const auto shadow_point = shadow_hit_record.hit_point();
 			const auto distance_shadow_point_to_point = (shadow_point - hit_point).norm();
-			const auto distance_light_source_to_point = (light_source->position() - hit_point).norm();
+			const auto distance_light_source_to_point = (light_source.position() - hit_point).norm();
 			if (object_in_shadow && distance_shadow_point_to_point < distance_light_source_to_point) {
 				continue;
 			}
 
-			diffuse_intensity += light_source->intensity() * std::max(0.f, light_direction * hit_normal);
+			diffuse_intensity += light_source.intensity() * std::max(0.f, light_direction * hit_normal);
 			ray_interaction_.compute_reflected_ray(*light_source_ray.get(), hit_record, reflected_ray);
 			const auto scalar_product = reflected_ray.direction_normalized()*camera_ray.direction_normalized();
 			specular_intensity +=
 				std::pow(std::max(0.f, scalar_product), object->get_material()->shininess())
-					* light_source->intensity();
+					* light_source.intensity();
 		}
 
 		Color diffuse_color =

@@ -8,18 +8,15 @@ SceneIllumination create_scene_illumination()
 {
 	auto light_source_position1 = Point3D{-20, -20, 20};
 	float light_intensity1 = 1.5;
-	ILightSourcePtr
-		light_source1 = std::make_shared<LightSource>(LightSource(light_source_position1, light_intensity1));
+	auto light_source1 = LightSource(light_source_position1, light_intensity1);
 
 	auto light_source_position2 = Point3D{30, -50, -25};
 	float light_intensity2 = 1.8;
-	ILightSourcePtr
-		light_source2 = std::make_shared<LightSource>(LightSource(light_source_position2, light_intensity2));;
+	auto light_source2 = LightSource(light_source_position2, light_intensity2);
 
 	auto light_source_position3 = Point3D{30, 20, 30};
 	float light_intensity3 = 1.7;
-	ILightSourcePtr
-		light_source3 = std::make_shared<LightSource>(LightSource(light_source_position3, light_intensity3));
+	auto light_source3 =LightSource(light_source_position3, light_intensity3);
 
 	auto scene_illumination = SceneIllumination(light_source1);
 

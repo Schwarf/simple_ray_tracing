@@ -23,7 +23,7 @@ public:
 	SceneIllumination &operator=(SceneIllumination &&rhs) noexcept;
 	~SceneIllumination() = default;
 	void add_light_source(const LightSource &light_source);
-	LightSource light_source(size_t index) const;
+	void light_source(size_t index, LightSource & lightSource) const;
 	size_t number_of_light_sources() const;
 	Color background_color(float parameter) const;
 	void set_background_colors(const Color &color1, const Color &color2);
